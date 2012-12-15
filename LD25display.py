@@ -18,7 +18,7 @@ def pDisplay(simName, unassigned, farm, factory):
     print "  ID  AGE  STR BATT UTIL COST BRKS"
     print "----------------------------------"
     
-    for robot in unassigned.robots():
+    for robot in unassigned.curr:
         id, age, str, batt, util, cost, brks, out = robot.stats()
         print repr(id).rjust(4), repr(age).rjust(4), repr(str).rjust(4),
         print repr(batt).rjust(4), repr(util).rjust(4), repr(cost).rjust(4),
@@ -28,7 +28,7 @@ def pDisplay(simName, unassigned, farm, factory):
     print "  ID  AGE  STR BATT UTIL COST BRKS"
     print "----------------------------------"
     
-    for robot in farm.robots():
+    for robot in farm.curr:
         id, age, str, batt, util, cost, brks, out = robot.stats()
         print repr(id).rjust(4), repr(age).rjust(4), repr(str).rjust(4),
         print repr(batt).rjust(4), repr(util).rjust(4), repr(cost).rjust(4),
@@ -38,7 +38,7 @@ def pDisplay(simName, unassigned, farm, factory):
     print "  ID  AGE  STR BATT UTIL COST BRKS"
     print "----------------------------------"
     
-    for robot in factory.robots():
+    for robot in factory.curr:
         id, age, str, batt, util, cost, brks, out = robot.stats()
         print repr(id).rjust(4), repr(age).rjust(4), repr(str).rjust(4),
         print repr(batt).rjust(4), repr(util).rjust(4), repr(cost).rjust(4),

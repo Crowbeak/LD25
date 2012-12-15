@@ -136,7 +136,7 @@ class Workplace(object):
         self.down = avgDowntime
         self.curr = currentRobots
     
-    def add(self, robot):
+    def addRobo(self, robot):
         """
         Adds a robot to the list of currentRobots.
         """
@@ -145,7 +145,7 @@ class Workplace(object):
         else:
             raise TooManyRobots("Max number of robots exceeded.")
     
-    def remove(self, id):
+    def rem(self, id):
         """
         Pops a robot from the list of currentRobots.
         """
@@ -199,7 +199,7 @@ class Unassigned(Workplace):
     def __init__(self, robots):
         self.curr = robots
     
-    def add(self, robot):
+    def addRobo(self, robot):
         self.curr.append(robot)
 
 
