@@ -1,12 +1,14 @@
+#TODO: Create site class, which is a collection of Workplace instances.
+
 import random
 
-random.seed()
+random.seed(0)
 
 
-FARM_BASE = 10.0
+FARM_BASE = 1.0
 FARM_UTIL_RATIO = 0.05
 FACTORY_BASE = 10.0
-FACTORY_STR_RATIO = 0.3
+FACTORY_STR_RATIO = 0.03
 BREAKDOWN_RATIO = 0.01
 BROKEN_BEFORE = 0.01
 
@@ -40,8 +42,8 @@ class LaborRobot(object):
         self.batt = battery
         self.util = utility
         self.cost = cost
-        self.out = output
         self.breaks = breakdowns
+        self.out = output
     
     def strength(self):
         """
@@ -55,11 +57,17 @@ class LaborRobot(object):
         """
         return self.batt
 
-    def utility():
+    def utility(self):
         """
         Returns robot's utility rating.
         """
         return self.util
+    
+    def idNum(self):
+        """
+        Returns robot's ID number.
+        """
+        return self.id
     
     def breakdown(self):
         """
@@ -82,7 +90,7 @@ class LaborRobot(object):
         """
         self.out += amount
     
-    def cost(self):
+    def costs(self):
         """
         Returns the average weekly cost to maintain the robot.
         """
@@ -99,7 +107,7 @@ class LaborRobot(object):
         Returns all of the robots's stats.
         """
         return (self. id, self.age, self.str, self.batt, self.util, self.cost,
-                self.out, self.breaks)
+                self.breaks, self.out)
            
                 
 class TooManyRobots(Exception):
@@ -113,7 +121,7 @@ class Workplace(object):
     """
     Representation of work environment for robots.
     """
-    def __init__(self, maxRobots, repairCost, avgDowntime, currentRobots = []):
+    def __init__(self, maxRobots, avgDowntime, currentRobots = []):
         """
         Initializes a Workplace instance, saves all parameters as attributes
         of the instance.
@@ -137,12 +145,12 @@ class Workplace(object):
         else:
             raise TooManyRobots("Max number of robots exceeded.")
     
-    def remove(self, robot):
+    def remove(self, id):
         """
-        Pops the given robot from the list of currentRobots.
+        Pops a robot from the list of currentRobots.
         """
         for i in range(len(self.curr)):
-            if self.curr[i] is robot:
+            if self.curr[i].id == id:
                 return self.curr.pop(i)
     
     def robots(self):
@@ -182,6 +190,17 @@ class Workplace(object):
         Returns the average weekly cost to maintain a robot at the workplace.
         """
         return self.totalCost()/float(len(self.curr))
+
+
+class Unassigned(Workplace):
+    """
+    Handler for robots not yet assigned to a real workplace.
+    """
+    def __init__(self, robots):
+        self.curr = robots
+    
+    def add(self, robot):
+        self.curr.append(robot)
 
 
 class Farm(Workplace):
