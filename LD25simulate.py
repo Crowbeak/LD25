@@ -64,88 +64,96 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
     farm = Farm(farmRobots, random.randint(1, 7), oldRobotL[:farmRobots])
     factory = Factory(factoryRobots, random.randint(1,7), oldRobotL[farmRobots:])
     
-    #Robot placements.
-    pDisplay(simName, unassigned, farm, factory)
+    rerun = True
     
-    command = [False]
+    while rerun:
+        #Robot placements.
+        pDisplay(unassigned, farm, factory, simName)
     
-    while command[0] != 'run':
-        pCommand()
-        input = raw_input("\nPlease choose an option from above:")
-        command = input.lower().split()
-        command.append(' ')
+        command = [False]
     
-        if command[0] == 'farm':
-            id = int(command[1])
-            oldHome = farm
+        while command[0] != 'run':
+            pCommand()
+            input = raw_input("\nPlease choose an option from above:")
+            command = input.lower().split()
+            command.append(' ')
+    
+            if command[0] == 'farm':
+                id = int(command[1])
+                oldHome = farm
             
-            for robot in factory.robots():
-                if robot.idNum() == id:
-                    oldHome = factory
-                    break
+                for robot in factory.robots():
+                    if robot.idNum() == id:
+                        oldHome = factory
+                        break
                     
-            if oldHome == farm:
-                for robot in unassigned.robots():
-                    if robot.idNum() == id:
-                        oldHome = unassigned
-                        break
+                if oldHome == farm:
+                    for robot in unassigned.robots():
+                        if robot.idNum() == id:
+                            oldHome = unassigned
+                            break
             
-            move = oldHome.rem(id)
-            try:
-                farm.addRobo(move)
-            except TooManyRobots:
-                oldHome.addRobo(move)
-                print "ERROR: Farm already contains max number of robots."
-                print "Please remove robots from farm before adding more."
-        elif command[0] == 'factory':
-            id = int(command[1])
-            oldHome = factory
+                move = oldHome.rem(id)
+                try:
+                    farm.addRobo(move)
+                except TooManyRobots:
+                    oldHome.addRobo(move)
+                    print "ERROR: Farm already contains max number of robots."
+                    print "Please remove robots from farm before adding more."
+            elif command[0] == 'factory':
+                id = int(command[1])
+                oldHome = factory
             
-            for robot in farm.robots():
-                if robot.idNum() == id:
-                    oldHome = farm
-                    break
-            
-            if oldHome == factory:
-                for robot in unassigned.robots():
-                    if robot.idNum() == id:
-                        oldHome = unassigned
-                        break
-            
-            move = oldHome.rem(id)
-            try:
-                factory.addRobo(move)
-            except TooManyRobots:
-                oldHome.addRobo(move)
-                print "ERROR: Factory already contains max number of robots."
-                print "Please remove robots from farm before adding more."
-        elif command[0] == 'none':
-            id = int(command[1])
-            oldHome = unassigned
-            
-            for robot in factory.robots():
-                if robot.idNum() == id:
-                    oldHome = factory
-                    break
-            if oldHome == unassigned:
                 for robot in farm.robots():
                     if robot.idNum() == id:
                         oldHome = farm
                         break
             
-            move = oldHome.rem(id)
-            unassigned.addRobo(move)
-        elif command[0] == 'update':
-            pDisplay(simName, unassigned, farm, factory)
-        elif command[0] == 'run':
-            break
-        else:
-            print "Invalid command. Please try again."
+                if oldHome == factory:
+                    for robot in unassigned.robots():
+                        if robot.idNum() == id:
+                            oldHome = unassigned
+                            break
+            
+                move = oldHome.rem(id)
+                try:
+                    factory.addRobo(move)
+                except TooManyRobots:
+                    oldHome.addRobo(move)
+                    print "ERROR: Factory already contains max number of robots."
+                    print "Please remove robots from farm before adding more."
+            elif command[0] == 'none':
+                id = int(command[1])
+                oldHome = unassigned
+            
+                for robot in factory.robots():
+                    if robot.idNum() == id:
+                        oldHome = factory
+                        break
+                if oldHome == unassigned:
+                    for robot in farm.robots():
+                        if robot.idNum() == id:
+                            oldHome = farm
+                            break
+            
+                move = oldHome.rem(id)
+                unassigned.addRobo(move)
+            elif command[0] == 'update':
+                pDisplay(unassigned, farm, factory, simName)
+            elif command[0] == 'run':
+                break
+            else:
+                print "Invalid command. Please try again."
 
-    #Run simulation.
-    for i in range(WEEKS_NUM):
-        factory.update()
-        farm.update()
+        #Run simulation.
+        for i in range(WEEKS_NUM):
+            factory.update()
+            farm.update()
+            sStatus(i, WEEKS_NUM)
     
-    #Display results.
-    
+        #Display results.
+        keyAndTitle(1, simName)
+        rWork(farm, 0, WEEKS_NUM, simName)
+        rWork(factory, 1, WEEKS_NUM, simName)
+
+        choice = raw_input("Rerun simulation?")

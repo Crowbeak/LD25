@@ -206,6 +206,7 @@ class Unassigned(Workplace):
     """
     def __init__(self, robots):
         self.curr = robots
+        self.max = None
     
     def addRobo(self, robot):
         self.curr.append(robot)
@@ -223,11 +224,11 @@ class Farm(Workplace):
         for robot in self.curr:
             if random.random() < robot.breakdown():
                 robot.incBreak()
-                output = ((self.str*FARM_BASE) * self.batt * (7-self.down) *
-                          (self.util*FARM_UTIL_RATIO))
+                output = int(((robot.str*FARM_BASE) * robot.batt *
+                             (7-self.down) * (robot.util*FARM_UTIL_RATIO)))
             else:
-                output = ((self.str*FARM_BASE) * self.batt * 7 *
-                          (self.util*FARM_UTIL_RATIO))
+                output = int(((robot.str*FARM_BASE) * robot.batt * 7 *
+                             (robot.util*FARM_UTIL_RATIO)))
             robot.addOut(output)
         
 
@@ -243,9 +244,9 @@ class Factory(Workplace):
         for robot in self.curr:
             if random.random() < robot.breakdown():
                 robot.incBreak()
-                output = ((self.util*FACTORY_BASE) * self.batt * (7-self.down) *
-                          (self.str*FACTORY_STR_RATIO))
+                output = int(((robot.util*FACTORY_BASE) * robot.batt *
+                             (7-self.down) * (robot.str*FACTORY_STR_RATIO)))
             else:
-                output = ((self.util*FACTORY_BASE) * self.batt * 7 *
-                          (self.str*FACTORY_STR_RATIO))
+                output = int(((robot.util*FACTORY_BASE) * robot.batt * 7 *
+                             (robot.str*FACTORY_STR_RATIO)))
             robot.addOut(output)
