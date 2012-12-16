@@ -444,8 +444,78 @@ def friends():
     return dave
     
     
+def loggedIn4():
+    print '\nWhat do you do?'
+    time.sleep(0.2)
+    
+    #Goof off or work.
+    nosebook = False
+    email = False
+    while True:
+        print '1 - Pick your Nosebook.'
+        time.sleep(0.2)
+        print '2 - Check your eternally uninteresting email.'
+        time.sleep(0.2)
+        print '3 - Slave away.'
+        
+        choice = raw_input("Pick one:")
+        try:
+            if int(choice) == 1:
+                if nosebook:
+                    print '\nOh, why bother.'
+                else:
+                    nbok = ['\nAsh is talking about how depressing it is to be a fireman. Again.',
+                            'And... oh. Nosebook has reached a new low.',
+                            'People are now posting pictures of themselves picking their noses.']
+                    text(nbok)
+                    nosebook = True
+            elif int(choice) == 2:
+                if email:
+                    print '\nNo new email. Again.'
+                else:
+                    print '\nNothing.'
+                    email = True
+            elif int(choice) == 3:
+                #Tries to work.
+                uhoh = ['\nYou\'re about to hit number 2 when the door to the stairwell',
+                        'bangs open. A troop of policeman run in, guns at the ready,',
+                        'yelling and looking ready to shoot any and all of the employees',
+                        'at the slightest provocation.',
+                        '\nAnd they come straight to your desk.',
+                        '"You\'re under arrest for criminal negligence tantamount to',
+                        'treason," states the woman with a gun pointed directly at your',
+                        'face. She says a lot of other things, too, but so quickly you',
+                        'you don\'t quite understand.',
+                        '\nAs they drag you away, the last thing you see is Dave gaping',
+                        'at you from his cubicle entrance.']
+                break
+            else:
+                print '\nJust put in a correct input so you can get this done and go home.'
+        except ValueError:
+            choice = ord(choice)
+            print '\nJust put in a correct input so you can get this done and go home.'
+        
+        print '\nWhat do you do next?'
+    
+    
 def trouble(dave):
-    pass
+    if dave:
+        word = ['\nIt\'s been over three months and Dave is still a mess. At least',
+                'he\'s able to work. For a bit there it looked like he was going',
+                'to lose the job, too, which he definitely didn\'t need. You\'ve',
+                'been doing everything in your power to try to help him through',
+                'this, but there\'s only so much you can do. Staying up late to',
+                'console him or keep him company has really been a drain of late.',
+                '\nBut your ferret still loves you!',
+                '\nEven if he does keep ferreting your house keys away.',
+                '\nAfter making sure Dave gets back to his desk on time, you sit',
+                'down at your own. You really don\'t want to be here today, but',
+                'your choices are limited.',
+                'Limited to three.']
+        text(word)
+        loggedIn4()
+    else:
+        pass
             
     
 def spanishInquisition():
