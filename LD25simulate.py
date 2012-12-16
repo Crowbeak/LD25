@@ -4,14 +4,17 @@ from LD25class import *
 from LD25display import *
 
 BREAKDOWN_CHANCE = [0, 0, 1, 1, 2, 3]
+WEEKS_NUM = 104
 
-def initRobots(number, old, robots=[]):
+def initRobots(number, old):
     """
     Returns a list of LaborRobot objects with randomized attributes.
     
     number: Number of robot objects to create (a positive int).
     old: A bool indicating whether or not the robots are old robots.
     """
+    robots = []
+    
     if old:
         id = random.randint(337, 742)
         for i in range(number):
@@ -51,15 +54,15 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
     simName: Name of current simulation.
     """
     #Initialization.
-    robots = initRobots(oldRobots, True)
-    robots = initRobots(newRobots, False, robots[:])
+    oldRobotL = initRobots(oldRobots, True)
+    newRobotL = initRobots(newRobots, False)
         
     farmRobots = oldRobots/random.randint(2, 4)
     factoryRobots = oldRobots - farmRobots
     
-    unassigned = Unassigned(robots[:])
-    farm = Farm(farmRobots, random.randint(1, 7))
-    factory = Factory(factoryRobots, random.randint(1,7))
+    unassigned = Unassigned(newRobotL[:])
+    farm = Farm(farmRobots, random.randint(1, 7), oldRobotL[:farmRobots])
+    factory = Factory(factoryRobots, random.randint(1,7), oldRobotL[farmRobots:])
     
     #Robot placements.
     pDisplay(simName, unassigned, farm, factory)
@@ -80,15 +83,20 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
                 if robot.idNum() == id:
                     oldHome = factory
                     break
-            
-            for robot in unassigned.robots():
+                    
+            if oldHome == farm:
+                for robot in unassigned.robots():
                     if robot.idNum() == id:
                         oldHome = unassigned
                         break
             
-            if oldHome != farm:
-                move = oldHome.rem(id)
+            move = oldHome.rem(id)
+            try:
                 farm.addRobo(move)
+            except TooManyRobots:
+                oldHome.addRobo(move)
+                print "ERROR: Farm already contains max number of robots."
+                print "Please remove robots from farm before adding more."
         elif command[0] == 'factory':
             id = int(command[1])
             oldHome = factory
@@ -98,14 +106,19 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
                     oldHome = farm
                     break
             
-            for robot in unassigned.robots():
+            if oldHome == factory:
+                for robot in unassigned.robots():
                     if robot.idNum() == id:
                         oldHome = unassigned
                         break
             
-            if oldHome != factory:
-                move = oldHome.rem(id)
+            move = oldHome.rem(id)
+            try:
                 factory.addRobo(move)
+            except TooManyRobots:
+                oldHome.addRobo(move)
+                print "ERROR: Factory already contains max number of robots."
+                print "Please remove robots from farm before adding more."
         elif command[0] == 'none':
             id = int(command[1])
             oldHome = unassigned
@@ -114,18 +127,25 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
                 if robot.idNum() == id:
                     oldHome = factory
                     break
-            
-            for robot in farm.robots():
+            if oldHome == unassigned:
+                for robot in farm.robots():
                     if robot.idNum() == id:
                         oldHome = farm
                         break
             
-            if oldHome != unassigned:
-                move = oldHome.rem(id)
-                unassigned.addRobo(move)
+            move = oldHome.rem(id)
+            unassigned.addRobo(move)
         elif command[0] == 'update':
             pDisplay(simName, unassigned, farm, factory)
         elif command[0] == 'run':
             break
         else:
             print "Invalid command. Please try again."
+
+    #Run simulation.
+    for i in range(WEEKS_NUM):
+        factory.update()
+        farm.update()
+    
+    #Display results.
+    
