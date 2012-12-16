@@ -1,5 +1,13 @@
-This Git repository will contain my files for my first ever Ludum Dare entry.
+This is my first ever Ludum Dare entry ever.
 
-The game may be horribly broken and will probably suck.
+It was made in spite of a 12-hour handicap brought on by time differences.
+It was made in spite of a sorely lacking skillset.
+It has no graphics or sound; in fact it is a Python IDLE text game.
+
+The theme for this Ludum Dare is You Are the Villain. The gameplay does not
+obviously reflect the theme in and of itself, but if you play through to the
+end, you can see how I incorporated it.
+
+I also added the fun +1 goat.
 
 Viva Ludum Dare!
