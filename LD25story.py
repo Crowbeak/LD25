@@ -87,7 +87,7 @@ def intro():
                 time.sleep(0,2)
                 print 'can find the 1 and 2 buttons on your keyboard.'
         except ValueError:
-            choice = ord(choice)
+            choice = 0
             print '\nCome on, now. I know you haven\'t had your coffee yet, but surely you'
             time.sleep(0.2)
             print 'can find the 1 and 2 buttons on your keyboard.'
@@ -148,13 +148,13 @@ def loggedIn():
                         else:
                             print 'Try again, please. Invalid input.'
                     except ValueError:
-                        choice = ord(choice)
+                        choice = 0
                         print 'Try again, please. Invalid input.'
                 break
             else:
                 print '\nNo, no, no, that\'s not a valid choice. Try again!'
         except ValueError:
-            choice = ord(choice)
+            choice = 0
             print '\nNo, no, no, that\'s not a valid choice. Try again!'
         
         print '\nWhat do you do next?'
@@ -224,7 +224,7 @@ def lunch():
             else:
                 print '\nYou... wait, what?! Try that again.'
         except ValueError:
-            choice = ord(choice)
+            choice = 0
             print '\nYou... wait, what?! Try that again.'
             
 
@@ -288,13 +288,13 @@ def loggedIn2():
                         else:
                             print 'Try again, please. Invalid input.'
                     except ValueError:
-                        choice = ord(choice)
+                        choice = 0
                         print 'Try again, please. Invalid input.'
                 break
             else:
                 print '\nI know you\'re distracted, but please use proper input.'
         except ValueError:
-            choice = ord(choice)
+            choice = 0
             print '\nI know you\'re distracted, but please use proper input.'
         
         print '\nWhat do you do next?'
@@ -360,13 +360,13 @@ def loggedIn3():
                         else:
                             print 'Try again, please. Invalid input.'
                     except ValueError:
-                        choice = ord(choice)
+                        choice = 0
                         print 'Try again, please. Invalid input.'
                 break
             else:
                 print '\nYou got coffee in peace today and still can\'t input numbers?'
         except ValueError:
-            choice = ord(choice)
+            choice = 0
             print '\nYou got coffee in peace today and still can\'t input numbers?'
         
         print '\nWhat do you do next?'
@@ -438,7 +438,7 @@ def friends():
             else:
                 print '\nDrink some of your coffee and try that again.'
         except ValueError:
-            choice = ord(choice)
+            choice = 0
             print '\nDrink some of your coffee and try that again.'
     
     return dave
@@ -477,7 +477,7 @@ def loggedIn4():
                     email = True
             elif int(choice) == 3:
                 #Tries to work.
-                uhoh = ['\nYou\'re about to hit number 2 when the door to the stairwell',
+                uhoh = ['\nYou\'re about to type RUN when the door to the stairwell',
                         'bangs open. A troop of policeman run in, guns at the ready,',
                         'yelling and looking ready to shoot any and all of the employees',
                         'at the slightest provocation.',
@@ -488,11 +488,13 @@ def loggedIn4():
                         'you don\'t quite understand.',
                         '\nAs they drag you away, the last thing you see is Dave gaping',
                         'at you from his cubicle entrance.']
+                text(uhoh)
+                raw_input('\n(Press any button to continue)')
                 break
             else:
                 print '\nJust put in a correct input so you can get this done and go home.'
         except ValueError:
-            choice = ord(choice)
+            choice = 0
             print '\nJust put in a correct input so you can get this done and go home.'
         
         print '\nWhat do you do next?'
@@ -501,7 +503,7 @@ def loggedIn4():
 def trouble(dave):
     if dave:
         word = ['\nIt\'s been over three months and Dave is still a mess. At least',
-                'he\'s able to work. For a bit there it looked like he was going',
+                'he\'s able to work, now. For a bit there it looked like he was going',
                 'to lose the job, too, which he definitely didn\'t need. You\'ve',
                 'been doing everything in your power to try to help him through',
                 'this, but there\'s only so much you can do. Staying up late to',
@@ -511,12 +513,124 @@ def trouble(dave):
                 '\nAfter making sure Dave gets back to his desk on time, you sit',
                 'down at your own. You really don\'t want to be here today, but',
                 'your choices are limited.',
-                'Limited to three.']
+                '\nLimited to three.']
         text(word)
         loggedIn4()
     else:
-        pass
-            
+        word = ['\nA few minutes before lunch, Biggs drops by your desk.',
+                '\n"You gonna eat with us today?" he asks.',
+                '\nIt\'s been over three months since Dave threw his chair through',
+                'the glass and dived after it, but the memory of that gap and the',
+                'sounds of cars stopping suddenly still haunts you. Could you have',
+                'saved Dave? The therapist tells you not to blame yourself, but it\'s',
+                'still hard to face your mutual friends sometimes.']
+        text(word)
+        
+        choice = 0
+        while (int(choice) != 1) and (int(choice) != 2):
+            chc1 = ['\nWill you eat with Biggs and Wedge today?',
+                    '1 - Yeah.',
+                    '2 - No.']
+            text(chc1)
+        
+            choice = raw_input("Pick one:")
+            try:
+                if int(choice) == 1:
+                    yeah = ['\nBigg grins. "Glad to hear it." He waves and walks off.',
+                            '\nEven though you blamed yourself for Dave\'s death at the time,',
+                            'your friends never did. They were a big help in getting you',
+                            'back in good enough mental shape to at least be able to work.',
+                            'You\'re always in a slightly better mood after hanging out with',
+                            'them.',
+                            '\nYou get to the cafeteria first, for once, and on a whim you pick',
+                            'that table in the middle Dave always seemed to like. Biggs and',
+                            'Wedge show up a few minutes later, and you all talk about that',
+                            'sporting event that happened last night.',
+                            '\nEveryone in the cafeteria is surprised when all the doors bust',
+                            'open at once. A troop of policeman run in, guns at the ready,',
+                            'yelling and looking ready to shoot any and all of the employees',
+                            'at the slightest provocation.',
+                            '\nThey examine everyone\'s faces one at a time, comparing their',
+                            'faces to a picture. No one seems to match.',
+                            '\nThen they come to you.',
+                            '\n"You\'re under arrest for criminal negligence tantamount to',
+                            'treason," states the woman with a gun pointed directly at your',
+                            'face. She says a lot of other things, too, but so quickly you',
+                            'you don\'t quite understand.',
+                            '\nAs they drag you away, everyone is gaping in shock.']
+                    text(yeah)
+                    raw_input('\n(Press any button to continue)')
+                elif int(choice) == 2:
+                    nope = ['\nBiggs nods a little sadly. "If you change your mind..."',
+                            '\nYou thank him politely and he leaves. He and Wedge don\'t seem',
+                            'to blame you for Dave\'s death at all, and they keep trying to',
+                            'drag you out of your personal misery. It\'s great of them, and',
+                            'usually you really appreciate it but some days...',
+                            '\nYou just want to be alone.',
+                            '\nYou walk to your apartment, ignoring the almost leafless trees.',
+                            'When you arrive, your ferret greets you. Plopping him on your',
+                            'shoulder, you rummage through the fridge. No sandwich meat',
+                            'again. You take the bread and cheese to the couch and eat them',
+                            'cold and plain.',
+                            '\nYou\'re almost done eating when the doorbell rings. Wondering',
+                            'who it could be, you check the peephole. It\'s a police officer.',
+                            'You open the door, but before you can even finish saying hello,',
+                            'there are what seems like a hundred guns pointed at your face.']
+                    text(nope)
+                    raw_input('\n(Press any button to continue)')
+                else:
+                    print '\nSimple question. He\'s just asking.'
+            except ValueError:
+                choice = 0
+                print '\nSimple question. He\'s just asking.'
+        
     
 def spanishInquisition():
-    pass
+    word = ['\nBy the time you\'re taken before a judge, you\'ve been in police',
+            'custody for... a while. You\'re not sure how long. The way they\'ve',
+            'been treating you, it just feels like... too long.',
+            '\nMuch to your dismay, you\'re not taken to a courtroom. You get to',
+            'sit down, but it\'s across a table from a judge in what looks like an',
+            'informal meeting room.'
+            '\n"Have you anything to say in your defense?" he asks simply.']
+    text(word)
+    
+    choice = 0
+    while (int(choice) != 1) and (int(choice) != 2):
+        chc1 = ['\nWell, do you?',
+                '1 - I still don\'t understand what I\'m supposed to have done.',
+                '2 - Would it matter if I did?']
+        text(chc1)
+        
+        choice = raw_input("Pick one:")
+        try:
+            if int(choice) == 1:
+                pass
+            elif int(choice) == 2:
+                ques = ['\n"It wouldn\'t change the verdict," he replied, "but it',
+                        'could affect your sentence."',
+                        'He doesn\'t stop there.']
+                text(ques)
+            else:
+                print '\n"Have you anything to say in your defense?" he asks again.'
+        except ValueError:
+            choice = 0
+            print '\n"Have you anything to say in your defense?" he asks again.'
+    
+    wrd2 = ['\n"The evidence against you is clear. Government records indicate that',
+            'you made the decision to decommission this robot," he says, pointing',
+            'to the document in question. "Do you deny it?"',
+            '\nThe documents appear to be in order. Your name and employee ID are',
+            'attached to it, and a very, very good robot was marked for',
+            'decommissioning. You would never decommission such a good robot, but',
+            'you haven\'t been at your best lately. It could have been a typo.',
+            '\nThe judge shakes his head. "By the power vested in me by the',
+            'government of our nation, I hereby declare you guilty. Your',
+            'punishment is demotion to labor."',
+            '\nWhat?',
+            '\nThe judge\'s parting wishes, clearly sincere, are not comforting.',
+            '"I wish you the best in your new life."']
+    text(wrd2)
+    raw_input('\n(Press any button to continue)')
+    
+    wrd3 = []
