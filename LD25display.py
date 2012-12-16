@@ -16,7 +16,7 @@ def keyAndTitle(num, simName='Simulation'):
     print "----------"
     print "ID:   Robot's ID number"
     print "AGE:  Years robot has been in service"
-    print "STR:  Tens of pounds robot can carry"
+    print "CARR:  Tens of pounds robot can carry"
     print "BATT: Battery life of robot"
     print "UTIL: Rating of robot's ability to complete varied tasks"
     print "COST: Weekly costs of maintaining robot"
@@ -37,7 +37,7 @@ def pWork(work, num):
         print "NO MAXIMUM"
     else:
         print "MAX NUMBER OF ROBOTS:", work.getMax()
-    print "  ID  AGE  STR BATT UTIL COST BRKS"
+    print "  ID  AGE CARR BATT UTIL COST BRKS"
     print "----------------------------------"
     
     for robot in work.robots():
@@ -105,7 +105,7 @@ def rWork(work, num, weeks, simName='Simulation'):
     """
     print "\n{} ROBOTS".format(WORKS[num])
     print "INDIVIDUAL OUTPUTS"
-    print "  ID  AGE  STR BATT UTIL COST BRKS |    T.OUT  A.OUT"
+    print "  ID  AGE CARR BATT UTIL COST BRKS |    T.OUT  A.OUT"
     print "-----------------------------------|----------------"
     
     for robot in work.robots():
