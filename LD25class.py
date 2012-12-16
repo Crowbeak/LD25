@@ -1,4 +1,6 @@
 #TODO: Create site class, which is a collection of Workplace instances.
+#TODO: Make constants variables for each workplace,
+#      initialized once like average downtime.
 
 import random
 
@@ -158,6 +160,12 @@ class Workplace(object):
         Returns the list of current robots.
         """
         return self.curr
+    
+    def getMax(self):
+        """
+        Returns the maximum number of robots the workplace can hold.
+        """
+        return self.max
     
     def totalOut(self):
         """

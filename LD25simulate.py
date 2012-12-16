@@ -39,7 +39,7 @@ def initRobots(number, old, robots=[]):
             id += 1
     
     return robots
-    
+
 
 def runSim(oldRobots, newRobots, simName="Simulation"):
     """
@@ -61,7 +61,7 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
     farm = Farm(farmRobots, random.randint(1, 7))
     factory = Factory(factoryRobots, random.randint(1,7))
     
-    #Placement
+    #Robot placements.
     pDisplay(simName, unassigned, farm, factory)
     
     command = [False]
@@ -74,6 +74,7 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
     
         if command[0] == 'farm':
             id = int(command[1])
+            oldHome = farm
             
             for robot in factory.robots():
                 if robot.idNum() == id:
@@ -85,10 +86,12 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
                         oldHome = unassigned
                         break
             
-            move = oldHome.rem(id)
-            farm.addRobo(move)
+            if oldHome != farm:
+                move = oldHome.rem(id)
+                farm.addRobo(move)
         elif command[0] == 'factory':
             id = int(command[1])
+            oldHome = factory
             
             for robot in farm.robots():
                 if robot.idNum() == id:
@@ -100,10 +103,12 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
                         oldHome = unassigned
                         break
             
-            move = oldHome.rem(id)
-            factory.addRobo(move)
+            if oldHome != factory:
+                move = oldHome.rem(id)
+                factory.addRobo(move)
         elif command[0] == 'none':
             id = int(command[1])
+            oldHome = unassigned
             
             for robot in factory.robots():
                 if robot.idNum() == id:
@@ -115,8 +120,9 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
                         oldHome = farm
                         break
             
-            move = oldHome.rem(id)
-            unassigned.addRobo(move)
+            if oldHome != unassigned:
+                move = oldHome.rem(id)
+                unassigned.addRobo(move)
         elif command[0] == 'update':
             pDisplay(simName, unassigned, farm, factory)
         elif command[0] == 'run':

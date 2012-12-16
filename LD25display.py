@@ -15,30 +15,33 @@ def pDisplay(simName, unassigned, farm, factory):
     print "BRKS: Number of times robot has broken down"
     
     print "\nUNASSIGNED ROBOTS"
+    print "NO MAXIMUM"
     print "  ID  AGE  STR BATT UTIL COST BRKS"
     print "----------------------------------"
     
-    for robot in unassigned.curr:
+    for robot in unassigned.robots():
         id, age, str, batt, util, cost, brks, out = robot.stats()
         print repr(id).rjust(4), repr(age).rjust(4), repr(str).rjust(4),
         print repr(batt).rjust(4), repr(util).rjust(4), repr(cost).rjust(4),
         print repr(brks).rjust(4)
     
     print "\nFARM ROBOTS"
+    print "MAX NUMBER OF ROBOTS:", farm.getMax()
     print "  ID  AGE  STR BATT UTIL COST BRKS"
     print "----------------------------------"
     
-    for robot in farm.curr:
+    for robot in farm.robots():
         id, age, str, batt, util, cost, brks, out = robot.stats()
         print repr(id).rjust(4), repr(age).rjust(4), repr(str).rjust(4),
         print repr(batt).rjust(4), repr(util).rjust(4), repr(cost).rjust(4),
         print repr(brks).rjust(4)
 
     print "\nFACTORY ROBOTS"
+    print "MAX NUMBER OF ROBOTS:", factory.getMax()
     print "  ID  AGE  STR BATT UTIL COST BRKS"
     print "----------------------------------"
     
-    for robot in factory.curr:
+    for robot in factory.robots():
         id, age, str, batt, util, cost, brks, out = robot.stats()
         print repr(id).rjust(4), repr(age).rjust(4), repr(str).rjust(4),
         print repr(batt).rjust(4), repr(util).rjust(4), repr(cost).rjust(4),
