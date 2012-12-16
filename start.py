@@ -6,6 +6,8 @@ def main():
     intro()
     loggedIn()
     lunch()
+    friends()
 
 if __name__ == '__main__':
-    main()
+    #main()
+    lunch()

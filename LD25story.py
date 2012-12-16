@@ -164,7 +164,7 @@ def loggedIn():
 def lunch():
     wrd1 = ['You yawn and stretch. Coffee time is past. It\'s snack time now.',
             '\nWhoops!',
-            '\n Apparently you meant lunch time.']
+            '\nApparently you meant lunch time.']
     text(wrd1)
     
     choice = 0
@@ -184,17 +184,53 @@ def lunch():
                         '\nYou quickly regret your punny decision when Wedge slaps you on the',
                         'back. At least he\'s gentler than usual. Maybe you\'ll just have a',
                         'bruise this time.',
-                        '"Hey, man! =D" he says. He\'s got one of those silly emoticon things',
+                        '\n"Hey, man! =D" he says. He\'s got one of those silly emoticon things',
                         'embedded in his forehead to make sure you see the smiley face. Real',
                         'friendly guy, but he doesn\'t always make the best decisions. Biggs,',
                         'his brother, just smiles and waves. He has all the brains his brother',
-                        'missed out on, but he\'s a good guy, too.']
+                        'missed out on, but he\'s a good guy, too. Quieter, though, and',
+                        'stronger. Wouldn\'t want to be against him in a fight.',
+                        '\nYou guys shoot the sheep around the table for about 20 minutes',
+                        'before Dave\'s wife calls and completely diverts his attention. Wedge',
+                        'uses that as an excuse to "go to the bathroom", by which he means hit',
+                        'on one of the new employees a few tables away.',
+                        '\nYou and Biggs idly watch the news on a nearby monitor. More',
+                        'terrorist activity. Has it been on the rise, lately? Ah, who cares.',
+                        'After a while, the sensationalist headlines all blur together.',
+                        '\nWedge comes back before Dave -- no surprise there -- and you guys',
+                        'go back to talking about... uh.. what were you talking about? Must',
+                        'not have been important.']
                 text(cafe)
             elif int(choice) == 2:
-                home =
+                home = ['\nYou barely catch Dave before he rockets downstairs to let him know',
+                        'that you\'ll be ducking out on the crew for lunch. After asking him',
+                        'to give your regards to Biggs and Wedge, you grab your jacket and',
+                        'head home.',
+                        '\nIt\'s nice to live within walking distance of work, isn\'t it? Even',
+                        'with the quality of mass transportation here, there\'s something',
+                        'about walking that feels nicer. Especially after long hours in a',
+                        'chair staring at robot output simulations.',
+                        '\nThe house is quiet when you get home. It always is. You flip on the',
+                        'TV before rummaging through the fridge. Ah, crap... no sandwich meat.',
+                        'Grilled cheese it is, then.',
+                        '\nThe news is showing on TV at the moment. You can\'t make out all of',
+                        'what\'s being said over the sizzling skillet, but apparently it\'s all',
+                        'about terrorists. But then, it always is, these days. The same old',
+                        'headlines are starting to get kind of old.',
+                        '\nYou plop down on your couch and eat your delicious, delicious',
+                        'grilled goodness. Unfortunately, you forget to change the channel',
+                        'BEFORE you grab your greasy sandwich. You manage to finish the',
+                        'sandwich and clean the remote with just enough time to get back to',
+                        'work on time. And there was much rejoicing. Yaaaaaay.']
                 text(home)
             else:
-                print '\nYou... where?!'
+                print '\nYou... wait, what?!'
         except ValueError:
             choice = ord(choice)
-            print '\nYou... where?!'
+            print '\nYou... wait, what?!'
+
+def friends():
+    pass
+    
+def spanishInquisition():
+    pass
