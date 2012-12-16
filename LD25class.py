@@ -187,11 +187,11 @@ class Workplace(object):
         
         return temp
     
-    def avgOut(self):
+    def avgOut(self, weeks):
         """
         Returns the average weekly output per robot as a float.
         """
-        return self.totalOut()/float(len(self.curr))
+        return (self.totalOut()/weeks)/float(len(self.curr))
     
     def avgCost(self):
         """
