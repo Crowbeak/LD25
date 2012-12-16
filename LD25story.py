@@ -84,7 +84,7 @@ def intro():
                 text(wife)
             else:
                 print '\nCome on, now. I know you haven\'t had your coffee yet, but surely you'
-                time.sleep(0,2)
+                time.sleep(0.2)
                 print 'can find the 1 and 2 buttons on your keyboard.'
         except ValueError:
             choice = 0
