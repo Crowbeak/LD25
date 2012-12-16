@@ -125,7 +125,7 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
                     oldHome.addRobo(move)
                     print "ERROR: Factory already contains max number of robots."
                     time.sleep(0.2)
-                    print "Please remove robots from farm before adding more."
+                    print "Please remove robots from factory before adding more."
             elif command[0] == 'none':
                 id = int(command[1])
                 oldHome = unassigned
