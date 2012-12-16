@@ -4,7 +4,7 @@
 
 import random
 
-random.seed(0)
+random.seed()
 
 
 FARM_BASE = 3.0
