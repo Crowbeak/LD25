@@ -133,12 +133,10 @@ def loggedIn():
                 firstSim()
                 
                 while True:
-                    print '\nWhat do you do?'
-                    time.sleep(0.2)
-                    print '1 - Review the manual again to stave off the inevitable.'
-                    time.sleep(0.2)
-                    print '2 - Just do it.'
-                    time.sleep(0.2)
+                    chc1 = ['\nWhat do you do?',
+                            '1 - Review the manual again to stave off the inevitable. [How to Play]',
+                            '2 - Just do it.']
+                    text(chc1)
                     
                     choice = raw_input("Pick one:")
                     try:
@@ -168,7 +166,7 @@ def lunch():
     text(wrd1)
     
     choice = 0
-    while (int(choice) != 1) and (int(choice) != 2) and (int(choice) != 3):
+    while (int(choice) != 1) and (int(choice) != 2):
         chc1 = ['\nWhere do you want to go?',
                 '1 - The good old cafeteria. Mediocre free food, decent conversation.',
                 '2 - Home. Sandwiches and solitude.']
@@ -210,9 +208,9 @@ def lunch():
                         'with the quality of mass transportation here, there\'s something',
                         'about walking that feels nicer. Especially after long hours in a',
                         'chair staring at robot output simulations.',
-                        '\nThe house is quiet when you get home. It always is. You flip on the',
-                        'TV before rummaging through the fridge. Ah, crap... no sandwich meat.',
-                        'Grilled cheese it is, then.',
+                        '\nThe house is quiet when you get home. It always is. Maybe you could',
+                        'get a cat? You flip on the TV before rummaging through the fridge.',
+                        '\nAh, crap... no sandwich meat. Grilled cheese it is, then.',
                         '\nThe news is showing on TV at the moment. You can\'t make out all of',
                         'what\'s being said over the sizzling skillet, but apparently it\'s all',
                         'about terrorists. But then, it always is, these days. The same old',
@@ -224,13 +222,231 @@ def lunch():
                         'work on time. And there was much rejoicing. Yaaaaaay.']
                 text(home)
             else:
-                print '\nYou... wait, what?!'
+                print '\nYou... wait, what?! Try that again.'
         except ValueError:
             choice = ord(choice)
-            print '\nYou... wait, what?!'
+            print '\nYou... wait, what?! Try that again.'
+            
+
+def loggedIn2():
+    print 'You log in. Confronted with the usual options...'
+    time.sleep(0.2)
+    print '\nWhat do you do?'
+    time.sleep(0.2)
+    
+    #Goof off or work.
+    nosebook = False
+    email = False
+    while True:
+        print '1 - See what\'s happening on Nosebook.'
+        time.sleep(0.2)
+        print '2 - Check your email.'
+        time.sleep(0.2)
+        print '3 - Work. Maybe it\'ll take your mind off things.'
+        
+        choice = raw_input("Pick one:")
+        try:
+            if int(choice) == 1:
+                if nosebook:
+                    print '\nEven scoffing at the nosebook-picking can\'t cheer you up.'
+                    time.sleep(0.2)
+                    print 'The term "nosebook-picking" isn\'t even funny right now.'
+                else:
+                    nbok = ['\nAsh is talking about how awesome it is to be a fireman. Again.',
+                            'Wedge renamed his cat? What the hell?',
+                            'Everyone thinks the new Kumoman is better than the last one.',
+                            'Didn\'t the last one only come out like five years ago?',
+                            'Neither Dave nor his wife have posted anything since yesterday.',
+                            'This isn\'t helping.']
+                    text(nbok)
+                    nosebook = True
+            elif int(choice) == 2:
+                if email:
+                    print '\nNo new email. Not that you did a good job reading the first two.'
+                else:
+                    print '\nSomething from Biggs about a party... don\'t care right now.'
+                    time.sleep(0.2)
+                    print 'And... news. Never really care about that.'
+                    email = True
+            elif int(choice) == 3:
+                #Working.
+                while True:
+                    print '\nWhat do you do?'
+                    time.sleep(0.2)
+                    print '1 - Review the manual again.'
+                    time.sleep(0.2)
+                    print '2 - Work. Or try to.'
+                    time.sleep(0.2)
+                    
+                    choice = raw_input("Pick one:")
+                    try:
+                        if int(choice) == 1:
+                            instructions()
+                        elif int(choice) == 2:
+                            runSim(18, 4, '#187949')
+                            break
+                        else:
+                            print 'Try again, please. Invalid input.'
+                    except ValueError:
+                        choice = ord(choice)
+                        print 'Try again, please. Invalid input.'
+                break
+            else:
+                print '\nI know you\'re distracted, but please use proper input.'
+        except ValueError:
+            choice = ord(choice)
+            print '\nI know you\'re distracted, but please use proper input.'
+        
+        print '\nWhat do you do next?'
+
+
+def loggedIn3():
+    print 'You log in. Confronted with the usual options...'
+    time.sleep(0.2)
+    print '\nWhat do you do?'
+    time.sleep(0.2)
+    
+    #Goof off or work.
+    nosebook = False
+    email = False
+    while True:
+        print '1 - See what\'s happening on Nosebook.'
+        time.sleep(0.2)
+        print '2 - Check your email.'
+        time.sleep(0.2)
+        print '3 - Do the work they\'re paying you to be here for.'
+        
+        choice = raw_input("Pick one:")
+        try:
+            if int(choice) == 1:
+                if nosebook:
+                    print '\nMore nosebook-picking. Ah, nosebook-picking.'
+                    time.sleep(0.2)
+                    print 'Just the term makes you happy. How do you visualize that?'
+                else:
+                    nbok = ['\nAsh is talking about how awesome it is to be a fireman. Again.',
+                            'Wedge renamed his cat? What the hell?',
+                            'Everyone thinks the new Kumoman is better than the last one.',
+                            'Didn\'t the last one only come out like five years ago?',
+                            'Neither Dave nor his wife have posted anything since yesterday.',
+                            'I should probably work. Probably.']
+                    text(nbok)
+                    nosebook = True
+            elif int(choice) == 2:
+                if email:
+                    print '\nNo new email. Who\'s surprised?'
+                else:
+                    print '\nSomething from Biggs about a party... don\'t care right now.'
+                    time.sleep(0.2)
+                    print 'And... news. Never really care about that.'
+                    email = True
+            elif int(choice) == 3:
+                #Working.
+                while True:
+                    print '\nWhat do you do?'
+                    time.sleep(0.2)
+                    print '1 - Review the manual again.'
+                    time.sleep(0.2)
+                    print '2 - Work! It\'s like a crummy party you get paid to attend.'
+                    time.sleep(0.2)
+                    
+                    choice = raw_input("Pick one:")
+                    try:
+                        if int(choice) == 1:
+                            instructions()
+                        elif int(choice) == 2:
+                            runSim(18, 4, '#187949')
+                            break
+                        else:
+                            print 'Try again, please. Invalid input.'
+                    except ValueError:
+                        choice = ord(choice)
+                        print 'Try again, please. Invalid input.'
+                break
+            else:
+                print '\nYou got coffee in peace today and still can\'t input numbers?'
+        except ValueError:
+            choice = ord(choice)
+            print '\nYou got coffee in peace today and still can\'t input numbers?'
+        
+        print '\nWhat do you do next?'
+
 
 def friends():
+    """
+    Returns True if Dave is still in player's life at end of module or False
+    otherwise.
+    """
+    word = ['\nTime passes. Universes are born and die.',
+            '\nOkay, so that much time hasn\'t actually passed. But the days do',
+            'wear on. Romance still isn\'t going that great, but you got a ferret',
+            'to keep you company. Didn\'t think too much about the smell before',
+            'making that purchase, but... too late now, and you like the little',
+            'guy. He\'s a lot more interesting than a cat. And you never wake up',
+            'with his butt in your face like Wedge complains about with his cat.',
+            '\nYou\'re already to your desk and pushing the power button on your',
+            'computer when you realize Dave wasn\'t in the kitchen this morning.',
+            '\nWeird. Wanna look into that?']
+    text(word)
+    
+    choice = 0
+    while (int(choice) != 1) and (int(choice) != 2):
+        chc1 = ['\n1 - Yeah... that\'s so out of character I can only assume aliens',
+                '    are involved.',
+                '2 - Nah. Dave\'s a great guy but it\'s nice not to have to deal',
+                '    with his peppy peppiness sometimes.']
+        text(chc1)
+        
+        choice = raw_input("Pick one:")
+        try:
+            if int(choice) == 1:
+                dave = True
+                look = ['\nIt doesn\'t take you long to find him. He\'s sitting at his desk.',
+                        'Dave\'s not his usual, bubbly self, though. He\'s staring so hard at',
+                        'his screen, leaning forward on his elbows, that he doesn\'t even',
+                        'hear you say good morning.',
+                        '\nSomething is most definitely wrong. Dave saps that greeting up like',
+                        'a tree does sunshine.',
+                        '\nNeedless to say, he\'s startled when you tap his shoulder. He turns',
+                        'to look at you and there are tears in his eyes. He turns back to the',
+                        'computer to wipe his face off. You look away akwardly as you inquire',
+                        'if something suddenly happened with his wife. (It would have had to',
+                        'be VERY suddenly, because they were DEFINITELY on good terms when you',
+                        'all went to see the newest Kumoman movie last night.)',
+                        '\n"She\'s leaving me."',
+                        '\nYou can\'t get a coherent account of what happened out of him, but',
+                        'with a bit of work you convince him to go rest at your place. He',
+                        'doesn\'t want you to go with him. After making him promise to call you',
+                        'if he needs anything, you go to your desk and get to work. It\'s not',
+                        'like you have anything better to do. Work will be a nice distraction.']
+                text(look)
+                loggedIn2()
+                print '\nLunch time. You still haven\'t heard from Dave. Time to go check on him.'
+                time.sleep(2)
+            elif int(choice) == 2:
+                dave = False
+                print '\nYou sip your coffee obtained in quiet and log in.'
+                loggedIn3()
+                dont = ['\nAs soon as you finish the simulation, you hear a crash and screaming',
+                        'coming from around the corner. When a gust of cold air brings the',
+                        'sound of screeching tires and car horns with it, your stomach',
+                        'plummets to your knees.',
+                        '\nYou\'re one of the last to stick your head out into the aisle to look.',
+                        'The hole in the glass -- 7 stories up -- is very, very close to Dave\'s',
+                        'cubicle.']
+                text(dont)
+            else:
+                print '\nDrink some of your coffee and try that again.'
+        except ValueError:
+            choice = ord(choice)
+            print '\nDrink some of your coffee and try that again.'
+    
+    return dave
+    
+    
+def trouble(dave):
     pass
+            
     
 def spanishInquisition():
     pass

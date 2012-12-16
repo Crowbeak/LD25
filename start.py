@@ -6,8 +6,11 @@ def main():
     intro()
     loggedIn()
     lunch()
-    friends()
+    dave = friends()
+    trouble(dave)
+    spanishInquisition()
+    
 
 if __name__ == '__main__':
     #main()
-    lunch()
+    friends()
