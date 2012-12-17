@@ -746,4 +746,4 @@ def spanishInquisition():
     raw_input('\n(Press any button to continue)')
     text(wrd7)
     
-    print '\n\nTHE END'
+    raw_input('\n\nTHE END')
