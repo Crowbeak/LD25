@@ -94,15 +94,20 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
                         if robot.idNum() == id:
                             oldHome = unassigned
                             break
-            
-                move = oldHome.rem(id)
-                try:
-                    farm.addRobo(move)
-                except TooManyRobots:
-                    oldHome.addRobo(move)
-                    print "ERROR: Farm already contains max number of robots."
+                
+                if oldHome == farm:
+                    print "ERROR: Invalid robot ID number."
                     time.sleep(0.2)
-                    print "Please remove robots from farm before adding more."
+                    print "Please try again."
+                else:
+                    move = oldHome.rem(id)
+                    try:
+                        farm.addRobo(move)
+                    except TooManyRobots:
+                        oldHome.addRobo(move)
+                        print "ERROR: Farm already contains max number of robots."
+                        time.sleep(0.2)
+                        print "Please remove robots from farm before adding more."
             elif command[0] == 'factory':
                 id = int(command[1])
                 oldHome = factory
@@ -117,15 +122,20 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
                         if robot.idNum() == id:
                             oldHome = unassigned
                             break
-            
-                move = oldHome.rem(id)
-                try:
-                    factory.addRobo(move)
-                except TooManyRobots:
-                    oldHome.addRobo(move)
-                    print "ERROR: Factory already contains max number of robots."
+                            
+                if oldHome == factory:
+                    print "ERROR: Invalid robot ID number."
                     time.sleep(0.2)
-                    print "Please remove robots from factory before adding more."
+                    print "Please try again."
+                else:
+                    move = oldHome.rem(id)
+                    try:
+                        factory.addRobo(move)
+                    except TooManyRobots:
+                        oldHome.addRobo(move)
+                        print "ERROR: Factory already contains max number of robots."
+                        time.sleep(0.2)
+                        print "Please remove robots from factory before adding more."
             elif command[0] == 'none':
                 id = int(command[1])
                 oldHome = unassigned
@@ -139,9 +149,14 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
                         if robot.idNum() == id:
                             oldHome = farm
                             break
-            
-                move = oldHome.rem(id)
-                unassigned.addRobo(move)
+                
+                if oldHome == unassigned:
+                    print "ERROR: Invalid robot ID number."
+                    time.sleep(0.2)
+                    print "Please try again."
+                else:
+                    move = oldHome.rem(id)
+                    unassigned.addRobo(move)
             elif command[0] == 'update':
                 pDisplay(unassigned, farm, factory, simName)
             elif command[0] == 'run':

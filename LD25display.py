@@ -10,7 +10,7 @@ def disp(stringList):
     """
     for i in stringList:
         print i
-        time.sleep(0.2)
+        time.sleep(0.1)
 
 
 def keyAndTitle(num, simName='Simulation'):
