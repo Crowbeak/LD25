@@ -1,13 +1,44 @@
-This is my first ever Ludum Dare entry ever.
+The first version of this game was made for Ludum Dare 25.
 
-It was made in spite of a 12-hour handicap brought on by time differences.
-It was made in spite of a sorely lacking skillset.
-It has no graphics or sound; in fact it is a Python IDLE text game.
+Ludum Dare is what's called a "game jam". A game jam is an event in which game
+developers have fun honing their skills by conceptualizing, designing, and
+programming a game in a short period of time and usually with some other
+limitations.
 
-The theme for this Ludum Dare is You Are the Villain. The gameplay does not
-obviously reflect the theme in and of itself, but if you play through to the
-end, you can see how I incorporated it.
+This particular game jam has two variants which run concurrently. One requires
+that entrants work alone and do everything within 48 hours; the other allows
+for teams or otherwise bending the rules and lasts 72 hours. Both run off the
+same theme, which is voted upon by participants during the course of the week
+leading up to the jam.
 
-I also added the fun +1 goat.
+The theme for this Ludum Dare, Ludum Dare 25, was You Are the Villain. The
+gameplay does not obviously reflect the theme in and of itself, but if you
+play through to the end, you can see how I incorporated it.
+
+The original version of Decommissioner was made for the 48 hour compo in spite
+of: a 12-hour handicap imposed by time differences; a sorely lacking skillset;
+and my having no generic code written up beforehand. It had no graphics or
+sound. In fact, it ran as a text game in the Python IDLE console, though I was
+able to compile versions that didn't require the user to have Python installed.
+
+I have preserved the original by maintaining it as its own branch on GitHub.
+This is the start of the soon-to-be improved version. Planned changes,
+organized into prioritized tiers, are:
+
+HIGH
+- clean up and finish commenting the code
+- make all the functions more flexible
+- make the robot simulation work with more site configurations than one farm
+  and one factory
+MEDIUM
+- add background music
+- more branching storylines
+- multiple endings
+- move job description out of how to play and into main story trunk
+- add graphics
+  - though I might keep the robot sim looking like DOS
+- fine-tune the robot simulation
+LOW
+- take out one of the redundant functions for displaying blocks of text.
 
 Viva Ludum Dare!

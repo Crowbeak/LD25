@@ -10,7 +10,8 @@ def text(stringList):
         time.sleep(0.2)
 
 def sCredits():
-    word = ['Made for Ludum Dare 25 by Lena LeRay.',
+    word = ['\nDECOMMISSIONER',
+            '\nMade for Ludum Dare 25 by Lena LeRay.',
             'Theme: You Are the Villain',
             'Please play through to the end.',
             'You won\'t see how it connects to the theme if you stop early.']

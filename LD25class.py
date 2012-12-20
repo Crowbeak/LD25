@@ -1,6 +1,12 @@
 #TODO: Create site class, which is a collection of Workplace instances.
 #TODO: Make constants variables for each workplace,
 #      initialized once like average downtime.
+#TODO: Add simulation ident class which holds things like the simulation's
+#      name for printing robot sim output and what kinds of Workplaces it
+#      contains.
+#TODO: Check for and get rid of unused modules.
+#TODO: Reorganize with exception at top and defined sections for each class
+#      grouping.
 
 import random
 

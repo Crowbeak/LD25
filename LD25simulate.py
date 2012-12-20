@@ -1,3 +1,6 @@
+#TODO: Move some things from runSim into their own functions so that shit is
+#      easier to read.
+
 import random
 import string
 import time

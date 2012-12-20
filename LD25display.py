@@ -1,3 +1,8 @@
+#TODO: Make Workplace instance name (farm, etc.) an attribute of the instance
+#      so it can be called without having to reference a constant.
+#      This would allow for two farms, etc, without having to build in silly
+#      lines of code.
+
 import time
 
 PHASES = ['ROBOT PLACEMENT', 'SIMULATION RESULTS']
@@ -13,6 +18,7 @@ def disp(stringList):
         time.sleep(0.1)
 
 
+#TODO: Make this take a simulation object instead of a name.
 def keyAndTitle(num, simName='Simulation'):
     """
     Prints key and title for the display output.
@@ -29,7 +35,7 @@ def keyAndTitle(num, simName='Simulation'):
             "----------",
             "ID:   Robot's ID number",
             "AGE:  Years robot has been in service",
-            "CARR:  Tens of pounds robot can carry",
+            "CARR: Tens of pounds robot can carry",
             "BATT: Battery life of robot",
             "UTIL: Rating of robot's ability to complete varied tasks",
             "COST: Weekly costs of maintaining robot",
@@ -45,6 +51,7 @@ def keyAndTitle(num, simName='Simulation'):
 
 def pWork(work, num):
     """
+    Displays 
     num: index in WORKS
     #TODO: proper description
     """
@@ -67,21 +74,26 @@ def pWork(work, num):
         print repr(brks).rjust(4)
     
 
+#TODO: Make pDisplay take a list of Wrokplace objects instead of specific ones.
 def pDisplay(unassigned, farm, factory, simName='Simulation'):
     """
     Prints console information during the robot placement phase of simulation.
     
-    #TODO: finish description.
+    unassigned
     """
     keyAndTitle(0, simName)
     
-    pWork(unassigned, 2)
     pWork(farm, 0)
     pWork(factory, 1)
+    pWork(unassigned, 2)
 
-        
+
+#TODO: Make this take a simulation object so it can print lines based on
+#      available work sites.
 def pCommand():
-    #TODO: description.
+    """
+    Displays console commands during the robot placement phase of simulation.
+    """
     word = ["\nCOMMANDS",
             "----------",
             "FARM [ID]    - Move robot with ID number [ID] to the farm",
@@ -91,10 +103,10 @@ def pCommand():
             "RUN          - Run simulation"]
     disp(word)
     
-    
-def sStatus(i, weeks):
+
+def sStatus(i, duration):
     #TODO: description.
-    tenths = weeks/10
+    tenths = duration/10
     
     if i == 0:
         print "\n\nSIMULATING. PLEASE WAIT..."
@@ -159,7 +171,8 @@ def rWork(work, num, weeks, simName='Simulation'):
 
 def rEnd():
     """
-    Displays options to end or restart simulation.
+    Displays options to end or restart simulation after robot placement is
+    complete.
     """
     word = ["\nCOMMANDS",
             "----------",
