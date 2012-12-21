@@ -2,6 +2,7 @@
 #      so it can be called without having to reference a constant.
 #      This would allow for two farms, etc, without having to build in silly
 #      lines of code.
+#TODO: Display the number of weeks during calculation phase results.
 
 import time
 
@@ -51,9 +52,11 @@ def keyAndTitle(num, simName='Simulation'):
 
 def pWork(work, num):
     """
-    Displays 
-    num: index in WORKS
-    #TODO: proper description
+    Displays the robots in a workplace and their stats in table form.
+    Used during the robot placement phase of simulation.
+    
+    work: a Workplace instance.
+    num: index in WORKS of the name of the Workplace type.
     """
     print "\n{} ROBOTS".format(WORKS[num])
     time.sleep(0.2)
@@ -79,7 +82,10 @@ def pDisplay(unassigned, farm, factory, simName='Simulation'):
     """
     Prints console information during the robot placement phase of simulation.
     
-    unassigned
+    unassigned: an Unassigned instance.
+    farm: a Farm instance.
+    factory: a Factory instance.
+    simName: the simulation name (a string).
     """
     keyAndTitle(0, simName)
     
@@ -105,7 +111,11 @@ def pCommand():
     
 
 def sStatus(i, duration):
-    #TODO: description.
+    """
+    Prints progress during the calculation phase of simulation.
+    
+    Calls to time.sleep() inserted because calculation takes little time.
+    """
     tenths = duration/10
     
     if i == 0:
@@ -138,15 +148,20 @@ def sStatus(i, duration):
     elif i == tenths*9:
         print "...90% complete"
         time.sleep(0.2)
-    elif i == (weeks-1):
+    elif i == (duration-1):
         print "SIMULATION COMPLETE.\n"
         time.sleep(0.2)
 
 
 def rWork(work, num, weeks, simName='Simulation'):
     """
-    Takes a Workplace instance as an argument and displays results of simulation.
-    #TODO: finish description.
+    Displays results of the calculation phase of simulation for the Workplace
+    instance given.
+    
+    work: a Workplace instance (any type).
+    num: index in WORKS of the name of the Workplace type.
+    weeks: number of weeks over which the results were calculated.
+    simName: the name of the simulation (a string).
     """
     print "\n{} ROBOTS".format(WORKS[num])
     time.sleep(0.2)
@@ -171,8 +186,8 @@ def rWork(work, num, weeks, simName='Simulation'):
 
 def rEnd():
     """
-    Displays options to end or restart simulation after robot placement is
-    complete.
+    Displays console commands after the calculation phase of simulation
+    is complete.
     """
     word = ["\nCOMMANDS",
             "----------",

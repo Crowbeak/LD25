@@ -27,18 +27,18 @@ organized into prioritized tiers, are:
 
 HIGH
 - clean up and finish commenting the code
-- make all the functions more flexible
+- make all the functions more flexible and compress redundant functions
 - make the robot simulation work with more site configurations than one farm
   and one factory
 MEDIUM
-- add background music
 - more branching storylines
 - multiple endings
 - move job description out of how to play and into main story trunk
+- balance robot simulation to make breakdowns more realistic
+- make robot id number generation less obviously fake
+LOW
+- add background music
 - add graphics
   - though I might keep the robot sim looking like DOS
-- fine-tune the robot simulation
-LOW
-- take out one of the redundant functions for displaying blocks of text.
 
 Viva Ludum Dare!

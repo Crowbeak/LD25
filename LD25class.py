@@ -5,9 +5,11 @@
 #      name for printing robot sim output and what kinds of Workplaces it
 #      contains.
 #TODO: Check for and get rid of unused modules.
-#TODO: Reorganize with exception at top and defined sections for each class
-#      grouping.
 
+
+###############################################################################
+# Imports and Initializations
+###############################################################################
 import random
 
 random.seed()
@@ -21,6 +23,19 @@ BREAKDOWN_RATIO = 0.005
 BROKEN_BEFORE = 0.001
 
 
+###############################################################################
+# Exceptions
+###############################################################################
+class TooManyRobots(Exception):
+    """
+    TooManyRobots is raised by Workplace instances when adding another robot
+    would result in the max number of robots for that Workplace being exceeded.
+    """
+
+
+###############################################################################
+# Labor Robot Class
+###############################################################################
 class LaborRobot(object):
     """
     Representation of a labor robot.
@@ -40,9 +55,9 @@ class LaborRobot(object):
                  tasks (an integer between 1-10).
         cost: Average weekly cost in resources to maintain the robot (a non-
               negative int).
-        output: Total resource output (a non-negative int).
         breakdowns: Total number of times the robot has broken down (a non-
                     negative int).
+        output: Total resource output (a non-negative int).
         """
         self.id = id
         self.age = age
@@ -52,6 +67,12 @@ class LaborRobot(object):
         self.cost = cost
         self.breaks = breakdowns
         self.out = output
+    
+    def idNum(self):
+        """
+        Returns robot's ID number.
+        """
+        return self.id
     
     def strength(self):
         """
@@ -70,12 +91,6 @@ class LaborRobot(object):
         Returns robot's utility rating.
         """
         return self.util
-    
-    def idNum(self):
-        """
-        Returns robot's ID number.
-        """
-        return self.id
     
     def breakdown(self):
         """
@@ -114,17 +129,14 @@ class LaborRobot(object):
         """
         Returns all of the robots's stats.
         """
-        return (self. id, self.age, self.str, self.batt, self.util, self.cost,
+        return (self.id, self.age, self.str, self.batt, self.util, self.cost,
                 self.breaks, self.out)
-           
-                
-class TooManyRobots(Exception):
-    """
-    TooManyRobots is raised by all Workplace instances when adding another robot
-    would result in the max number of robots for that Workplace being exceeded.
-    """
 
 
+###############################################################################
+# Workplace Classes
+#   Includes basic Workplace definition and subclasses.
+###############################################################################
 class Workplace(object):
     """
     Representation of work environment for robots.
@@ -135,8 +147,6 @@ class Workplace(object):
         of the instance.
         
         maxRobots: Maximum number of robots the place can hold (a non-neg int).
-        repairCost: Average cost to repair a broken robot in resources (a non-
-                    negative int).
         avgDowntime: Average time to repair a robot, in days (int between 1-7).
         currentRobots: A list of robot objects currently at the workplace.
         """
@@ -155,7 +165,9 @@ class Workplace(object):
     
     def rem(self, id):
         """
-        Pops a robot from the list of currentRobots.
+        Pops the robot with the given id number from the list of currentRobots
+        if the robot is in the list.
+        #TODO: Otherwise, raise exception.
         """
         for i in range(len(self.curr)):
             if self.curr[i].id == id:
@@ -175,7 +187,7 @@ class Workplace(object):
     
     def totalOut(self):
         """
-        Returns the total output at the workplace.
+        Returns the total output of all robots at the workplace.
         """
         temp = 0
         for robot in self.curr:
@@ -225,7 +237,7 @@ class Farm(Workplace):
     def update(self):
         """
         Updates all robots' output totals after a week's worth of work.
-        If a robot breaks, increments the number of breaks.
+        If a robot breaks, increments the number of breaks for that robot.
         """
         for robot in self.curr:
             if random.random() < robot.breakdown():
@@ -245,7 +257,7 @@ class Factory(Workplace):
     def update(self):
         """
         Updates all robots' output totals after a week's worth of work.
-        If a robot breaks, increments the number of breaks.
+        If a robot breaks, increments the number of breaks for that robot.
         """
         for robot in self.curr:
             if random.random() < robot.breakdown():
