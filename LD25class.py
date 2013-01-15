@@ -43,9 +43,6 @@ class LaborRobot(object):
     def __init__(self, id, age, strength, battery, utility, cost, breakdowns=0,
                  output=0):
         """
-        Initializes a LaborRobot instance, saves all parameters as attributes
-        of the instance.
-        
         id: ID number for robot (a positive int).
         age: Number of years robot has been in service (a non-negative int).
         strength: Tens of pounds the robot can carry (a positive float).
@@ -69,27 +66,15 @@ class LaborRobot(object):
         self.out = output
     
     def idNum(self):
-        """
-        Returns robot's ID number.
-        """
         return self.id
     
     def strength(self):
-        """
-        Returns robot's strength.
-        """
         return self.str
     
     def battery(self):
-        """
-        Returns robot's battery life.
-        """
         return self.batt
 
     def utility(self):
-        """
-        Returns robot's utility rating.
-        """
         return self.util
     
     def breakdown(self):
@@ -102,27 +87,15 @@ class LaborRobot(object):
             return (self.age*BREAKDOWN_RATIO) + (self.breaks*BROKEN_BEFORE)
     
     def incBreak(self):
-        """
-        Increments the robot's number of breakdowns.
-        """
         self.breaks += 1
     
     def addOut(self, amount):
-        """
-        Adds to the robot's total output.
-        """
         self.out += amount
     
     def costs(self):
-        """
-        Returns the average weekly cost to maintain the robot.
-        """
         return self.cost
     
     def output(self):
-        """
-        Returns the robot's total output.
-        """
         return self.out
     
     def stats(self):
@@ -143,9 +116,6 @@ class Workplace(object):
     """
     def __init__(self, maxRobots, avgDowntime, currentRobots = []):
         """
-        Initializes a Workplace instance, saves all parameters as attributes
-        of the instance.
-        
         maxRobots: Maximum number of robots the place can hold (a non-neg int).
         avgDowntime: Average time to repair a robot, in days (int between 1-7).
         currentRobots: A list of robot objects currently at the workplace.
@@ -180,9 +150,6 @@ class Workplace(object):
         return self.curr
     
     def getMax(self):
-        """
-        Returns the maximum number of robots the workplace can hold.
-        """
         return self.max
     
     def totalOut(self):
@@ -213,14 +180,15 @@ class Workplace(object):
     
     def avgCost(self):
         """
-        Returns the average weekly cost to maintain a robot at the workplace.
+        Returns the average weekly cost to maintain a robot at the workplace
+        as a float.
         """
         return self.totalCost()/float(len(self.curr))
 
 
 class Unassigned(Workplace):
     """
-    Handler for robots not yet assigned to a real workplace.
+    Placeholder for robots not yet assigned to a real workplace.
     """
     def __init__(self, robots):
         self.curr = robots

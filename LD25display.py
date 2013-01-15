@@ -10,6 +10,7 @@ PHASES = ['ROBOT PLACEMENT', 'SIMULATION RESULTS']
 WORKS = ['FARM', 'FACTORY', 'UNASSIGNED']
 
 
+#TODO: Eliminate redundancy with text() in story file.
 def disp(stringList):
     """
     Prints strings in list word with a 0.2 second time step between each string.
@@ -22,8 +23,6 @@ def disp(stringList):
 #TODO: Make this take a simulation object instead of a name.
 def keyAndTitle(num, simName='Simulation'):
     """
-    Prints key and title for the display output.
-    
     num: The index of the appropriate subtitle in PHASES (a non-negative int).
     simName: Simulation name (a string).
     """
@@ -114,7 +113,7 @@ def sStatus(i, duration):
     """
     Prints progress during the calculation phase of simulation.
     
-    Calls to time.sleep() inserted because calculation takes little time.
+    Calls to time.sleep() inserted because calculation takes almost no time.
     """
     tenths = duration/10
     

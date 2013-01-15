@@ -54,7 +54,6 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
     
     oldRobots: Number of robots in operation at the site (a non-negative int).
     newRobots: Number of incoming brand new robots to fit in (a positive int).
-    numWorks: Number of workplaces (a positive int).
     simName: Name of current simulation.
     """
     #Initialization.

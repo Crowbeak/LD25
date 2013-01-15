@@ -10,6 +10,9 @@ def text(stringList):
         time.sleep(0.2)
 
 def sCredits():
+    """
+    Displays the game title and credits.
+    """
     word = ['\nDECOMMISSIONER',
             '\nMade for Ludum Dare 25 by Lena LeRay.',
             'Theme: You Are the Villain',
@@ -19,6 +22,11 @@ def sCredits():
     
 
 def firstSim():
+    """
+    Displays a little bit of an intro to the robot simulation.
+    
+    TODO: Indicate why you're doing this job.
+    """
     word = ['\nAlright. May as well get started. The work isn\'t hard, but it IS',
             'tedious sometimes. Maybe this will be one of those days where',
             'rearranging robots to maximize farm and factory outputs seems more',
@@ -28,6 +36,9 @@ def firstSim():
 
 
 def instructions():
+    """
+    Displays the employee "manual", which is actually tips for playing.
+    """
     word = ['\nYour job is to maximize the output of our nation\'s farms and',
             'factories by assigning labor robots to each appropriately. This',
             'usually coincides with assigning new robots to farm or factory',
@@ -50,6 +61,16 @@ def instructions():
 
 
 def intro():
+    """
+    The story introduction. Introduces Dave, has first story choice.
+    
+    Choices: 1
+    Simulations: 0
+    
+    TODO: Have choice of asking about wife or not indicate interest or lack
+          thereof in Dave's personal life. Eventually to impact ability to
+          prevent Dave's suicide and its impact on the story.
+    """
     dave = ['\n\n"Good morning!"\n',
             'Dave is as cheerful as ever. Does he really not drink coffee?\n',
             '"I really don\'t drink coffee," he says with a grin.\n',
@@ -59,12 +80,13 @@ def intro():
     text(dave)
     
     choice = 0
+    agin = ['\nCome on, now. I know you haven\'t had your coffee yet, but surely you',
+            'can find the 1 and 2 buttons on your keyboard.']
     while (int(choice) != 1) and (int(choice) != 2):
-        print '\nWhat do you do?'
-        time.sleep(0.2)
-        print '1 - Grunt, wave goodbye, and go to your cubicle.'
-        time.sleep(0.2)
-        print '2 - Ask about his wife.'
+        menu = ['\nWhat do you do?',
+                '1 - Grunt, wave goodbye, and go to your cubicle.',
+                '2 - Ask about his wife.']
+        text(menu)
     
         choice = raw_input("Pick one:")
         try:
@@ -84,30 +106,25 @@ def intro():
                         'your cushy chair, and turn on the computer.\n']
                 text(wife)
             else:
-                print '\nCome on, now. I know you haven\'t had your coffee yet, but surely you'
-                time.sleep(0.2)
-                print 'can find the 1 and 2 buttons on your keyboard.'
+                text(agin)
         except ValueError:
             choice = 0
-            print '\nCome on, now. I know you haven\'t had your coffee yet, but surely you'
-            time.sleep(0.2)
-            print 'can find the 1 and 2 buttons on your keyboard.'
+            text(agin)
 
 def loggedIn():
-    print 'After logging in, you consider your options.'
-    time.sleep(0.2)
-    print '\nWhat do you do?'
-    time.sleep(0.2)
+    intr = ['After logging in, you consider your options.',
+            '\nWhat do you do?']
+    text(intr)
     
     #Goof off or work.
     nosebook = False
     email = False
+    agin = ['\nNo, no, no, that\'s not a valid choice. Try again!']
     while True:
-        print '1 - See what\'s happening on Nosebook.'
-        time.sleep(0.2)
-        print '2 - Check your email.'
-        time.sleep(0.2)
-        print '3 - Do the work they\'re paying you to be here for.'
+        menu = ['1 - See what\'s happening on Nosebook.',
+                '2 - Check your email.',
+                '3 - Do the work they\'re paying you to be here for.']
+        text(menu)
         
         choice = raw_input("Pick one:")
         try:
@@ -153,10 +170,10 @@ def loggedIn():
                         print 'Try again, please. Invalid input.'
                 break
             else:
-                print '\nNo, no, no, that\'s not a valid choice. Try again!'
+                text(agin)
         except ValueError:
             choice = 0
-            print '\nNo, no, no, that\'s not a valid choice. Try again!'
+            text(agin)
         
         print '\nWhat do you do next?'
 
@@ -167,6 +184,7 @@ def lunch():
     text(wrd1)
     
     choice = 0
+    agin = ['\nYou... wait, what?! Try that again.']
     while (int(choice) != 1) and (int(choice) != 2):
         chc1 = ['\nWhere do you want to go?',
                 '1 - The good old cafeteria. Mediocre free food, decent conversation.',
@@ -223,10 +241,10 @@ def lunch():
                         'work on time. And there was much rejoicing. Yaaaaaay.']
                 text(home)
             else:
-                print '\nYou... wait, what?! Try that again.'
+                text(agin)
         except ValueError:
             choice = 0
-            print '\nYou... wait, what?! Try that again.'
+            text(agin)
         
         raw_input('\n(Press any button to continue)')
             
