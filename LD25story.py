@@ -1,13 +1,6 @@
 import time
+from LD25display import printText
 from LD25simulate import *
-
-def text(stringList):
-    """
-    Prints strings in list word with a 0.2 second time step between each string.
-    """
-    for i in stringList:
-        print i
-        time.sleep(0.2)
 
 def sCredits():
     """
@@ -18,7 +11,7 @@ def sCredits():
             'Theme: You Are the Villain',
             'Please play through to the end.',
             'You won\'t see how it connects to the theme if you stop early.']
-    text(word)
+    printText(word)
     
 
 def firstSim():
@@ -32,7 +25,7 @@ def firstSim():
             'rearranging robots to maximize farm and factory outputs seems more',
             'like a game [Ha~h!] than work. It\'s a bit too groggy in the day to',
             'say for sure yet.\n']
-    text(word)
+    printText(word)
 
 
 def instructions():
@@ -57,7 +50,7 @@ def instructions():
             '\nRemember: your job is very important. The parts and scrap from',
             'decommissioned robots is essential in these days of scarcity.',
             '\nDo your duty -- serve us all, and serve yourself!']
-    text(word)
+    printText(word)
 
 
 def intro():
@@ -77,7 +70,7 @@ def intro():
             'Before you can ask how he knew what you were thinki--\n',
             '"You\'ve asked me that question so many times now," he says, "that I',
             'can see it in your face."\n']
-    text(dave)
+    printText(dave)
     
     choice = 0
     agin = ['\nCome on, now. I know you haven\'t had your coffee yet, but surely you',
@@ -86,7 +79,7 @@ def intro():
         menu = ['\nWhat do you do?',
                 '1 - Grunt, wave goodbye, and go to your cubicle.',
                 '2 - Ask about his wife.']
-        text(menu)
+        printText(menu)
     
         choice = raw_input("Pick one:")
         try:
@@ -97,24 +90,24 @@ def intro():
                          'don\'t realize until you\'ve already turned your computer on that',
                          'you were so annoyed with Dave you didn\'t get any coffee.\n',
                          'Damnation.\n']
-                text(grunt)
+                printText(grunt)
             elif int(choice) == 2:
                 wife = ['\nDave blabbers on happily about her newest hobby for a few minutes',
                         'while you get your sweet, sweet coffee. Unsweetened. Black. It\'s sweet',
                         'in that you really, really wanted-- ah, forget it, you know what I',
                         'mean. Anyway, you take your coffee to your desk, plop down into',
                         'your cushy chair, and turn on the computer.\n']
-                text(wife)
+                printText(wife)
             else:
-                text(agin)
+                printText(agin)
         except ValueError:
             choice = 0
-            text(agin)
+            printText(agin)
 
 def loggedIn():
     intr = ['After logging in, you consider your options.',
             '\nWhat do you do?']
-    text(intr)
+    printText(intr)
     
     #Goof off or work.
     nosebook = False
@@ -124,7 +117,7 @@ def loggedIn():
         menu = ['1 - See what\'s happening on Nosebook.',
                 '2 - Check your email.',
                 '3 - Do the work they\'re paying you to be here for.']
-        text(menu)
+        printText(menu)
         
         choice = raw_input("Pick one:")
         try:
@@ -138,7 +131,7 @@ def loggedIn():
                             'Ugh. Maybe "hot" isn\'t the right adjective. Moving on.',
                             'Dave is also picking his nosebook.',
                             'Alright, screw this.']
-                    text(nbok)
+                    printText(nbok)
                     nosebook = True
             elif int(choice) == 2:
                 if email:
@@ -154,7 +147,7 @@ def loggedIn():
                     chc1 = ['\nWhat do you do?',
                             '1 - Review the manual again to stave off the inevitable. [How to Play]',
                             '2 - Just do it.']
-                    text(chc1)
+                    printText(chc1)
                     
                     choice = raw_input("Pick one:")
                     try:
@@ -170,10 +163,10 @@ def loggedIn():
                         print 'Try again, please. Invalid input.'
                 break
             else:
-                text(agin)
+                printText(agin)
         except ValueError:
             choice = 0
-            text(agin)
+            printText(agin)
         
         print '\nWhat do you do next?'
 
@@ -181,7 +174,7 @@ def lunch():
     wrd1 = ['You yawn and stretch. Coffee time is past. It\'s snack time now.',
             '\nWhoops!',
             '\nApparently you meant lunch time.']
-    text(wrd1)
+    printText(wrd1)
     
     choice = 0
     agin = ['\nYou... wait, what?! Try that again.']
@@ -189,7 +182,7 @@ def lunch():
         chc1 = ['\nWhere do you want to go?',
                 '1 - The good old cafeteria. Mediocre free food, decent conversation.',
                 '2 - Home. Sandwiches and solitude.']
-        text(chc1)
+        printText(chc1)
         
         choice = raw_input("Pick one:")
         try:
@@ -217,7 +210,7 @@ def lunch():
                         '\nWedge comes back before Dave -- no surprise there -- and you guys',
                         'go back to talking about... uh.. what were you talking about? Must',
                         'not have been important.']
-                text(cafe)
+                printText(cafe)
             elif int(choice) == 2:
                 home = ['\nYou barely catch Dave before he rockets downstairs to let him know',
                         'that you\'ll be ducking out on the crew for lunch. After asking him',
@@ -239,65 +232,61 @@ def lunch():
                         'BEFORE you grab your greasy sandwich. You manage to finish the',
                         'sandwich and clean the remote with just enough time to get back to',
                         'work on time. And there was much rejoicing. Yaaaaaay.']
-                text(home)
+                printText(home)
             else:
-                text(agin)
+                printText(agin)
         except ValueError:
             choice = 0
-            text(agin)
+            printText(agin)
         
         raw_input('\n(Press any button to continue)')
             
 
 def loggedIn2():
-    print 'Confronted with the usual options...'
-    time.sleep(0.2)
-    print '\nWhat do you do?'
-    time.sleep(0.2)
+    intro = ['Confronted with the usual options...',
+             '\nWhat do you do?']
+    printText(intro)
     
     #Goof off or work.
     nosebook = False
     email = False
     while True:
-        print '1 - See what\'s happening on Nosebook.'
-        time.sleep(0.2)
-        print '2 - Check your email.'
-        time.sleep(0.2)
-        print '3 - Work. Maybe it\'ll take your mind off things.'
+        opts = ['1 - See what\'s happening on Nosebook.',
+                '2 - Check your email.',
+                '3 - Work. Maybe it\'ll take your mind off things.']
+        printText(opts)
         
         choice = raw_input("Pick one:")
         try:
             if int(choice) == 1:
                 if nosebook:
-                    print '\nEven scoffing at the nosebook-picking can\'t cheer you up.'
-                    time.sleep(0.2)
-                    print 'The term "nosebook-picking" isn\'t even funny right now.'
+                    noseSeen = ['\nEven scoffing at the nosebook-picking can\'t cheer you up.',
+                                'The term "nosebook-picking" isn\'t even funny right now.']
+                    printText(noseSeen)
                 else:
-                    nbok = ['\nAsh is talking about how awesome it is to be a fireman. Again.',
-                            'Wedge renamed his cat? What the hell?',
-                            'Everyone thinks the new Kumoman is better than the last one.',
-                            'Didn\'t the last one only come out like five years ago?',
-                            'Neither Dave nor his wife have posted anything since yesterday.',
-                            'This isn\'t helping.']
-                    text(nbok)
+                    noseNew = ['\nAsh is talking about how awesome it is to be a fireman. Again.',
+                               'Wedge renamed his cat? What the hell?',
+                               'Everyone thinks the new Kumoman is better than the last one.',
+                               'Didn\'t the last one only come out like five years ago?',
+                               'Neither Dave nor his wife have posted anything since yesterday.',
+                               'This isn\'t helping.']
+                    printText(noseNew)
                     nosebook = True
             elif int(choice) == 2:
                 if email:
                     print '\nNo new email. Not that you did a good job reading the first two.'
                 else:
-                    print '\nSomething from Biggs about a party... don\'t care right now.'
-                    time.sleep(0.2)
-                    print 'And... news. Noone cares about that.'
+                    newEmail = ['\nSomething from Biggs about a party... don\'t care right now.',
+                                'And... news. Noone cares about that.']
+                    printText(newEmail)
                     email = True
             elif int(choice) == 3:
                 #Working.
                 while True:
-                    print '\nWhat do you do?'
-                    time.sleep(0.2)
-                    print '1 - Review the manual again.'
-                    time.sleep(0.2)
-                    print '2 - Work. Or try to.'
-                    time.sleep(0.2)
+                    workopts = ['\nWhat do you do?',
+                                '1 - Review the manual again.',
+                                '2 - Work. Or try to.']
+                    printText(workopts)
                     
                     choice = raw_input("Pick one:")
                     try:
@@ -322,54 +311,49 @@ def loggedIn2():
 
 
 def loggedIn3():
-    print 'Confronted with the usual options...'
-    time.sleep(0.2)
-    print '\nWhat do you do?'
-    time.sleep(0.2)
+    intro = ['Confronted with the usual options...',
+             '\nWhat do you do?']
+    printText(intro)
     
-    #Goof off or work.
     nosebook = False
     email = False
     while True:
-        print '1 - See what\'s happening on Nosebook.'
-        time.sleep(0.2)
-        print '2 - Check your email.'
-        time.sleep(0.2)
-        print '3 - Do the work they\'re paying you to be here for.'
+        opts = ['1 - See what\'s happening on Nosebook.',
+                '2 - Check your email.',
+                '3 - Do the work they\'re paying you to be here for.']
+        printText(opts)
         
         choice = raw_input("Pick one:")
         try:
             if int(choice) == 1:
                 if nosebook:
-                    print '\nMore nosebook-picking. Ah, nosebook-picking.'
-                    time.sleep(0.2)
-                    print 'Just the term makes you happy. How do you visualize that?'
+                    noseSeen = ['\nMore nosebook-picking. Ah, nosebook-picking.',
+                                'Just the term makes you happy. How do you visualize that?']
+                    printText(noseSeen)
                 else:
-                    nbok = ['\nAsh is talking about how awesome it is to be a fireman. Again.',
-                            'Wedge renamed his cat? What the hell?',
-                            'Everyone thinks the new Kumoman is better than the last one.',
-                            'Didn\'t the last one only come out like five years ago?',
-                            'Neither Dave nor his wife have posted anything since yesterday.',
-                            'You should probably work. Probably.']
-                    text(nbok)
+                    noseNew = ['\nAsh is talking about how awesome it is to be a fireman. Again.',
+                               'Wedge renamed his cat? What the hell?',
+                               'Everyone thinks the new Kumoman is better than the last one.',
+                               'Didn\'t the last one only come out like five years ago?',
+                               'Neither Dave nor his wife have posted anything since yesterday.',
+                               'You should probably work. Probably.']
+                    printText(noseNew)
                     nosebook = True
             elif int(choice) == 2:
                 if email:
                     print '\nNo new email. Who\'s surprised?'
                 else:
-                    print '\nSomething from Biggs about a party... don\'t care right now.'
-                    time.sleep(0.2)
-                    print 'And... news. Noone cares about that.'
+                    newEmail = ['\nSomething from Biggs about a party... don\'t care right now.',
+                                'And... news. Noone cares about that.']
+                    printText(newEmail)
                     email = True
             elif int(choice) == 3:
                 #Working.
                 while True:
-                    print '\nWhat do you do?'
-                    time.sleep(0.2)
-                    print '1 - Review the manual again.'
-                    time.sleep(0.2)
-                    print '2 - Work! It\'s like a crummy party you get paid to attend.'
-                    time.sleep(0.2)
+                    workopts = ['\nWhat do you do?',
+                                '1 - Review the manual again.',
+                                '2 - Work! It\'s like a crummy party you get paid to attend.']
+                    printText(workopts)
                     
                     choice = raw_input("Pick one:")
                     try:
@@ -398,25 +382,25 @@ def friends():
     Returns True if Dave is still in player's life at end of module or False
     otherwise.
     """
-    word = ['\nTime passes. Universes are born and die.',
-            '\nOkay, so that much time hasn\'t actually passed. But the days do',
-            'wear on. Romance still isn\'t going that great, but you got a ferret',
-            'to keep you company. Didn\'t think too much about the smell before',
-            'making that purchase, but... too late now, and you like the little',
-            'guy. He\'s a lot more interesting than a cat. And you never wake up',
-            'with his butt in your face like Wedge complains about with his cat.',
-            '\nYou\'re already to your desk and pushing the power button on your',
-            'computer when you realize Dave wasn\'t in the kitchen this morning.',
-            '\nWeird. Wanna look into that?']
-    text(word)
+    intro = ['\nTime passes. Universes are born and die.',
+             '\nOkay, so that much time hasn\'t actually passed. But the days do',
+             'wear on. Romance still isn\'t going that great, but you got a ferret',
+             'to keep you company. Didn\'t think too much about the smell before',
+             'making that purchase, but... too late now, and you like the little',
+             'guy. He\'s a lot more interesting than a cat. And you never wake up',
+             'with his butt in your face like Wedge complains about with his cat.',
+             '\nYou\'re already to your desk and pushing the power button on your',
+             'computer when you realize Dave wasn\'t in the kitchen this morning.',
+             '\nWeird. Wanna look into that?']
+    printText(intro)
     
     choice = 0
     while (int(choice) != 1) and (int(choice) != 2):
-        chc1 = ['\n1 - Yeah... that\'s so out of character I can only assume aliens',
+        opts = ['\n1 - Yeah... that\'s so out of character I can only assume aliens',
                 '    are involved.',
                 '2 - Nah. Dave\'s a great guy but it\'s nice not to have to deal',
                 '    with his peppy peppiness sometimes.']
-        text(chc1)
+        printText(opts)
         
         choice = raw_input("Pick one:")
         try:
@@ -440,7 +424,7 @@ def friends():
                         'doesn\'t want you to go with him. After making him promise to call you',
                         'if he needs anything, you go to your desk and get to work. It\'s not',
                         'like you have anything better to do. Work will be a nice distraction.']
-                text(look)
+                printText(look)
                 loggedIn2()
                 print '\nLunch time. You still haven\'t heard from Dave. Time to go check on him.'
                 time.sleep(2)
@@ -448,14 +432,14 @@ def friends():
                 dave = False
                 print '\nYou sip your coffee obtained in quiet and log in.'
                 loggedIn3()
-                dont = ['\nAs soon as you finish the simulation, you hear a crash and screaming',
-                        'coming from around the corner. When a gust of cold air brings the',
-                        'sound of screeching tires and car horns with it, your stomach',
-                        'plummets to your knees.',
-                        '\nYou\'re one of the last to stick your head out into the aisle to look.',
-                        'The hole in the glass -- 7 stories up -- is very, very close to Dave\'s',
-                        'cubicle.']
-                text(dont)
+                dontLook = ['\nAs soon as you finish the simulation, you hear a crash and screaming',
+                            'coming from around the corner. When a gust of cold air brings the',
+                            'sound of screeching tires and car horns with it, your stomach',
+                            'plummets to your knees.',
+                            '\nYou\'re one of the last to stick your head out into the aisle to look.',
+                            'The hole in the glass -- 7 stories up -- is very, very close to Dave\'s',
+                            'cubicle.']
+                printText(dontLook)
             else:
                 print '\nDrink some of your coffee and try that again.'
         except ValueError:
@@ -474,11 +458,10 @@ def loggedIn4():
     nosebook = False
     email = False
     while True:
-        print '1 - Pick your Nosebook.'
-        time.sleep(0.2)
-        print '2 - Check your eternally uninteresting email.'
-        time.sleep(0.2)
-        print '3 - Slave away.'
+        opts = ['1 - Pick your Nosebook.',
+                '2 - Check your eternally uninteresting email.',
+                '3 - Slave away.']
+        printText(opts)
         
         choice = raw_input("Pick one:")
         try:
@@ -486,10 +469,10 @@ def loggedIn4():
                 if nosebook:
                     print '\nOh, why bother.'
                 else:
-                    nbok = ['\nAsh is talking about how depressing it is to be a fireman. Again.',
+                    noseNew = ['\nAsh is talking about how depressing it is to be a fireman. Again.',
                             'And... oh. Nosebook has reached a new low.',
                             'People are now posting pictures of themselves picking their noses.']
-                    text(nbok)
+                    printText(noseNew)
                     nosebook = True
             elif int(choice) == 2:
                 if email:
@@ -510,7 +493,7 @@ def loggedIn4():
                         'you don\'t quite understand.',
                         '\nAs they drag you away, the last thing you see is Dave gaping',
                         'at you from his cubicle entrance.']
-                text(uhoh)
+                printText(uhoh)
                 raw_input('\n(Press any button to continue)')
                 break
             else:
@@ -524,36 +507,36 @@ def loggedIn4():
     
 def trouble(dave):
     if dave:
-        word = ['\nIt\'s been over three months and Dave is still a mess. At least',
-                'he\'s able to work, now. For a bit there it looked like he was going',
-                'to lose the job, too, which he definitely didn\'t need. You\'ve',
-                'been doing everything in your power to try to help him through',
-                'this, but there\'s only so much you can do. Staying up late to',
-                'console him or keep him company has really been a drain of late.',
-                '\nBut your ferret still loves you!',
-                '\nEven if he does keep ferreting your house keys away.',
-                '\nAfter making sure Dave gets back to his desk on time, you sit',
-                'down at your own. You really don\'t want to be here today, but',
-                'your choices are limited.',
-                '\nLimited to three.']
-        text(word)
+        intro = ['\nIt\'s been over three months and Dave is still a mess. At least',
+                 'he\'s able to work, now. For a bit there it looked like he was going',
+                 'to lose the job, too, which he definitely didn\'t need. You\'ve',
+                 'been doing everything in your power to try to help him through',
+                 'this, but there\'s only so much you can do. Staying up late to',
+                 'console him or keep him company has really been a drain of late.',
+                 '\nBut your ferret still loves you!',
+                 '\nEven if he does keep ferreting your house keys away.',
+                 '\nAfter making sure Dave gets back to his desk on time, you sit',
+                 'down at your own. You really don\'t want to be here today, but',
+                 'your choices are limited.',
+                 '\nLimited to three.']
+        printText(intro)
         loggedIn4()
     else:
-        word = ['\nA few minutes before lunch, Biggs drops by your desk.',
-                '\n"You gonna eat with us today?" he asks.',
-                '\nIt\'s been over three months since Dave threw his chair through',
-                'the glass and dived after it, but the memory of that gap and the',
-                'sounds of cars stopping suddenly still haunts you. Could you have',
-                'saved Dave? The therapist tells you not to blame yourself, but it\'s',
-                'still hard to face your mutual friends sometimes.']
-        text(word)
+        intro = ['\nA few minutes before lunch, Biggs drops by your desk.',
+                 '\n"You gonna eat with us today?" he asks.',
+                 '\nIt\'s been over three months since Dave threw his chair through',
+                 'the glass and dived after it, but the memory of that gap and the',
+                 'sounds of cars stopping suddenly still haunts you. Could you have',
+                 'saved Dave? The therapist tells you not to blame yourself, but it\'s',
+                 'still hard to face your mutual friends sometimes.']
+        printText(intro)
         
         choice = 0
         while (int(choice) != 1) and (int(choice) != 2):
-            chc1 = ['\nWill you eat with Biggs and Wedge today?',
+            opts = ['\nWill you eat with Biggs and Wedge today?',
                     '1 - Yeah.',
                     '2 - No.']
-            text(chc1)
+            printText(opts)
         
             choice = raw_input("Pick one:")
             try:
@@ -580,7 +563,7 @@ def trouble(dave):
                             'face. She says a lot of other things, too, but so quickly you',
                             'you don\'t quite understand.',
                             '\nAs they drag you away, everyone is gaping in shock.']
-                    text(yeah)
+                    printText(yeah)
                     raw_input('\n(Press any button to continue)')
                 elif int(choice) == 2:
                     nope = ['\nBiggs nods a little sadly. "If you change your mind..."',
@@ -598,7 +581,7 @@ def trouble(dave):
                             'who it could be, you check the peephole. It\'s a police officer.',
                             'You open the door, but before you can even finish saying hello,',
                             'there are what seems like a hundred guns pointed at your face.']
-                    text(nope)
+                    printText(nope)
                     raw_input('\n(Press any button to continue)')
                 else:
                     print '\nSimple question. He\'s just asking.'
@@ -608,38 +591,38 @@ def trouble(dave):
         
     
 def spanishInquisition():
-    word = ['\nBy the time you\'re taken before a judge, you\'ve been in police',
-            'custody for... a while. You\'re not sure how long. The way they\'ve',
-            'been treating you, it just feels like... too long.',
-            '\nMuch to your dismay, you\'re not taken to a courtroom. You get to',
-            'sit down, but it\'s across a table from a judge in what looks like an',
-            'informal meeting room.',
-            '\n"Have you anything to say in your defense?" he asks simply.']
-    text(word)
+    intro = ['\nBy the time you\'re taken before a judge, you\'ve been in police',
+             'custody for... a while. You\'re not sure how long. The way they\'ve',
+             'been treating you, it just feels like... too long.',
+             '\nMuch to your dismay, you\'re not taken to a courtroom. You get to',
+             'sit down, but it\'s across a table from a judge in what looks like an',
+             'informal meeting room.',
+             '\n"Have you anything to say in your defense?" he asks simply.']
+    printText(intro)
     
     choice = 0
     while (int(choice) != 1) and (int(choice) != 2):
-        chc1 = ['\nWell, do you?',
+        opts = ['\nWell, do you?',
                 '1 - I still don\'t understand what I\'m supposed to have done.',
                 '2 - Would it matter if I did?']
-        text(chc1)
+        printText(opts)
         
         choice = raw_input("Pick one:")
         try:
             if int(choice) == 1:
                 pass
             elif int(choice) == 2:
-                ques = ['\n"It wouldn\'t change the verdict," he replied, "but it',
-                        'could affect your sentence."',
-                        '\nHe doesn\'t stop there.']
-                text(ques)
+                question = ['\n"It wouldn\'t change the verdict," he replied, "but it',
+                            'could affect your sentence."',
+                            '\nHe doesn\'t stop there.']
+                printText(question)
             else:
                 print '\n"Have you anything to say in your defense?" he asks again.'
         except ValueError:
             choice = 0
             print '\n"Have you anything to say in your defense?" he asks again.'
     
-    wrd2 = ['\n"The evidence against you is clear. Government records indicate that',
+    cont = ['\n"The evidence against you is clear. Government records indicate that',
             'you made the decision to decommission this robot," he says, pointing',
             'to the document in question. "Do you deny it?"',
             '\nThe documents appear to be in order. Your name and employee ID are',
@@ -653,65 +636,67 @@ def spanishInquisition():
             '\nWhat does THAT mean?',
             '\nThe judge\'s parting wishes, clearly sincere, are not comforting.',
             '\n"I wish you the best in your new life."']
-    text(wrd2)
+    printText(cont)
     raw_input('\n(Press any button to continue)')
     
-    wrd3 = ['\nA sharp jolt rouses you. You\'re in a vehicle of some kind, travelling',
-            'down the absolute bumpiest road you\'ve ever encountered in your life.',
-            'As you raise your head, a policeman sitting across from you turns and',
-            'yells towards the front of the vehicle.',
-            '\n"He\'s awake, sarge."',
-            '\n"Damn," comes a muffled voice, "I was looking forward to waking him',
-            'myself."',
-            '\nYour mouth feels funny. When you try to lift your hands to feel it, you',
-            'discover that your hands are chained to the floor. There are straps',
-            'holding you up against the wall of the vehicle, and you couldn\'t reach',
-            'the buckles to make an escape attempt if you tried.']
+    cont2 = ['\nA sharp jolt rouses you. You\'re in a vehicle of some kind, travelling',
+             'down the absolute bumpiest road you\'ve ever encountered in your life.',
+             'As you raise your head, a policeman sitting across from you turns and',
+             'yells towards the front of the vehicle.',
+             '\n"He\'s awake, sarge."',
+             '\n"Damn," comes a muffled voice, "I was looking forward to waking him',
+             'myself."',
+             '\nYour mouth feels funny. When you try to lift your hands to feel it, you',
+             'discover that your hands are chained to the floor. There are straps',
+             'holding you up against the wall of the vehicle, and you couldn\'t reach',
+             'the buckles to make an escape attempt if you tried.']
     
-    wrd4 = ['\nThe discomfort of your mouth and your grogginess are making it hard to',
-            'process much, but you\'re slowly becoming more aware of your surroundings.',
-            'While you\'re opening and closing your mouth to test it out -- your jaw',
-            'seems to be working fine, but your tongue is just not with the program --',
-            'another policeman sits next to the first opposite you.',
-            '\n"Hmm," he says. "Don\'t see eyes that color often out here. He\'ll be',
-            'good breeding stock."',
-            '\n"I dunno, sir," replied the first man. "He seems kinda scrawny to me."',
-            '\n"Yeah, but genetic diversity is important, too."',
-            '\nAre they... are they seriously discussing you as if you were livestock?',
-            '\nApparently the \'sarge\' notices your reaction. The smile he gives',
-            'in response is NOT a friendly one.']
+    cont3 = ['\nThe discomfort of your mouth and your grogginess are making it hard to',
+             'process much, but you\'re slowly becoming more aware of your surroundings.',
+             'While you\'re opening and closing your mouth to test it out -- your jaw',
+             'seems to be working fine, but your tongue is just not with the program --',
+             'another policeman sits next to the first opposite you.',
+             '\n"Hmm," he says. "Don\'t see eyes that color often out here. He\'ll be',
+             'good breeding stock."',
+             '\n"I dunno, sir," replied the first man. "He seems kinda scrawny to me."',
+             '\n"Yeah, but genetic diversity is important, too."',
+             '\nAre they... are they seriously discussing you as if you were livestock?',
+             '\nApparently the \'sarge\' notices your reaction. The smile he gives',
+             'in response is NOT a friendly one.']
     
-    wrd5 = ['"All right, then," the sargeant says, addressing you directly. "here\'s',
-            'your orientation. You are the newest \'robot\' on farm #512. This," he',
-            'continues, attaching something to your wrist, "is your ID bracelet. It',
-            'contains all your data -- your ID number and your stats. The stats are:',
-            'your \'age\', or years in labor service; the amount you can carry in',
-            'tens of pounds; your \'battery life\', or how many hours of work we can',
-            'get out of you in a day; your utility rating, which is assigned by',
-            'sargeants like myself; how much it costs us to feed you; and the number',
-            'of times you\'ve gotten sick or injured -- \'broken down\'."',
-            '\n"Your performance is closely monitored and evaluated on a regular',
-            'basis, especially when new \'robots\' become operational."',
-            '\nHe grins, and this time it looks downright nasty. "Oh yeah... you',
-            'already know that part."',
-            '\n"Now, this is where I normally tell new \'bots that if they work long',
-            'and hard enough, they might get to join proper society. But I think you',
-            'know that society class folk like your-former-self believe the farms',
-            'and factories are worked by actual robots. So I won\'t insult you with',
-            'that pep talk."',
-            '\n"Any questions?"']
+    cont4 = ['"All right, then," the sargeant says, addressing you directly. "here\'s',
+             'your orientation. You are the newest \'robot\' on farm #512. This," he',
+             'continues, attaching something to your wrist, "is your ID bracelet. It',
+             'contains all your data -- your ID number and your stats. The stats are:',
+             'your \'age\', or years in labor service; the amount you can carry in',
+             'tens of pounds; your \'battery life\', or how many hours of work we can',
+             'get out of you in a day; your utility rating, which is assigned by',
+             'sargeants like myself; how much it costs us to feed you; and the number',
+             'of times you\'ve gotten sick or injured -- \'broken down\'."',
+             '\n"Your performance is closely monitored and evaluated on a regular',
+             'basis, especially when new \'robots\' become operational."',
+             '\nHe grins, and this time it looks downright nasty. "Oh yeah... you',
+             'already know that part."',
+             '\n"Now, this is where I normally tell new \'bots that if they work long',
+             'and hard enough, they might get to join proper society. But I think you',
+             'know that society class folk like your-former-self believe the farms',
+             'and factories are worked by actual robots. So I won\'t insult you with',
+             'that pep talk."',
+             '\n"Any questions?"']
             
-    text(wrd3)
+    printText(cont2)
     raw_input('\n(Press any button to continue)')
-    text(wrd4)
+    printText(cont3)
     raw_input('\n(Press any button to continue)')
-    text(wrd5)
+    printText(cont4)
     
     choice = 0
+    again = ['\n"What\'s that?" he asks. I can\'t hear you."',
+             '\nHis subordinate snickers.']
     while (int(choice) != 1) and (int(choice) != 2):
-        chc1 = ['1 - You\'re kidding, right? You can\'t be serious.',
+        opts = ['1 - You\'re kidding, right? You can\'t be serious.',
                 '2 - Say nothing.']
-        text(chc1)
+        printText(opts)
         
         choice = raw_input("Pick one:")
         try:
@@ -720,49 +705,45 @@ def spanishInquisition():
                         '\nThe two men laugh.',
                         '\n"I love watching the ones with their tongues out try to talk,"',
                         'says the sargeant."']
-                text(talk)
+                printText(talk)
             elif int(choice) == 2:
-                slnc = ['\nAfter waiting for several moments with one eyebrow cocked, the',
-                        'sargeant clicks his tongue and makes a face.',
-                        '\n"Damn," he says, "I like it when the ones with their tongues out',
-                        'try to talk.']
-                text(slnc)
+                dontTalk = ['\nAfter waiting for several moments with one eyebrow cocked, the',
+                            'sargeant clicks his tongue and makes a face.',
+                            '\n"Damn," he says, "I like it when the ones with their tongues out',
+                            'try to talk.']
+                printText(dontTalk)
             else:
-                print '\n"What\'s that?" he asks. I can\'t hear you."'
-                time.sleep(0.2)
-                print '\nHis subordinate snickers.'
+                printText(again)
         except ValueError:
             choice = 0
-            print '\n"What\'s that?" he asks. I can\'t hear you."'
-            time.sleep(0.2)
-            print '\nHis subordinate snickers.'
+            printText(again)
     
-    wrd6 = ['\n"Anyway," he goes on, "Your tongue has been removed to prevent you from',
-            'trying to tell any of your fellow laborers about the fact that no one',
-            'in society knows they exist. You will be watched, and if you look like',
-            'you\'re even thinking about trying to communicate what you know to the',
-            'native laborers, you will be punished. Nor may you attempt to teach',
-            'them to read or write."',
-            '\n"Do I make myself clear?" he asks.',
-            '\nUnable to do anything else, you nod.']
+    cont5 = ['\n"Anyway," he goes on, "Your tongue has been removed to prevent you from',
+             'trying to tell any of your fellow laborers about the fact that no one',
+             'in society knows they exist. You will be watched, and if you look like',
+             'you\'re even thinking about trying to communicate what you know to the',
+             'native laborers, you will be punished. Nor may you attempt to teach',
+             'them to read or write."',
+             '\n"Do I make myself clear?" he asks.',
+             '\nUnable to do anything else, you nod.']
             
-    wrd7 = ['\nThe vehicle makes a turn and slows to a stop.',
-            '\nThe policemen bundle you out of the car and shove you to your knees in the',
-            'mud before undoing your wrists. When your eyes adjust to the light and',
-            'catch up to your nose, you can see that the horrible smell is animal dung',
-            'strewn about the yard.',
-            '\nThe sargeant points to a solitary goat in one corner.',
-            '\n"That goat is your charge until you\'re told otherwise."',
-            '\nHe then points to a girl nearby.',
-            '\n"She\'ll teach you everything you need to know." He grins another one of',
-            'his horrible grins. "You\'d best learn quickly. Your utility stat depends',
-            'on it."',
-            '\nThe girl comes over to help you up, smiling, as the policemen drive away.',
-            '\nIf none of this had happened to you, would her fate have been in your',
-            'hands tomorrow?']
+    cont6 = ['\nThe vehicle makes a turn and slows to a stop.',
+             '\nThe policemen bundle you out of the car and shove you to your knees in the',
+             'mud before undoing your wrists. When your eyes adjust to the light and',
+             'catch up to your nose, you can see that the horrible smell is animal dung',
+             'strewn about the yard.',
+             '\nThe sargeant points to a solitary goat in one corner.',
+             '\n"That goat is your charge until you\'re told otherwise."',
+             '\nHe then points to a girl nearby.',
+             '\n"She\'ll teach you everything you need to know." He grins another one of',
+             'his horrible grins. "You\'d best learn quickly. Your utility stat depends',
+             'on it."',
+             '\nThe girl comes over to help you up, smiling, as the policemen drive away.',
+             '\nIf none of this had happened to you, would her fate have been in your',
+             'hands tomorrow?']
     
-    text(wrd6)
+    printText(cont5)
     raw_input('\n(Press any button to continue)')
-    text(wrd7)
+    printText(cont6)
     
     raw_input('\n\nTHE END')

@@ -26,7 +26,7 @@ This is the start of the soon-to-be improved version. Planned changes,
 organized into prioritized tiers, are:
 
 HIGH
-- clean up and finish commenting the code
+- make the code self-documenting
 - make all the functions more flexible and compress redundant functions
 - make the robot simulation work with more site configurations than one farm
   and one factory
@@ -39,6 +39,6 @@ MEDIUM
 LOW
 - add background music
 - add graphics
-  - though I might keep the robot sim looking like DOS
+    - though I might keep the robot sim looking like DOS
 
 Viva Ludum Dare!

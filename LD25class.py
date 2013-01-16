@@ -37,9 +37,6 @@ class TooManyRobots(Exception):
 # Labor Robot Class
 ###############################################################################
 class LaborRobot(object):
-    """
-    Representation of a labor robot.
-    """
     def __init__(self, id, age, strength, battery, utility, cost, breakdowns=0,
                  output=0):
         """

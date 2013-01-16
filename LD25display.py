@@ -11,7 +11,7 @@ WORKS = ['FARM', 'FACTORY', 'UNASSIGNED']
 
 
 #TODO: Eliminate redundancy with text() in story file.
-def disp(stringList):
+def printText(stringList):
     """
     Prints strings in list word with a 0.2 second time step between each string.
     """
@@ -40,13 +40,12 @@ def keyAndTitle(num, simName='Simulation'):
             "UTIL: Rating of robot's ability to complete varied tasks",
             "COST: Weekly costs of maintaining robot",
             "BRKS: Number of times robot has broken down"]
-    disp(key1)
+    printText(key1)
     
     if num == 1:
-        print "T.OUT: Robot's total output over simulated timeframe."
-        time.sleep(0.2)
-        print "A.OUT: Robot's average output per week over simulated timeframe."
-        time.sleep(0.2)
+        key2 = ["T.OUT: Robot's total output over simulated timeframe",
+                "A.OUT: Robot's average output per week over simulated timeframe"]
+        printText(key2)
 
 
 def pWork(work, num):
@@ -106,7 +105,7 @@ def pCommand():
             "NONE [ID]    - Return robot to unassigned robot pool",
             "UPDATE       - Reprint robot lists",
             "RUN          - Run simulation"]
-    disp(word)
+    printText(word)
     
 
 def sStatus(i, duration):
@@ -192,4 +191,4 @@ def rEnd():
             "----------",
             "RESTART  - Restart simulation.",
             "DECOM - Choose robots to decommission.\n"]
-    disp(word)
+    printText(word)
