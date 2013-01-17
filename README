@@ -28,6 +28,7 @@ organized into prioritized tiers, are:
 HIGH
 - make the code self-documenting
 - make all the functions more flexible and compress redundant functions
+    - make it more pythonic
 - make the robot simulation work with more site configurations than one farm
   and one factory
 - make it so simulation results can be saved for reference/reloaded before
@@ -37,6 +38,9 @@ MEDIUM
 - multiple endings
 - move job description out of how to play and into main story trunk
 - balance robot simulation to make breakdowns more realistic
+    - number of breakdowns per robot
+    - stats of old robots relative to existing assignments
+    - general balance
 - make robot id number generation less obviously fake
 LOW
 - add background music

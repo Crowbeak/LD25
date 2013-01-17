@@ -5,14 +5,9 @@
 #      including simulation name and phase.
 #TODO: Check for and get rid of unused modules.
 
-
-###############################################################################
-# Imports and Initializations
-###############################################################################
 import random
 
 random.seed()
-
 
 FARM_BASE = 3.0
 FARM_UTIL_RATIO = 0.05
@@ -52,20 +47,6 @@ class LaborRobot(object):
                     negative int).
         output: Total resource output (a non-negative int).
         """
-        
-        """
-        TODO: Delete this docstring.
-              Saved for reference until all changes verified.
-        
-        self.id = id
-        self.age = age
-        self.str = strength
-        self.batt = battery
-        self.util = utility
-        self.cost = cost
-        self.breaks = breakdowns
-        self.out = output
-        """
         self.id = id
         self.age = age
         self.strength = strength
@@ -83,7 +64,8 @@ class LaborRobot(object):
             return BREAKDOWN_RATIO + (self.breakdowns*BROKEN_BEFORE)
         else:
             return (self.age*BREAKDOWN_RATIO) + (self.breakdowns*BROKEN_BEFORE)
-    
+
+    #TODO: Make following modules into properties?
     def incrementBreaks(self):
         self.breakdowns += 1
     
@@ -93,7 +75,6 @@ class LaborRobot(object):
 
 ###############################################################################
 # Workplace Classes
-#   Includes basic Workplace definition and subclasses.
 ###############################################################################
 class Workplace(object):
     """
@@ -105,19 +86,11 @@ class Workplace(object):
         avgDowntime: Average time to repair a robot, in days (int between 1-7).
         robots: A list of robot objects currently at the workplace.
         """
-        
-        """
-        TODO: Delete this docstring.
-              Saved for reference until all changes complete.
-              
-        self.max = maxRobots
-        self.down = avgDowntime
-        self.curr = currentRobots
-        """
         self.maxRobots = maxRobots
         self.avgDowntime = avgDowntime
         self.robots = robots
     
+    #TODO: Implement following two modules as properties.
     def addRobot(self, robot):
         """
         Adds a robot to the list of currentRobots.

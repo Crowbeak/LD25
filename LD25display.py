@@ -19,6 +19,19 @@ def printText(stringList):
         time.sleep(0.1)
 
 
+#TODO: Make this work. Currently unused.
+def initErrors():
+    errors = {}
+    errors[id] = ["ERROR: Invalid robot ID number.",
+                  "Please try again."]
+    errors[farmMax] = ["ERROR: Farm already contains max number of robots.",
+                       "Please remove one or more robots from farm before adding more."]
+    errors[factoryMax] = ["ERROR: Factory already contains max number of robots.",
+                          "Please remove one or more robots from factory before adding more."]
+    errors[commands] = ['Invalid command. Please try again.']
+    return errors
+
+
 ###############################################################################
 # Simulation - General Display Functions
 ###############################################################################
