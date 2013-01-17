@@ -1,9 +1,8 @@
 #TODO: Create site class, which is a collection of Workplace instances.
 #TODO: Make constants variables for each workplace,
 #      initialized once like average downtime.
-#TODO: Add simulation ident class which holds things like the simulation's
-#      name for printing robot sim output and what kinds of Workplaces it
-#      contains.
+#TODO: Add simulation class which holds the simulation game state variables,
+#      including simulation name and phase.
 #TODO: Check for and get rid of unused modules.
 
 
@@ -53,6 +52,11 @@ class LaborRobot(object):
                     negative int).
         output: Total resource output (a non-negative int).
         """
+        
+        """
+        TODO: Delete this docstring.
+              Saved for reference until all changes verified.
+        
         self.id = id
         self.age = age
         self.str = strength
@@ -61,46 +65,30 @@ class LaborRobot(object):
         self.cost = cost
         self.breaks = breakdowns
         self.out = output
+        """
+        self.id = id
+        self.age = age
+        self.strength = strength
+        self.battery = battery
+        self.utility = utility
+        self.cost = cost
+        self.breakdowns = breakdowns
+        self.output = output
     
-    def idNum(self):
-        return self.id
-    
-    def strength(self):
-        return self.str
-    
-    def battery(self):
-        return self.batt
-
-    def utility(self):
-        return self.util
-    
-    def breakdown(self):
+    def breakdownProb(self):
         """
         Returns probability of the robot breaking down in a week (a float).
         """
         if self.age <= 1:
-            return BREAKDOWN_RATIO + (self.breaks*BROKEN_BEFORE)
+            return BREAKDOWN_RATIO + (self.breakdowns*BROKEN_BEFORE)
         else:
-            return (self.age*BREAKDOWN_RATIO) + (self.breaks*BROKEN_BEFORE)
+            return (self.age*BREAKDOWN_RATIO) + (self.breakdowns*BROKEN_BEFORE)
     
-    def incBreak(self):
-        self.breaks += 1
+    def incrementBreaks(self):
+        self.breakdowns += 1
     
-    def addOut(self, amount):
-        self.out += amount
-    
-    def costs(self):
-        return self.cost
-    
-    def output(self):
-        return self.out
-    
-    def stats(self):
-        """
-        Returns all of the robots's stats.
-        """
-        return (self.id, self.age, self.str, self.batt, self.util, self.cost,
-                self.breaks, self.out)
+    def addOutput(self, amount):
+        self.output += amount
 
 
 ###############################################################################
@@ -111,88 +99,87 @@ class Workplace(object):
     """
     Representation of work environment for robots.
     """
-    def __init__(self, maxRobots, avgDowntime, currentRobots = []):
+    def __init__(self, maxRobots, avgDowntime, robots = []):
         """
         maxRobots: Maximum number of robots the place can hold (a non-neg int).
         avgDowntime: Average time to repair a robot, in days (int between 1-7).
-        currentRobots: A list of robot objects currently at the workplace.
+        robots: A list of robot objects currently at the workplace.
         """
+        
+        """
+        TODO: Delete this docstring.
+              Saved for reference until all changes complete.
+              
         self.max = maxRobots
         self.down = avgDowntime
         self.curr = currentRobots
+        """
+        self.maxRobots = maxRobots
+        self.avgDowntime = avgDowntime
+        self.robots = robots
     
-    def addRobo(self, robot):
+    def addRobot(self, robot):
         """
         Adds a robot to the list of currentRobots.
         """
-        if len(self.curr) < self.max:
-            self.curr.append(robot)
+        if len(self.robots) < self.maxRobots:
+            self.robots.append(robot)
         else:
             raise TooManyRobots("Max number of robots exceeded.")
     
-    def rem(self, id):
+    def removeRobot(self, id):
         """
         Pops the robot with the given id number from the list of currentRobots
         if the robot is in the list.
         #TODO: Otherwise, raise exception.
         """
-        for i in range(len(self.curr)):
-            if self.curr[i].id == id:
-                return self.curr.pop(i)
+        for i in range(len(self.robots)):
+            if self.robots[i].id == id:
+                return self.robots.pop(i)
     
-    def robots(self):
-        """
-        Returns the list of current robots.
-        """
-        return self.curr
-    
-    def getMax(self):
-        return self.max
-    
-    def totalOut(self):
+    def getTotalOutput(self):
         """
         Returns the total output of all robots at the workplace.
         """
-        temp = 0
-        for robot in self.curr:
-            temp += robot.out
+        total = 0
+        for robot in self.robots:
+            total += robot.output
         
-        return temp
-        
-    def totalCost(self):
-        """
-        Returns the total cost of robot maintenance at the workplace.
-        """
-        temp = 0
-        for robot in self.curr:
-            temp += robot.cost
-        
-        return temp
+        return total
     
-    def avgOut(self, weeks):
+    #TODO: Am I using this, or does it need to go?
+    def getTotalCost(self):
+        total = 0
+        for robot in self.robots:
+            total += robot.cost
+        
+        return total
+    
+    def getAvgOutput(self, weeks):
         """
         Returns the average weekly output per robot as a float.
         """
-        return (self.totalOut()/weeks)/float(len(self.curr))
+        return (self.getTotalOutput()/weeks)/float(len(self.robots))
     
-    def avgCost(self):
+    #TODO: Am I using this, or does it need to go?
+    def getAvgCost(self):
         """
         Returns the average weekly cost to maintain a robot at the workplace
         as a float.
         """
-        return self.totalCost()/float(len(self.curr))
+        return self.getTotalCost()/float(len(self.robots))
 
 
 class Unassigned(Workplace):
     """
     Placeholder for robots not yet assigned to a real workplace.
     """
-    def __init__(self, robots):
-        self.curr = robots
-        self.max = None
+    def __init__(self, robots = []):
+        self.robots = robots
+        self.maxRobots = None   #Need for pDisplayWorkplace.
     
-    def addRobo(self, robot):
-        self.curr.append(robot)
+    def addRobot(self, robot):
+        self.robots.append(robot)
 
 
 class Farm(Workplace):
@@ -204,15 +191,15 @@ class Farm(Workplace):
         Updates all robots' output totals after a week's worth of work.
         If a robot breaks, increments the number of breaks for that robot.
         """
-        for robot in self.curr:
-            if random.random() < robot.breakdown():
-                robot.incBreak()
-                output = int(((robot.str*FARM_BASE) * robot.batt *
-                             (7-self.down) * (robot.util*FARM_UTIL_RATIO)))
+        for robot in self.robots:
+            if random.random() < robot.breakdownProb():
+                robot.incrementBreaks()
+                output = int(((robot.strength*FARM_BASE) * robot.battery *
+                             (7-self.avgDowntime) * (robot.utility*FARM_UTIL_RATIO)))
             else:
-                output = int(((robot.str*FARM_BASE) * robot.batt * 7 *
-                             (robot.util*FARM_UTIL_RATIO)))
-            robot.addOut(output)
+                output = int(((robot.strength*FARM_BASE) * robot.battery * 7 *
+                             (robot.utility*FARM_UTIL_RATIO)))
+            robot.addOutput(output)
         
 
 class Factory(Workplace):
@@ -224,12 +211,12 @@ class Factory(Workplace):
         Updates all robots' output totals after a week's worth of work.
         If a robot breaks, increments the number of breaks for that robot.
         """
-        for robot in self.curr:
-            if random.random() < robot.breakdown():
-                robot.incBreak()
-                output = int(((robot.util*FACTORY_BASE) * robot.batt *
-                             (7-self.down) * (robot.str*FACTORY_STR_RATIO)))
+        for robot in self.robots:
+            if random.random() < robot.breakdownProb():
+                robot.incrementBreaks()
+                output = int(((robot.utility*FACTORY_BASE) * robot.battery *
+                             (7-self.avgDowntime) * (robot.strength*FACTORY_STR_RATIO)))
             else:
-                output = int(((robot.util*FACTORY_BASE) * robot.batt * 7 *
-                             (robot.str*FACTORY_STR_RATIO)))
-            robot.addOut(output)
+                output = int(((robot.utility*FACTORY_BASE) * robot.battery * 7 *
+                             (robot.strength*FACTORY_STR_RATIO)))
+            robot.addOutput(output)

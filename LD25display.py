@@ -10,7 +10,6 @@ PHASES = ['ROBOT PLACEMENT', 'SIMULATION RESULTS']
 WORKS = ['FARM', 'FACTORY', 'UNASSIGNED']
 
 
-#TODO: Eliminate redundancy with text() in story file.
 def printText(stringList):
     """
     Prints strings in list word with a 0.2 second time step between each string.
@@ -20,18 +19,18 @@ def printText(stringList):
         time.sleep(0.1)
 
 
+###############################################################################
+# Simulation - General Display Functions
+###############################################################################
 #TODO: Make this take a simulation object instead of a name.
-def keyAndTitle(num, simName='Simulation'):
+def printKeyAndTitle(num, simName='Simulation'):
     """
     num: The index of the appropriate subtitle in PHASES (a non-negative int).
     simName: Simulation name (a string).
     """
-    print "\nSIMULATION: {} \n".format(simName)
-    time.sleep(0.2)
-    print "{}".format(PHASES[num])
-    time.sleep(0.2)
-    
-    key1 = ["KEY",
+    key1 = ["\nSIMULATION: {} \n".format(simName),
+            "{}\n".format(PHASES[num]),
+            "KEY",
             "----------",
             "ID:   Robot's ID number",
             "AGE:  Years robot has been in service",
@@ -48,34 +47,38 @@ def keyAndTitle(num, simName='Simulation'):
         printText(key2)
 
 
-def pWork(work, num):
+###############################################################################
+# Simulation - Placement Phase Display Functions
+###############################################################################
+def pDisplayWorkplace(work, num):
     """
     Displays the robots in a workplace and their stats in table form.
-    Used during the robot placement phase of simulation.
     
     work: a Workplace instance.
     num: index in WORKS of the name of the Workplace type.
     """
     print "\n{} ROBOTS".format(WORKS[num])
     time.sleep(0.2)
-    if work.getMax() == None:
+    
+    if work.maxRobots == None:
         print "NO MAXIMUM"
         time.sleep(0.2)
     else:
-        print "MAX NUMBER OF ROBOTS:", work.getMax()
+        print "MAX NUMBER OF ROBOTS:", work.maxRobots
         time.sleep(0.2)
-    print "  ID  AGE CARR BATT UTIL COST BRKS"
-    time.sleep(0.2)
-    print "----------------------------------"
+        
+    head = ["  ID  AGE CARR BATT UTIL COST BRKS",
+            "----------------------------------"]
+    printText(head)
     
-    for robot in work.robots():
-        id, age, str, batt, util, cost, brks, out = robot.stats()
-        print repr(id).rjust(4), repr(age).rjust(4), repr(str).rjust(4),
-        print repr(batt).rjust(4), repr(util).rjust(4), repr(cost).rjust(4),
-        print repr(brks).rjust(4)
+    for robot in work.robots:
+        print repr(robot.id).rjust(4), repr(robot.age).rjust(4),
+        print repr(robot.strength).rjust(4), repr(robot.battery).rjust(4),
+        print repr(robot.utility).rjust(4), repr(robot.cost).rjust(4),
+        print repr(robot.breakdowns).rjust(4)
     
 
-#TODO: Make pDisplay take a list of Wrokplace objects instead of specific ones.
+#TODO: Make this take a list of Wrokplace objects instead of specific ones.
 def pDisplay(unassigned, farm, factory, simName='Simulation'):
     """
     Prints console information during the robot placement phase of simulation.
@@ -85,33 +88,34 @@ def pDisplay(unassigned, farm, factory, simName='Simulation'):
     factory: a Factory instance.
     simName: the simulation name (a string).
     """
-    keyAndTitle(0, simName)
+    printKeyAndTitle(0, simName)
     
-    pWork(farm, 0)
-    pWork(factory, 1)
-    pWork(unassigned, 2)
+    pDisplayWorkplace(farm, 0)
+    pDisplayWorkplace(factory, 1)
+    pDisplayWorkplace(unassigned, 2)
 
 
 #TODO: Make this take a simulation object so it can print lines based on
 #      available work sites.
-def pCommand():
+def pCommandMenu():
     """
     Displays console commands during the robot placement phase of simulation.
     """
-    word = ["\nCOMMANDS",
-            "----------",
-            "FARM [ID]    - Move robot with ID number [ID] to the farm",
-            "FACTORY [ID] - Move robot with ID number [ID] to the factory",
-            "NONE [ID]    - Return robot to unassigned robot pool",
-            "UPDATE       - Reprint robot lists",
-            "RUN          - Run simulation"]
-    printText(word)
+    commands = ["\nCOMMANDS",
+                "----------",
+                "FARM [ID]    - Move robot with ID number [ID] to the farm",
+                "FACTORY [ID] - Move robot with ID number [ID] to the factory",
+                "NONE [ID]    - Return robot to unassigned robot pool",
+                "UPDATE       - Reprint robot lists",
+                "RUN          - Run simulation"]
+    printText(commands)
     
 
-def sStatus(i, duration):
+###############################################################################
+# Simulation - Calculation Phase Display Functions
+###############################################################################
+def cStatus(i, duration):
     """
-    Prints progress during the calculation phase of simulation.
-    
     Calls to time.sleep() inserted because calculation takes almost no time.
     """
     tenths = duration/10
@@ -151,7 +155,10 @@ def sStatus(i, duration):
         time.sleep(0.2)
 
 
-def rWork(work, num, weeks, simName='Simulation'):
+###############################################################################
+# Simulation - Results Phase Display Functions
+###############################################################################
+def rDisplayWorkplaceResults(work, num, weeks, simName='Simulation'):
     """
     Displays results of the calculation phase of simulation for the Workplace
     instance given.
@@ -161,24 +168,23 @@ def rWork(work, num, weeks, simName='Simulation'):
     weeks: number of weeks over which the results were calculated.
     simName: the name of the simulation (a string).
     """
-    print "\n{} ROBOTS".format(WORKS[num])
-    time.sleep(0.2)
-    print "INDIVIDUAL OUTPUTS"
-    time.sleep(0.2)
-    print "  ID  AGE CARR BATT UTIL COST BRKS |    T.OUT  A.OUT"
-    time.sleep(0.2)
-    print "-----------------------------------|----------------"
+    head = ["\n{} ROBOTS".format(WORKS[num]),
+            "INDIVIDUAL OUTPUTS",
+            "  ID  AGE CARR BATT UTIL COST BRKS |    T.OUT  A.OUT",
+            "-----------------------------------|----------------"]
+    printText(head)
     
-    for robot in work.robots():
-        id, age, str, batt, util, cost, brks, out = robot.stats()
-        print repr(id).rjust(4), repr(age).rjust(4), repr(str).rjust(4),
-        print repr(batt).rjust(4), repr(util).rjust(4), repr(cost).rjust(4),
-        print repr(brks).rjust(4), '|',  repr(out).rjust(8),
-        print repr(out/weeks).rjust(6)
+    for robot in work.robots:
+        print repr(robot.id).rjust(4), repr(robot.age).rjust(4),
+        print repr(robot.strength).rjust(4), repr(robot.battery).rjust(4),
+        print repr(robot.utility).rjust(4), repr(robot.cost).rjust(4),
+        print repr(robot.breakdowns).rjust(4), '|',
+        print repr(robot.output).rjust(8), repr(robot.output/weeks).rjust(6)
     
-    print "\nTOTAL {} OUTPUT:".format(WORKS[num]), work.totalOut()
+    #TODO: Try to make this a nice list. Parentheses?
+    print "\nTOTAL {} OUTPUT:".format(WORKS[num]), work.getTotalOutput()
     time.sleep(0.2)
-    print "\nAVERAGE WEEKLY OUTPUT PER ROBOT:", work.avgOut(weeks)
+    print "\nAVERAGE WEEKLY OUTPUT PER ROBOT:", work.getAvgOutput(weeks)
     time.sleep(0.2)
 
 
@@ -187,8 +193,8 @@ def rEnd():
     Displays console commands after the calculation phase of simulation
     is complete.
     """
-    word = ["\nCOMMANDS",
-            "----------",
-            "RESTART  - Restart simulation.",
-            "DECOM - Choose robots to decommission.\n"]
-    printText(word)
+    commands = ["\nCOMMANDS",
+                "----------",
+                "RESTART  - Restart simulation.",
+                "DECOM - Choose robots to decommission.\n"]
+    printText(commands)

@@ -1,5 +1,5 @@
-#TODO: Move some things from runSim into their own functions so that shit is
-#      easier to read.
+#TODO: Create three functions -- placement, calculate, and resutls -- to make
+#      runSim more readable.
 
 import random
 import string
@@ -46,6 +46,26 @@ def initRobots(number, old):
             id += 1
     
     return robots
+    
+    
+def initErrors():
+    errors = {}
+    errors[id] = ["ERROR: Invalid robot ID number.",
+                  "Please try again."]
+    errors[farmMax] = ["ERROR: Farm already contains max number of robots.",
+                       "Please remove one or more robots from farm before adding more."]
+    errors[factoryMax] = ["ERROR: Factory already contains max number of robots.",
+                          "Please remove one or more robots from factory before adding more."]
+    errors[commands] = ['Invalid command. Please try again.']
+    return errors
+
+
+#TODO: Make this take a list of workplaces.
+def runCalculations(farm, factory):
+    for i in range(WEEKS_NUM):
+        factory.update()
+        farm.update()
+        cStatus(i, WEEKS_NUM)
 
 
 def runSim(oldRobots, newRobots, simName="Simulation"):
@@ -56,28 +76,35 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
     newRobots: Number of incoming brand new robots to fit in (a positive int).
     simName: Name of current simulation.
     """
-    #Initialization.
     oldRobotL = initRobots(oldRobots, True)
     newRobotL = initRobots(newRobots, False)
-    farmDown = random.randint(1, 7)
-    factDown = random.randint(1, 7)
-    farmRobots = oldRobots/random.randint(2, 4)
-    factoryRobots = oldRobots - farmRobots
+    farmAvgDowntime = random.randint(1, 7)
+    factAvgDowntime = random.randint(1, 7)
+    farmRobotsNum = oldRobots/random.randint(2, 4)
+    factoryRobotsNum = oldRobots - farmRobotsNum
     
-    start = True
-    while start:
+    errorID = ["\nERROR: Invalid robot ID number.",
+               "Please try again."]
+    errorFarmMax = ["\nERROR: Farm already contains max number of robots.",
+                    "Please remove one or more robots from farm before adding more."]
+    errorFactoryMax = ["\nERROR: Factory already contains max number of robots.",
+                       "Please remove one or more robots from factory before adding more."]
+    errorCMD = ['\nInvalid command. Please try again.']
+    
+    go = True
+    while go:
         #Setup Workplace instances.
         unassigned = Unassigned(newRobotL[:])
-        farm = Farm(farmRobots, farmDown, oldRobotL[:farmRobots])
-        factory = Factory(factoryRobots, factDown, oldRobotL[farmRobots:])
+        farm = Farm(farmRobotsNum, farmAvgDowntime, oldRobotL[:farmRobotsNum])
+        factory = Factory(factoryRobotsNum, factAvgDowntime, oldRobotL[farmRobotsNum:])
         
-        #Robot placements.
+        #Placement phase.
         pDisplay(unassigned, farm, factory, simName)
     
         command = [False]
     
         while command[0] != 'run':
-            pCommand()
+            pCommandMenu()
             input = raw_input("\nPlease choose an option from above:")
             command = input.lower().split()
             command.append(' ')
@@ -86,96 +113,82 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
                 id = int(command[1])
                 oldHome = farm
             
-                for robot in factory.robots():
-                    if robot.idNum() == id:
+                for robot in factory.robots:
+                    if robot.id == id:
                         oldHome = factory
                         break
                     
                 if oldHome == farm:
-                    for robot in unassigned.robots():
-                        if robot.idNum() == id:
+                    for robot in unassigned.robots:
+                        if robot.id == id:
                             oldHome = unassigned
                             break
                 
                 if oldHome == farm:
-                    print "ERROR: Invalid robot ID number."
-                    time.sleep(0.2)
-                    print "Please try again."
+                    printText(errorID)
                 else:
-                    move = oldHome.rem(id)
+                    move = oldHome.removeRobot(id)
                     try:
-                        farm.addRobo(move)
+                        farm.addRobot(move)
                     except TooManyRobots:
-                        oldHome.addRobo(move)
-                        print "ERROR: Farm already contains max number of robots."
-                        time.sleep(0.2)
-                        print "Please remove robots from farm before adding more."
+                        oldHome.addRobot(move)
+                        printText(errorFarmMax)
             elif command[0] == 'factory':
                 id = int(command[1])
                 oldHome = factory
             
-                for robot in farm.robots():
-                    if robot.idNum() == id:
+                for robot in farm.robots:
+                    if robot.id == id:
                         oldHome = farm
                         break
             
                 if oldHome == factory:
-                    for robot in unassigned.robots():
-                        if robot.idNum() == id:
+                    for robot in unassigned.robots:
+                        if robot.id == id:
                             oldHome = unassigned
                             break
                             
                 if oldHome == factory:
-                    print "ERROR: Invalid robot ID number."
-                    time.sleep(0.2)
-                    print "Please try again."
+                    printText(errorID)
                 else:
-                    move = oldHome.rem(id)
+                    move = oldHome.removeRobot(id)
                     try:
-                        factory.addRobo(move)
+                        factory.addRobot(move)
                     except TooManyRobots:
-                        oldHome.addRobo(move)
-                        print "ERROR: Factory already contains max number of robots."
-                        time.sleep(0.2)
-                        print "Please remove robots from factory before adding more."
+                        oldHome.addRobot(move)
+                        printText(errorFactoryMax)
             elif command[0] == 'none':
                 id = int(command[1])
                 oldHome = unassigned
             
-                for robot in factory.robots():
-                    if robot.idNum() == id:
+                for robot in factory.robots:
+                    if robot.id == id:
                         oldHome = factory
                         break
                 if oldHome == unassigned:
-                    for robot in farm.robots():
-                        if robot.idNum() == id:
+                    for robot in farm.robots:
+                        if robot.id == id:
                             oldHome = farm
                             break
                 
                 if oldHome == unassigned:
-                    print "ERROR: Invalid robot ID number."
-                    time.sleep(0.2)
-                    print "Please try again."
+                    printText(errorID)
                 else:
-                    move = oldHome.rem(id)
-                    unassigned.addRobo(move)
+                    move = oldHome.removeRobot(id)
+                    unassigned.addRobot(move)
             elif command[0] == 'update':
                 pDisplay(unassigned, farm, factory, simName)
             elif command[0] == 'run':
                 break
             else:
-                print "Invalid command. Please try again."
+                printText(errorCMD)
 
-        #Run simulation calculations at battlestation, no contatenations.
-        for i in range(WEEKS_NUM):
-            factory.update()
-            farm.update()
-            sStatus(i, WEEKS_NUM)
+        runCalculations(farm, factory)
     
-        #Display results.
-        keyAndTitle(1, simName)
-        rWork(farm, 0, WEEKS_NUM, simName)
-        rWork(factory, 1, WEEKS_NUM, simName)
+        #Results phase.
+        printKeyAndTitle(1, simName)
+        rDisplayWorkplaceResults(farm, 0, WEEKS_NUM, simName)
+        rDisplayWorkplaceResults(factory, 1, WEEKS_NUM, simName)
 
         doneYet = False
         while not doneYet:
@@ -188,12 +201,12 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
                 doneYet = True
             elif command[0] == 'decom':
                 idNums = []
-                for robot in farm.robots():
-                    idNums.append(robot.idNum())
-                for robot in factory.robots():
-                    idNums.append(robot.idNum())
-                for robot in unassigned.robots():
-                    idNums.append(robot.idNum())
+                for robot in farm.robots:
+                    idNums.append(robot.id)
+                for robot in factory.robots:
+                    idNums.append(robot.id)
+                for robot in unassigned.robots:
+                    idNums.append(robot.id)
                 
                 for i in range(newRobots):
                     extant = False
@@ -203,12 +216,15 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
                             if int(input) in idNums:
                                 extant = True
                             else:
-                                print "Invalid robot ID number."
+                                printText(errorID)
                         except ValueError:
                             input = ' '
-                            print "Invalid robot ID number."
+                            printText(errorID)
                 print '\nSIMULATION COMPLETE\n'
-                start = False
+                go = False
                 doneYet = True
             else:
-                print 'Invalid command. Please try again.'
+                printText(errorCMD)
+
+if __name__ == '__main__':
+    runSim(10, 2)

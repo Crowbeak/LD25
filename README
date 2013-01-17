@@ -30,6 +30,8 @@ HIGH
 - make all the functions more flexible and compress redundant functions
 - make the robot simulation work with more site configurations than one farm
   and one factory
+- make it so simulation results can be saved for reference/reloaded before
+  choosing what to decommission
 MEDIUM
 - more branching storylines
 - multiple endings
