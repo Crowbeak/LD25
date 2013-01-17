@@ -201,10 +201,8 @@ def resultsPhase(farm, factory, simName):
 
 def runSim(oldRobots, newRobots, simName="Simulation"):
     """
-    Runs the robot simulation with the given parameters.
-    
     oldRobots: Number of robots in operation at the site (a non-negative int).
-    newRobots: Number of incoming brand new robots to fit in (a positive int).
+    newRobots: Number of incoming new robots to fit in (a positive int).
     simName: Name of current simulation.
     """
     #TODO: Create simulation object.

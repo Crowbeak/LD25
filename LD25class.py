@@ -90,7 +90,6 @@ class Workplace(object):
         self.avgDowntime = avgDowntime
         self.robots = robots
     
-    #TODO: Implement following two modules as properties.
     def addRobot(self, robot):
         """
         Adds a robot to the list of currentRobots.
@@ -193,3 +192,21 @@ class Factory(Workplace):
                 output = int(((robot.utility*FACTORY_BASE) * robot.battery * 7 *
                              (robot.strength*FACTORY_STR_RATIO)))
             robot.addOutput(output)
+
+
+###############################################################################
+# Simulation State Class
+###############################################################################
+class SimState(Object):
+    """
+    Represents the state of the simulation at any given time.
+    """
+    def __init__(self, name, workplaces=[]):
+        """
+        name: simulation name (a string).
+        workplaces: A list of workplace objects.
+        phase: current phase of simulation (a string).
+        """
+        self.name = name
+        self.workplaces = workplaces
+        self.phase = "PLACEMENT"

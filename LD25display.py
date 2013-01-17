@@ -35,7 +35,7 @@ def initErrors():
 ###############################################################################
 # Simulation - General Display Functions
 ###############################################################################
-#TODO: Make this take a simulation object instead of a name.
+#TODO: Make this take a simulation object instead of a name and number.
 def printKeyAndTitle(num, simName='Simulation'):
     """
     num: The index of the appropriate subtitle in PHASES (a non-negative int).
