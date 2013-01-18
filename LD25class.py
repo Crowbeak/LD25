@@ -83,7 +83,7 @@ class Workplace(object):
     
     Does not include name attribute.
     """
-    def __init__(self, maxRobots, avgDowntime, robots = []):
+    def __init__(self, maxRobots, avgDowntime, robots=[]):
         """
         maxRobots: Maximum number of robots the place can hold (a non-neg int).
         avgDowntime: Average time to repair a robot, in days (int between 1-7).
@@ -143,20 +143,23 @@ class Workplace(object):
         as a float.
         """
         return self.getTotalCost()/float(len(self.robots))
+    
+    def update(self):
+        pass
 
 
 class Unassigned(Workplace):
     """
     Placeholder for robots not yet assigned to an actual workplace.
     """
-    def __init__(self, robots = []):
+    def __init__(self, robots=[]):
         """
         robots: A list of robots currently unassigned to an actual workplace.
-        maxRobots: for purposes of display during simulation (value: None).
-        type: name of workplace type (a string).
+        maxRobots: for purposes of display during simulation,this is None type.
+        name: name of workplace (a string).
         """
         self.robots = robots
-        #TODO: Make this maxRobots unnecessary by going off of self.type.
+        #TODO: Make this maxRobots unnecessary by going off of self.name.
         self.maxRobots = None   #Need for pDisplayWorkplace.
         self.name = "UNASSIGNED"
     
@@ -168,7 +171,7 @@ class Farm(Workplace):
     """
     Representation of a farm where robots work.
     """
-    def __init__(self, maxRobots, avgDowntime, robots = []):
+    def __init__(self, maxRobots, avgDowntime, robots=[]):
         Workplace.__init__(self, maxRobots, avgDowntime, robots)
         self.name = "FARM"
     
@@ -181,7 +184,8 @@ class Farm(Workplace):
             if random.random() < robot.breakdownProb():
                 robot.incrementBreaks()
                 output = int(((robot.strength*FARM_BASE) * robot.battery *
-                             (7-self.avgDowntime) * (robot.utility*FARM_UTIL_RATIO)))
+                             (7-self.avgDowntime) *
+                             (robot.utility*FARM_UTIL_RATIO)))
             else:
                 output = int(((robot.strength*FARM_BASE) * robot.battery * 7 *
                              (robot.utility*FARM_UTIL_RATIO)))
@@ -192,7 +196,7 @@ class Factory(Workplace):
     """
     Representation of a factory where robots work.
     """
-    def __init__(self, maxRobots, avgDowntime, robots = []):
+    def __init__(self, maxRobots, avgDowntime, robots=[]):
         Workplace.__init__(self, maxRobots, avgDowntime, robots)
         self.name = "FACTORY"
         
@@ -205,10 +209,11 @@ class Factory(Workplace):
             if random.random() < robot.breakdownProb():
                 robot.incrementBreaks()
                 output = int(((robot.utility*FACTORY_BASE) * robot.battery *
-                             (7-self.avgDowntime) * (robot.strength*FACTORY_STR_RATIO)))
-            else:
-                output = int(((robot.utility*FACTORY_BASE) * robot.battery * 7 *
+                             (7-self.avgDowntime) *
                              (robot.strength*FACTORY_STR_RATIO)))
+            else:
+                output = int(((robot.utility*FACTORY_BASE) * robot.battery *
+                             7 * (robot.strength*FACTORY_STR_RATIO)))
             robot.addOutput(output)
 
 
@@ -219,12 +224,12 @@ class SimState(object):
     """
     Represents the state of the simulation at any given time.
     """
-    def __init__(self, workplaces=[], name = "SIMULATION"):
+    def __init__(self, newRobotsNum, workplaces=[], name="SIMULATION"):
         """
-        name: simulation name (a string).
-        workplaces: A list of workplace objects.
+        workplaces: A list of Workplace objects.
         phase: current phase of simulation (a string).
         """
         self.name = name
         self.workplaces = workplaces
         self.phase = "ROBOT PLACEMENT"
+        self.newRobotsNum = newRobotsNum

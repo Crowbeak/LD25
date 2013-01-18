@@ -41,6 +41,7 @@ MEDIUM
     - number of breakdowns per robot
     - stats of old robots relative to existing assignments
     - general balance
+- Implement robot repurposing
 - make robot id number generation less obviously fake
 LOW
 - add background music

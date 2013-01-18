@@ -120,11 +120,11 @@ def pCommandMenu():
 ###############################################################################
 # Simulation - Calculation Phase Display Functions
 ###############################################################################
-def cStatus(i, duration):
+def cStatus(i, cycles):
     """
     Calls to time.sleep() inserted because calculation takes almost no time.
     """
-    tenths = duration/10
+    tenths = cycles/10
     
     if i == 0:
         print "\n\nSIMULATING. PLEASE WAIT..."
@@ -156,7 +156,7 @@ def cStatus(i, duration):
     elif i == tenths*9:
         print "...90% complete"
         time.sleep(0.2)
-    elif i == (duration-1):
+    elif i == (cycles-1):
         print "SIMULATION COMPLETE.\n"
         time.sleep(0.2)
 

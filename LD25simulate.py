@@ -1,3 +1,4 @@
+
 #TODO: Create three functions -- placement, calculate, and resutls -- to make
 #      runSim more readable.
 #TODO: Create special 
@@ -145,19 +146,20 @@ def placementPhase(workplaces, simName):
             printText(errorCMD)
 
 
-#TODO: Make this take a SimState instance.
-def calculationPhase(farm, factory):
+#TODO: Make this take a SimState instance. (Maybe?)
+def calculationPhase(workplaces):
     for i in range(WEEKS_NUM):
-        factory.update()
-        farm.update()
+        for workplace in workplaces:
+            workplace.update()
         cStatus(i, WEEKS_NUM)
         
 
 #TODO: Make this take a SimState instance.
-def resultsPhase(farm, factory, simName):
+#TODO: Make this take newRobotsNum from SimState
+def resultsPhase(workplaces, simName, newRobotsNum):
     printKeyAndTitle(1, simName)
-    rDisplayWorkplaceResults(farm, WEEKS_NUM, simName)
-    rDisplayWorkplaceResults(factory, WEEKS_NUM, simName)
+    for workplace in workplaces:
+        rDisplayWorkplaceResults(workplace, WEEKS_NUM, simName)
 
     restart = True
     doneYet = False
@@ -171,14 +173,11 @@ def resultsPhase(farm, factory, simName):
             doneYet = True
         elif command[0] == 'decom':
             idNums = []
-            for robot in farm.robots:
-                idNums.append(robot.id)
-            for robot in factory.robots:
-                idNums.append(robot.id)
-            for robot in unassigned.robots:
-                idNums.append(robot.id)
+            for workplace in workplaces:
+                for robot in workplace.robots:
+                    idNums.append(robot.id)
                 
-            for i in range(newRobots):
+            for i in range(newRobotsNum):
                 extant = False
                 while not extant:
                     input = raw_input("Enter ID of robot #{} to be decommissioned:".format(i+1))
@@ -199,18 +198,13 @@ def resultsPhase(farm, factory, simName):
     return restart
 
 
-def runSim(oldRobots, newRobots, simName="Simulation"):
-    """
-    oldRobots: Number of robots in operation at the site (a non-negative int).
-    newRobots: Number of incoming new robots to fit in (a positive int).
-    simName: Name of current simulation.
-    """
-    oldRobotL = initRobots(oldRobots, True)
-    newRobotL = initRobots(newRobots, False)
+def runSim(oldRobotsNum, newRobotsNum, simName="Simulation"):
+    oldRobotL = initRobots(oldRobotsNum, True)
+    newRobotL = initRobots(newRobotsNum, False)
     farmAvgDowntime = random.randint(1, 7)
     factAvgDowntime = random.randint(1, 7)
-    farmRobotsNum = oldRobots/random.randint(2, 4)
-    factoryRobotsNum = oldRobots - farmRobotsNum
+    farmRobotsNum = oldRobotsNum/random.randint(2, 4)
+    factoryRobotsNum = oldRobotsNum - farmRobotsNum
     
     simRunning = True
     while simRunning:
@@ -221,8 +215,8 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
         #simulation = SimState(workplaces, simName)
         
         placementPhase(workplaces, simName)
-        calculationPhase(farm, factory)
-        simRunning = resultsPhase(farm, factory, simName)
+        calculationPhase(workplaces)
+        simRunning = resultsPhase(workplaces, simName, newRobotsNum)
 
 if __name__ == '__main__':
     runSim(10, 2)
