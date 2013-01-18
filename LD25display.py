@@ -62,27 +62,25 @@ def printKeyAndTitle(num, simName='Simulation'):
 ###############################################################################
 # Simulation - Placement Phase Display Functions
 ###############################################################################
-def pDisplayWorkplace(work):
+def pDisplayWorkplace(workplace):
     """
     Displays the robots in a workplace and their stats in table form.
-    
-    work: a Workplace instance.
     """
-    print "\n{} ROBOTS".format(work.type)
+    print "\n{} ROBOTS".format(workplace.name)
     time.sleep(0.2)
     
-    if work.maxRobots == None:
+    if workplace.maxRobots == None:
         print "NO MAXIMUM"
         time.sleep(0.2)
     else:
-        print "MAX NUMBER OF ROBOTS:", work.maxRobots
+        print "MAX NUMBER OF ROBOTS:", workplace.maxRobots
         time.sleep(0.2)
         
     head = ["  ID  AGE CARR BATT UTIL COST BRKS",
             "----------------------------------"]
     printText(head)
     
-    for robot in work.robots:
+    for robot in workplace.robots:
         print repr(robot.id).rjust(4), repr(robot.age).rjust(4),
         print repr(robot.strength).rjust(4), repr(robot.battery).rjust(4),
         print repr(robot.utility).rjust(4), repr(robot.cost).rjust(4),
@@ -90,20 +88,17 @@ def pDisplayWorkplace(work):
     
 
 #TODO: Make this take a list of Wrokplace objects instead of specific ones.
-def pDisplay(unassigned, farm, factory, simName='Simulation'):
+def pDisplay(workplaces, simName='Simulation'):
     """
     Prints console information during the robot placement phase of simulation.
     
-    unassigned: an Unassigned instance.
-    farm: a Farm instance.
-    factory: a Factory instance.
+    workplaces: a list of Workplace instances.
     simName: the simulation name (a string).
     """
     printKeyAndTitle(0, simName)
     
-    pDisplayWorkplace(farm)
-    pDisplayWorkplace(factory)
-    pDisplayWorkplace(unassigned)
+    for workplace in workplaces:
+        pDisplayWorkplace(workplace)
 
 
 #TODO: Make this take a simulation object so it can print lines based on
@@ -169,22 +164,22 @@ def cStatus(i, duration):
 ###############################################################################
 # Simulation - Results Phase Display Functions
 ###############################################################################
-def rDisplayWorkplaceResults(work, weeks, simName='Simulation'):
+def rDisplayWorkplaceResults(workplace, weeks, simName='Simulation'):
     """
     Displays results of the calculation phase of simulation for the Workplace
     instance given.
     
-    work: a Workplace instance (any type).
+    workplace: a Workplace instance (any type).
     weeks: number of weeks over which the results were calculated.
     simName: the name of the simulation (a string).
     """
-    head = ["\n{} ROBOTS".format(work.type),
+    head = ["\n{} ROBOTS".format(workplace.name),
             "INDIVIDUAL OUTPUTS",
             "  ID  AGE CARR BATT UTIL COST BRKS |    T.OUT  A.OUT",
             "-----------------------------------|----------------"]
     printText(head)
     
-    for robot in work.robots:
+    for robot in workplace.robots:
         print repr(robot.id).rjust(4), repr(robot.age).rjust(4),
         print repr(robot.strength).rjust(4), repr(robot.battery).rjust(4),
         print repr(robot.utility).rjust(4), repr(robot.cost).rjust(4),
@@ -192,9 +187,9 @@ def rDisplayWorkplaceResults(work, weeks, simName='Simulation'):
         print repr(robot.output).rjust(8), repr(robot.output/weeks).rjust(6)
     
     #TODO: Try to make this a nice list. Parentheses?
-    print "\nTOTAL {} OUTPUT:".format(work.type), work.getTotalOutput()
+    print "\nTOTAL {} OUTPUT:".format(workplace.name), workplace.getTotalOutput()
     time.sleep(0.2)
-    print "\nAVERAGE WEEKLY OUTPUT PER ROBOT:", work.getAvgOutput(weeks)
+    print "\nAVERAGE WEEKLY OUTPUT PER ROBOT:", workplace.getAvgOutput(weeks)
     time.sleep(0.2)
 
 

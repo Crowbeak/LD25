@@ -59,8 +59,8 @@ def initRobots(number, old):
 
 #TODO: Make this take a SimState instance.
 #TODO: Create moveRobotTo(works, command) function for readability.
-def placementPhase(farm, factory, unassigned, simName):
-    pDisplay(unassigned, farm, factory, simName)
+def placementPhase(workplaces, simName):
+    pDisplay(workplaces, simName)
     
     command = [False]
     
@@ -70,75 +70,75 @@ def placementPhase(farm, factory, unassigned, simName):
         command = input.lower().split()
         command.append(' ')
     
-        if command[0] == 'farm':
+        if command[0] == workplaces[0].name.lower():
             id = int(command[1])
-            oldHome = farm
+            oldHome = workplaces[0]
             
-            for robot in factory.robots:
+            for robot in workplaces[1].robots:
                 if robot.id == id:
-                    oldHome = factory
+                    oldHome = workplaces[1]
                     break
                     
-            if oldHome == farm:
-                for robot in unassigned.robots:
+            if oldHome == workplaces[0]:
+                for robot in workplaces[2].robots:
                     if robot.id == id:
-                        oldHome = unassigned
+                        oldHome = workplaces[2]
                         break
                 
-            if oldHome == farm:
+            if oldHome == workplaces[0]:
                 printText(errorID)
             else:
                 move = oldHome.removeRobot(id)
                 try:
-                    farm.addRobot(move)
+                    workplaces[0].addRobot(move)
                 except TooManyRobots:
                     oldHome.addRobot(move)
                     printText(errorFarmMax)
-        elif command[0] == 'factory':
+        elif command[0] == workplaces[1].name.lower():
             id = int(command[1])
-            oldHome = factory
+            oldHome = workplaces[1]
             
-            for robot in farm.robots:
+            for robot in workplaces[0].robots:
                 if robot.id == id:
-                    oldHome = farm
+                    oldHome = workplaces[0]
                     break
             
-            if oldHome == factory:
-                for robot in unassigned.robots:
+            if oldHome == workplaces[1]:
+                for robot in workplaces[2].robots:
                     if robot.id == id:
-                        oldHome = unassigned
+                        oldHome = workplaces[2]
                         break
                             
-            if oldHome == factory:
+            if oldHome == workplaces[1]:
                 printText(errorID)
             else:
                 move = oldHome.removeRobot(id)
                 try:
-                    factory.addRobot(move)
+                    workplaces[1].addRobot(move)
                 except TooManyRobots:
                     oldHome.addRobot(move)
                     printText(errorFactoryMax)
         elif command[0] == 'none':
             id = int(command[1])
-            oldHome = unassigned
+            oldHome = workplaces[2]
             
-            for robot in factory.robots:
+            for robot in workplaces[0].robots:
                 if robot.id == id:
-                    oldHome = factory
+                    oldHome = workplaces[0]
                     break
-            if oldHome == unassigned:
-                for robot in farm.robots:
+            if oldHome == workplaces[2]:
+                for robot in workplaces[1].robots:
                     if robot.id == id:
-                        oldHome = farm
+                        oldHome = workplaces[1]
                         break
                 
-            if oldHome == unassigned:
+            if oldHome == workplaces[2]:
                 printText(errorID)
             else:
                 move = oldHome.removeRobot(id)
-                unassigned.addRobot(move)
+                workplaces[2].addRobot(move)
         elif command[0] == 'update':
-            pDisplay(unassigned, farm, factory, simName)
+            pDisplay(workplaces, simName)
         elif command[0] == 'run':
             break
         else:
@@ -220,7 +220,7 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
         workplaces = [farm, factory, unassigned]
         #simulation = SimState(workplaces, simName)
         
-        placementPhase(farm, factory, unassigned, simName)
+        placementPhase(workplaces, simName)
         calculationPhase(farm, factory)
         simRunning = resultsPhase(farm, factory, simName)
 

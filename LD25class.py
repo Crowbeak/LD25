@@ -81,7 +81,7 @@ class Workplace(object):
     Basic representation of work environment for robots.
     Designed to be inherited.
     
-    Does not include type attribute.
+    Does not include name attribute.
     """
     def __init__(self, maxRobots, avgDowntime, robots = []):
         """
@@ -158,7 +158,7 @@ class Unassigned(Workplace):
         self.robots = robots
         #TODO: Make this maxRobots unnecessary by going off of self.type.
         self.maxRobots = None   #Need for pDisplayWorkplace.
-        self.type = "UNASSIGNED"
+        self.name = "UNASSIGNED"
     
     def addRobot(self, robot):
         self.robots.append(robot)
@@ -170,7 +170,7 @@ class Farm(Workplace):
     """
     def __init__(self, maxRobots, avgDowntime, robots = []):
         Workplace.__init__(self, maxRobots, avgDowntime, robots)
-        self.type = "FARM"
+        self.name = "FARM"
     
     def update(self):
         """
@@ -194,7 +194,7 @@ class Factory(Workplace):
     """
     def __init__(self, maxRobots, avgDowntime, robots = []):
         Workplace.__init__(self, maxRobots, avgDowntime, robots)
-        self.type = "FACTORY"
+        self.name = "FACTORY"
         
     def update(self):
         """
