@@ -4,6 +4,7 @@ import time
 from LD25class import *
 from LD25display import *
 
+#TODO: Make breakdown chance an attribute of a workplace instance.
 BREAKDOWN_CHANCE = [0, 0, 1, 1, 2, 3]
 WEEKS_NUM = 104
 
@@ -161,7 +162,7 @@ def resultsPhase(workplaces, simName, newRobotsNum):
     return restart
 
 
-def runSim(oldRobotsNum, newRobotsNum, simName="Simulation"):
+def runSim(oldRobotsNum, newRobotsNum, simName="SIMULATION"):
     oldRobotL = initRobots(oldRobotsNum, True)
     newRobotL = initRobots(newRobotsNum, False)
     farmAvgDowntime = random.randint(1, 7)
@@ -175,7 +176,7 @@ def runSim(oldRobotsNum, newRobotsNum, simName="Simulation"):
         farm = Farm(farmRobotsNum, farmAvgDowntime, oldRobotL[:farmRobotsNum])
         factory = Factory(factoryRobotsNum, factAvgDowntime, oldRobotL[farmRobotsNum:])
         workplaces = [farm, factory, unassigned]
-        #simulation = SimState(newRobotsNum, workplaces, simName)
+        #simState = SimState(newRobotsNum, workplaces, simName)
         
         placementPhase(workplaces, simName)
         calculationPhase(workplaces)

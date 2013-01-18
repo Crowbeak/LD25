@@ -227,7 +227,7 @@ class SimState(object):
     """
     Represents the state of the simulation at any given time.
     """
-    def __init__(self, newRobotsNum, workplaces=[], name="SIMULATION"):
+    def __init__(self, newRobotsNum, workplaces=[], name="SIMULATION", weeks=104):
         """
         workplaces: A list of Workplace objects.
         phase: current phase of simulation (a string).
@@ -235,4 +235,5 @@ class SimState(object):
         self.newRobotsNum = newRobotsNum
         self.workplaces = workplaces
         self.name = name
+        self.weeks = weeks
         self.phase = "ROBOT PLACEMENT"

@@ -1,7 +1,3 @@
-#TODO: Make Workplace instance name (farm, etc.) an attribute of the instance
-#      so it can be called without having to reference a constant.
-#      This would allow for two farms, etc, without having to build in silly
-#      lines of code.
 #TODO: Display the number of weeks during calculation phase results.
 
 import time
@@ -74,7 +70,7 @@ def pDisplayWorkplace(workplace):
         print repr(robot.breakdowns).rjust(4)
     
 
-#TODO: Make this take a list of Wrokplace objects instead of specific ones.
+#TODO: Make this take a SimState object.
 def pDisplay(workplaces, simName='Simulation'):
     """
     Prints console information during the robot placement phase of simulation.
@@ -88,21 +84,19 @@ def pDisplay(workplaces, simName='Simulation'):
         pDisplayWorkplace(workplace)
 
 
-#TODO: Make this take a simulation object so it can print lines based on
-#      available work sites.
 def pCommandMenu(workplaces):
     """
     Displays console commands during the robot placement phase of simulation.
     """
     cmd1 = ["\nCOMMAND   | EFFECT",
-            "-------------|----------------------------------------------"]
+            "----------|----------------------------------------------"]
     printText(cmd1)
     for workplace in workplaces:
         if workplace.cmd == "NONE":
             print "NONE [ID] | Return robot to unassigned robot pool"
         else:
             print "{} [ID] | Move robot with ID number [ID] to {}".format(workplace.cmd,
-                                                                             workplace.name)
+                                                                          workplace.name)
     cmd2 = ["UPDATE    | Reprint robot lists",
             "RUN       | Run simulation"]
     printText(cmd2)
@@ -169,7 +163,6 @@ def rDisplayWorkplaceResults(workplace, weeks, simName='Simulation'):
             "  ID  AGE CARR BATT UTIL COST BRKS |    T.OUT  A.OUT",
             "-----------------------------------|----------------"]
     printText(head)
-    
     for robot in workplace.robots:
         print repr(robot.id).rjust(4), repr(robot.age).rjust(4),
         print repr(robot.strength).rjust(4), repr(robot.battery).rjust(4),
@@ -177,11 +170,10 @@ def rDisplayWorkplaceResults(workplace, weeks, simName='Simulation'):
         print repr(robot.breakdowns).rjust(4), '|',
         print repr(robot.output).rjust(8), repr(robot.output/weeks).rjust(6)
     
-    #TODO: Try to make this a nice list. Parentheses?
-    print "\nTOTAL {} OUTPUT:".format(workplace.name), workplace.getTotalOutput()
-    time.sleep(0.2)
-    print "\nAVERAGE WEEKLY OUTPUT PER ROBOT:", workplace.getAvgOutput(weeks)
-    time.sleep(0.2)
+    summ = ["\nTOTAL {} OUTPUT: {}".format(workplace.name,
+                                           workplace.getTotalOutput()),
+            "\nAVERAGE WEEKLY OUTPUT PER ROBOT: {}".format(workplace.getAvgOutput(weeks))]
+    printText(summ)
 
 
 def rEnd():
@@ -189,8 +181,8 @@ def rEnd():
     Displays console commands after the calculation phase of simulation
     is complete.
     """
-    commands = ["\nCOMMANDS",
-                "----------",
-                "RESTART  - Restart simulation.",
-                "DECOM - Choose robots to decommission.\n"]
-    printText(commands)
+    cmds = ["\nCOMMAND   | EFFECT",
+            "----------|----------------------------------------------",
+            "RESTART   | Restart simulation.",
+            "DECOM     | Choose robots to decommission.\n"]
+    printText(cmds)
