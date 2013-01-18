@@ -1,8 +1,3 @@
-
-#TODO: Create three functions -- placement, calculate, and resutls -- to make
-#      runSim more readable.
-#TODO: Create special 
-
 import random
 import string
 import time
@@ -12,13 +7,10 @@ from LD25display import *
 BREAKDOWN_CHANCE = [0, 0, 1, 1, 2, 3]
 WEEKS_NUM = 104
 
-errorID = ["\nERROR: Invalid robot ID number.",
-           "Please try again."]
-errorFarmMax = ["\nERROR: Farm already contains max number of robots.",
-                "Please remove one or more robots from farm before adding more."]
-errorFactoryMax = ["\nERROR: Factory already contains max number of robots.",
-                   "Please remove one or more robots from factory before adding more."]
-errorCMD = ['\nInvalid command. Please try again.']
+errorCMD = ["\nERROR: Robot does not exist or command was mistyped.",
+            "Please try again."]
+errorMaxRobots = ["\nERROR: Maximum robot capacity exceeded.",
+                  "Please remove one or more robots from destination before adding more."]
 
 def initRobots(number, old):
     """
@@ -59,7 +51,6 @@ def initRobots(number, old):
 
 
 #TODO: Make this take a SimState instance.
-#TODO: Create moveRobotTo(works, command) function for readability.
 def placementPhase(workplaces, simName):
     pDisplay(workplaces, simName)
     
@@ -70,80 +61,40 @@ def placementPhase(workplaces, simName):
         input = raw_input("\nPlease choose an option from above:")
         command = input.lower().split()
         command.append(' ')
-    
-        if command[0] == workplaces[0].name.lower():
-            id = int(command[1])
-            oldHome = workplaces[0]
-            
-            for robot in workplaces[1].robots:
-                if robot.id == id:
-                    oldHome = workplaces[1]
-                    break
-                    
-            if oldHome == workplaces[0]:
-                for robot in workplaces[2].robots:
-                    if robot.id == id:
-                        oldHome = workplaces[2]
-                        break
-                
-            if oldHome == workplaces[0]:
-                printText(errorID)
-            else:
-                move = oldHome.removeRobot(id)
-                try:
-                    workplaces[0].addRobot(move)
-                except TooManyRobots:
-                    oldHome.addRobot(move)
-                    printText(errorFarmMax)
-        elif command[0] == workplaces[1].name.lower():
-            id = int(command[1])
-            oldHome = workplaces[1]
-            
-            for robot in workplaces[0].robots:
-                if robot.id == id:
-                    oldHome = workplaces[0]
-                    break
-            
-            if oldHome == workplaces[1]:
-                for robot in workplaces[2].robots:
-                    if robot.id == id:
-                        oldHome = workplaces[2]
-                        break
-                            
-            if oldHome == workplaces[1]:
-                printText(errorID)
-            else:
-                move = oldHome.removeRobot(id)
-                try:
-                    workplaces[1].addRobot(move)
-                except TooManyRobots:
-                    oldHome.addRobot(move)
-                    printText(errorFactoryMax)
-        elif command[0] == 'none':
-            id = int(command[1])
-            oldHome = workplaces[2]
-            
-            for robot in workplaces[0].robots:
-                if robot.id == id:
-                    oldHome = workplaces[0]
-                    break
-            if oldHome == workplaces[2]:
-                for robot in workplaces[1].robots:
-                    if robot.id == id:
-                        oldHome = workplaces[1]
-                        break
-                
-            if oldHome == workplaces[2]:
-                printText(errorID)
-            else:
-                move = oldHome.removeRobot(id)
-                workplaces[2].addRobot(move)
-        elif command[0] == 'update':
+        
+        if command[0] == 'update':
             pDisplay(workplaces, simName)
         elif command[0] == 'run':
             break
         else:
-            printText(errorCMD)
+            for workplace in workplaces:
+                if command[0] == workplace.cmd:
+                    id = int(command[1])
+                    oldHome = workplace
+                
+                    found = False
+                    while not found:
+                        for other in workplaces:
+                            if other is workplace:
+                                continue
+                            else:
+                                for robot in other.robots:
+                                    if robot.id == id:
+                                        oldHome = other
+                                        found = True
+                                        break
+                        #Robot not found anywhere; break loop w/o changing oldHome.
+                        break
+                    
+                    if oldHome == workplace:
+                        printText(errorCMD)
+                    else:
+                        move = oldHome.removeRobot(id)
+                        try:
+                            workplace.addRobot(move)
+                        except TooManyRobots:
+                            oldHome.addRobot(move)
+                            printText(errorMaxRobots)
 
 
 #TODO: Make this take a SimState instance. (Maybe?)

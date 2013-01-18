@@ -81,7 +81,7 @@ class Workplace(object):
     Basic representation of work environment for robots.
     Designed to be inherited.
     
-    Does not include name attribute.
+    Does not include name or cmd attributes.
     """
     def __init__(self, maxRobots, avgDowntime, robots=[]):
         """
@@ -162,6 +162,7 @@ class Unassigned(Workplace):
         #TODO: Make this maxRobots unnecessary by going off of self.name.
         self.maxRobots = None   #Need for pDisplayWorkplace.
         self.name = "UNASSIGNED"
+        self.cmd = "none"
     
     def addRobot(self, robot):
         self.robots.append(robot)
@@ -171,9 +172,10 @@ class Farm(Workplace):
     """
     Representation of a farm where robots work.
     """
-    def __init__(self, maxRobots, avgDowntime, robots=[]):
+    def __init__(self, maxRobots, avgDowntime, robots=[], name="FARM", cmd="farm"):
         Workplace.__init__(self, maxRobots, avgDowntime, robots)
-        self.name = "FARM"
+        self.name = name
+        self.cmd = cmd
     
     def update(self):
         """
@@ -196,9 +198,10 @@ class Factory(Workplace):
     """
     Representation of a factory where robots work.
     """
-    def __init__(self, maxRobots, avgDowntime, robots=[]):
+    def __init__(self, maxRobots, avgDowntime, robots=[], name="FACTORY", cmd="factory"):
         Workplace.__init__(self, maxRobots, avgDowntime, robots)
-        self.name = "FACTORY"
+        self.name = name
+        self.cmd = cmd
         
     def update(self):
         """
@@ -229,7 +232,7 @@ class SimState(object):
         workplaces: A list of Workplace objects.
         phase: current phase of simulation (a string).
         """
-        self.name = name
-        self.workplaces = workplaces
-        self.phase = "ROBOT PLACEMENT"
         self.newRobotsNum = newRobotsNum
+        self.workplaces = workplaces
+        self.name = name
+        self.phase = "ROBOT PLACEMENT"
