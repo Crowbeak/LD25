@@ -26,8 +26,7 @@ This is the start of the soon-to-be improved version. Planned changes,
 organized into prioritized tiers, are:
 
 HIGH
-- make the code self-documenting
-- make all the functions more flexible and compress redundant functions
+- compress redundant functions
     - make it more pythonic
 - make the robot simulation work with more site configurations than one farm
   and one factory

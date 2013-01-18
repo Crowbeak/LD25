@@ -1,9 +1,5 @@
-#TODO: Create site class, which is a collection of Workplace instances.
 #TODO: Make constants variables for each workplace,
 #      initialized once like average downtime.
-#TODO: Add simulation class which holds the simulation game state variables,
-#      including simulation name and phase.
-#TODO: Check for and get rid of unused modules.
 
 import random
 
@@ -22,8 +18,8 @@ BROKEN_BEFORE = 0.001
 ###############################################################################
 class TooManyRobots(Exception):
     """
-    TooManyRobots is raised by Workplace instances when adding another robot
-    would result in the max number of robots for that Workplace being exceeded.
+    Raised by Workplace instances when adding another robot would result in the
+    max number of robots for that Workplace being exceeded.
     """
 
 
@@ -34,7 +30,6 @@ class LaborRobot(object):
     def __init__(self, id, age, strength, battery, utility, cost, breakdowns=0,
                  output=0):
         """
-        id: ID number for robot (a positive int).
         age: Number of years robot has been in service (a non-negative int).
         strength: Tens of pounds the robot can carry (a positive float).
         battery: Average battery life of the robot in hours (a non-negative
@@ -94,9 +89,6 @@ class Workplace(object):
         self.robots = robots
     
     def addRobot(self, robot):
-        """
-        Adds a robot to the list of currentRobots.
-        """
         if len(self.robots) < self.maxRobots:
             self.robots.append(robot)
         else:
@@ -113,9 +105,6 @@ class Workplace(object):
                 return self.robots.pop(i)
     
     def getTotalOutput(self):
-        """
-        Returns the total output of all robots at the workplace.
-        """
         total = 0
         for robot in self.robots:
             total += robot.output
@@ -157,9 +146,10 @@ class Unassigned(Workplace):
         robots: A list of robots currently unassigned to an actual workplace.
         maxRobots: for purposes of display during simulation,this is None type.
         name: name of workplace (a string).
+        cmd: console command for robot placement phase (a 4-character uppercase
+             string).
         """
         self.robots = robots
-        #TODO: Make this maxRobots unnecessary by going off of self.name.
         self.maxRobots = None   #Need for pDisplayWorkplace.
         self.name = "UNASSIGNED"
         self.cmd = "NONE"
@@ -169,10 +159,11 @@ class Unassigned(Workplace):
 
 
 class Farm(Workplace):
-    """
-    Representation of a farm where robots work.
-    """
     def __init__(self, maxRobots, avgDowntime, robots=[], name="FARM", cmd="FARM"):
+        """
+        cmd: console command for robot placement phase (a 4-character uppercase
+             string).
+        """
         Workplace.__init__(self, maxRobots, avgDowntime, robots)
         self.name = name
         self.cmd = cmd
@@ -195,10 +186,11 @@ class Farm(Workplace):
         
 
 class Factory(Workplace):
-    """
-    Representation of a factory where robots work.
-    """
     def __init__(self, maxRobots, avgDowntime, robots=[], name="FACTORY", cmd="FACT"):
+        """
+        cmd: console command for robot placement phase (a 4-character uppercase
+             string).
+        """
         Workplace.__init__(self, maxRobots, avgDowntime, robots)
         self.name = name
         self.cmd = cmd

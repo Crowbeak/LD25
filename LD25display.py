@@ -63,13 +63,9 @@ def pDisplayWorkplace(workplace):
         print repr(robot.breakdowns).rjust(4)
     
 
-#TODO: Make this take a SimState object.
 def pDisplay(simState):
     """
     Prints console information during the robot placement phase of simulation.
-    
-    workplaces: a list of Workplace instances.
-    simName: the simulation name (a string).
     """
     printKeyAndTitle(simState)
     
@@ -144,8 +140,8 @@ def cStatus(i, cycles):
 ###############################################################################
 def rDisplayWorkplaceResults(workplace, weeks):
     """
-    Displays results of the calculation phase of simulation for the Workplace
-    instance given.
+    Displays results of the calculation phase of simulation in table format for
+    the Workplace instance given.
     """
     head = ["\n{} ROBOTS".format(workplace.name),
             "INDIVIDUAL OUTPUTS",
