@@ -50,21 +50,30 @@ def initRobots(number, old):
     return robots
 
 
+def buildPossibleCMD(workplaces):
+    possibleCMD = ['UPDATE', 'RUN']
+    for workplace in workplaces:
+        possibleCMD.append(workplace.cmd)
+    return possibleCMD
+
+
 #TODO: Make this take a SimState instance.
 def placementPhase(workplaces, simName):
     pDisplay(workplaces, simName)
+    possibleCMD = buildPossibleCMD(workplaces)
     
     command = [False]
-    
-    while command[0] != 'run':
-        pCommandMenu()
+    while command[0] != 'RUN':
+        pCommandMenu(workplaces)
         input = raw_input("\nPlease choose an option from above:")
-        command = input.lower().split()
+        command = input.upper().split()
         command.append(' ')
         
-        if command[0] == 'update':
+        if command[0] not in possibleCMD:
+            printText(errorCMD)
+        elif command[0] == 'UPDATE':
             pDisplay(workplaces, simName)
-        elif command[0] == 'run':
+        elif command[0] == 'RUN':
             break
         else:
             for workplace in workplaces:
@@ -92,6 +101,9 @@ def placementPhase(workplaces, simName):
                         move = oldHome.removeRobot(id)
                         try:
                             workplace.addRobot(move)
+                            print "\nSUCCESS. Robot #{} moved from {} to {}.".format(id,
+                                                                                     oldHome.name,
+                                                                                     workplace.name)
                         except TooManyRobots:
                             oldHome.addRobot(move)
                             printText(errorMaxRobots)
@@ -117,12 +129,12 @@ def resultsPhase(workplaces, simName, newRobotsNum):
     while not doneYet:
         rEnd()
         input = raw_input("\nPlease choose an option from above:")
-        command = input.lower().split()
+        command = input.upper().split()
         command.append(' ')
         
-        if command[0] == 'restart':
+        if command[0] == 'RESTART':
             doneYet = True
-        elif command[0] == 'decom':
+        elif command[0] == 'DECOM':
             idNums = []
             for workplace in workplaces:
                 for robot in workplace.robots:
@@ -154,7 +166,7 @@ def runSim(oldRobotsNum, newRobotsNum, simName="Simulation"):
     newRobotL = initRobots(newRobotsNum, False)
     farmAvgDowntime = random.randint(1, 7)
     factAvgDowntime = random.randint(1, 7)
-    farmRobotsNum = oldRobotsNum/random.randint(2, 4)
+    farmRobotsNum = random.randint(oldRobotsNum*5/10, oldRobotsNum*7/10)
     factoryRobotsNum = oldRobotsNum - farmRobotsNum
     
     simRunning = True
@@ -163,7 +175,7 @@ def runSim(oldRobotsNum, newRobotsNum, simName="Simulation"):
         farm = Farm(farmRobotsNum, farmAvgDowntime, oldRobotL[:farmRobotsNum])
         factory = Factory(factoryRobotsNum, factAvgDowntime, oldRobotL[farmRobotsNum:])
         workplaces = [farm, factory, unassigned]
-        #simulation = SimState(workplaces, simName)
+        #simulation = SimState(newRobotsNum, workplaces, simName)
         
         placementPhase(workplaces, simName)
         calculationPhase(workplaces)

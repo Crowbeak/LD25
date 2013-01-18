@@ -162,7 +162,7 @@ class Unassigned(Workplace):
         #TODO: Make this maxRobots unnecessary by going off of self.name.
         self.maxRobots = None   #Need for pDisplayWorkplace.
         self.name = "UNASSIGNED"
-        self.cmd = "none"
+        self.cmd = "NONE"
     
     def addRobot(self, robot):
         self.robots.append(robot)
@@ -172,7 +172,7 @@ class Farm(Workplace):
     """
     Representation of a farm where robots work.
     """
-    def __init__(self, maxRobots, avgDowntime, robots=[], name="FARM", cmd="farm"):
+    def __init__(self, maxRobots, avgDowntime, robots=[], name="FARM", cmd="FARM"):
         Workplace.__init__(self, maxRobots, avgDowntime, robots)
         self.name = name
         self.cmd = cmd
@@ -198,7 +198,7 @@ class Factory(Workplace):
     """
     Representation of a factory where robots work.
     """
-    def __init__(self, maxRobots, avgDowntime, robots=[], name="FACTORY", cmd="factory"):
+    def __init__(self, maxRobots, avgDowntime, robots=[], name="FACTORY", cmd="FACT"):
         Workplace.__init__(self, maxRobots, avgDowntime, robots)
         self.name = name
         self.cmd = cmd

@@ -18,19 +18,6 @@ def printText(stringList):
         time.sleep(0.1)
 
 
-#TODO: Make this work. Currently unused.
-def initErrors():
-    errors = {}
-    errors[id] = ["ERROR: Invalid robot ID number.",
-                  "Please try again."]
-    errors[farmMax] = ["ERROR: Farm already contains max number of robots.",
-                       "Please remove one or more robots from farm before adding more."]
-    errors[factoryMax] = ["ERROR: Factory already contains max number of robots.",
-                          "Please remove one or more robots from factory before adding more."]
-    errors[commands] = ['Invalid command. Please try again.']
-    return errors
-
-
 ###############################################################################
 # Simulation - General Display Functions
 ###############################################################################
@@ -103,18 +90,22 @@ def pDisplay(workplaces, simName='Simulation'):
 
 #TODO: Make this take a simulation object so it can print lines based on
 #      available work sites.
-def pCommandMenu():
+def pCommandMenu(workplaces):
     """
     Displays console commands during the robot placement phase of simulation.
     """
-    commands = ["\nCOMMANDS",
-                "----------",
-                "FARM [ID]    - Move robot with ID number [ID] to the farm",
-                "FACTORY [ID] - Move robot with ID number [ID] to the factory",
-                "NONE [ID]    - Return robot to unassigned robot pool",
-                "UPDATE       - Reprint robot lists",
-                "RUN          - Run simulation"]
-    printText(commands)
+    cmd1 = ["\nCOMMAND   | EFFECT",
+            "-------------|----------------------------------------------"]
+    printText(cmd1)
+    for workplace in workplaces:
+        if workplace.cmd == "NONE":
+            print "NONE [ID] | Return robot to unassigned robot pool"
+        else:
+            print "{} [ID] | Move robot with ID number [ID] to {}".format(workplace.cmd,
+                                                                             workplace.name)
+    cmd2 = ["UPDATE    | Reprint robot lists",
+            "RUN       | Run simulation"]
+    printText(cmd2)
     
 
 ###############################################################################
