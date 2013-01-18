@@ -2,8 +2,6 @@
 
 import time
 
-PHASES = ['ROBOT PLACEMENT', 'SIMULATION RESULTS']
-
 
 def printText(stringList):
     """
@@ -17,15 +15,10 @@ def printText(stringList):
 ###############################################################################
 # Simulation - General Display Functions
 ###############################################################################
-#TODO: Make this take a simulation object instead of a name and number.
-def printKeyAndTitle(num, simName='Simulation'):
-    """
-    num: The index of the appropriate subtitle in PHASES (a non-negative int).
-    simName: Simulation name (a string).
-    """
-    key1 = ["\nSIMULATION: {} \n".format(simName),
-            "{}\n".format(PHASES[num]),
-            "KEY",
+def printKeyAndTitle(simState):
+    key1 = ["\nSIMULATION: {} \n".format(simState.name),
+            "{}\n".format(simState.phase),
+            "\nKEY",
             "----------",
             "ID:   Robot's ID number",
             "AGE:  Years robot has been in service",
@@ -36,7 +29,7 @@ def printKeyAndTitle(num, simName='Simulation'):
             "BRKS: Number of times robot has broken down"]
     printText(key1)
     
-    if num == 1:
+    if simState.phase == 'SIMULATION RESULTS':
         key2 = ["T.OUT: Robot's total output over simulated timeframe",
                 "A.OUT: Robot's average output per week over simulated timeframe"]
         printText(key2)
@@ -71,16 +64,16 @@ def pDisplayWorkplace(workplace):
     
 
 #TODO: Make this take a SimState object.
-def pDisplay(workplaces, simName='Simulation'):
+def pDisplay(simState):
     """
     Prints console information during the robot placement phase of simulation.
     
     workplaces: a list of Workplace instances.
     simName: the simulation name (a string).
     """
-    printKeyAndTitle(0, simName)
+    printKeyAndTitle(simState)
     
-    for workplace in workplaces:
+    for workplace in simState.workplaces:
         pDisplayWorkplace(workplace)
 
 
@@ -149,14 +142,10 @@ def cStatus(i, cycles):
 ###############################################################################
 # Simulation - Results Phase Display Functions
 ###############################################################################
-def rDisplayWorkplaceResults(workplace, weeks, simName='Simulation'):
+def rDisplayWorkplaceResults(workplace, weeks):
     """
     Displays results of the calculation phase of simulation for the Workplace
     instance given.
-    
-    workplace: a Workplace instance (any type).
-    weeks: number of weeks over which the results were calculated.
-    simName: the name of the simulation (a string).
     """
     head = ["\n{} ROBOTS".format(workplace.name),
             "INDIVIDUAL OUTPUTS",

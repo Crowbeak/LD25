@@ -58,14 +58,13 @@ def buildPossibleCMD(workplaces):
     return possibleCMD
 
 
-#TODO: Make this take a SimState instance.
-def placementPhase(workplaces, simName):
-    pDisplay(workplaces, simName)
-    possibleCMD = buildPossibleCMD(workplaces)
+def placementPhase(simState):
+    pDisplay(simState)
+    possibleCMD = buildPossibleCMD(simState.workplaces)
     
     command = [False]
     while command[0] != 'RUN':
-        pCommandMenu(workplaces)
+        pCommandMenu(simState.workplaces)
         input = raw_input("\nPlease choose an option from above:")
         command = input.upper().split()
         command.append(' ')
@@ -73,18 +72,18 @@ def placementPhase(workplaces, simName):
         if command[0] not in possibleCMD:
             printText(errorCMD)
         elif command[0] == 'UPDATE':
-            pDisplay(workplaces, simName)
+            pDisplay(simState)
         elif command[0] == 'RUN':
             break
         else:
-            for workplace in workplaces:
+            for workplace in simState.workplaces:
                 if command[0] == workplace.cmd:
                     id = int(command[1])
                     oldHome = workplace
                 
                     found = False
                     while not found:
-                        for other in workplaces:
+                        for other in simState.workplaces:
                             if other is workplace:
                                 continue
                             else:
@@ -110,20 +109,19 @@ def placementPhase(workplaces, simName):
                             printText(errorMaxRobots)
 
 
-#TODO: Make this take a SimState instance. (Maybe?)
-def calculationPhase(workplaces):
-    for i in range(WEEKS_NUM):
-        for workplace in workplaces:
+def calculationPhase(simState):
+    simState.phase = 'CALCULATION'
+    for i in range(simState.weeks):
+        for workplace in simState.workplaces:
             workplace.update()
-        cStatus(i, WEEKS_NUM)
+        cStatus(i, simState.weeks)
         
 
-#TODO: Make this take a SimState instance.
-#TODO: Make this take newRobotsNum from SimState
-def resultsPhase(workplaces, simName, newRobotsNum):
-    printKeyAndTitle(1, simName)
-    for workplace in workplaces:
-        rDisplayWorkplaceResults(workplace, WEEKS_NUM, simName)
+def resultsPhase(simState):
+    simState.phase = 'SIMULATION RESULTS'
+    printKeyAndTitle(simState)
+    for workplace in simState.workplaces:
+        rDisplayWorkplaceResults(workplace, simState.weeks)
 
     restart = True
     doneYet = False
@@ -137,11 +135,11 @@ def resultsPhase(workplaces, simName, newRobotsNum):
             doneYet = True
         elif command[0] == 'DECOM':
             idNums = []
-            for workplace in workplaces:
+            for workplace in simState.workplaces:
                 for robot in workplace.robots:
                     idNums.append(robot.id)
                 
-            for i in range(newRobotsNum):
+            for i in range(simState.newRobotsNum):
                 extant = False
                 while not extant:
                     input = raw_input("Enter ID of robot #{} to be decommissioned:".format(i+1))
@@ -176,11 +174,11 @@ def runSim(oldRobotsNum, newRobotsNum, simName="SIMULATION"):
         farm = Farm(farmRobotsNum, farmAvgDowntime, oldRobotL[:farmRobotsNum])
         factory = Factory(factoryRobotsNum, factAvgDowntime, oldRobotL[farmRobotsNum:])
         workplaces = [farm, factory, unassigned]
-        #simState = SimState(newRobotsNum, workplaces, simName)
+        simState = SimState(newRobotsNum, workplaces, simName)
         
-        placementPhase(workplaces, simName)
-        calculationPhase(workplaces)
-        simRunning = resultsPhase(workplaces, simName, newRobotsNum)
+        placementPhase(simState)
+        calculationPhase(simState)
+        simRunning = resultsPhase(simState)
 
 if __name__ == '__main__':
     runSim(10, 2)
