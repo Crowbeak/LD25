@@ -7,7 +7,6 @@
 import time
 
 PHASES = ['ROBOT PLACEMENT', 'SIMULATION RESULTS']
-WORKS = ['FARM', 'FACTORY', 'UNASSIGNED']
 
 
 def printText(stringList):
@@ -63,14 +62,13 @@ def printKeyAndTitle(num, simName='Simulation'):
 ###############################################################################
 # Simulation - Placement Phase Display Functions
 ###############################################################################
-def pDisplayWorkplace(work, num):
+def pDisplayWorkplace(work):
     """
     Displays the robots in a workplace and their stats in table form.
     
     work: a Workplace instance.
-    num: index in WORKS of the name of the Workplace type.
     """
-    print "\n{} ROBOTS".format(WORKS[num])
+    print "\n{} ROBOTS".format(work.type)
     time.sleep(0.2)
     
     if work.maxRobots == None:
@@ -103,9 +101,9 @@ def pDisplay(unassigned, farm, factory, simName='Simulation'):
     """
     printKeyAndTitle(0, simName)
     
-    pDisplayWorkplace(farm, 0)
-    pDisplayWorkplace(factory, 1)
-    pDisplayWorkplace(unassigned, 2)
+    pDisplayWorkplace(farm)
+    pDisplayWorkplace(factory)
+    pDisplayWorkplace(unassigned)
 
 
 #TODO: Make this take a simulation object so it can print lines based on
@@ -171,17 +169,16 @@ def cStatus(i, duration):
 ###############################################################################
 # Simulation - Results Phase Display Functions
 ###############################################################################
-def rDisplayWorkplaceResults(work, num, weeks, simName='Simulation'):
+def rDisplayWorkplaceResults(work, weeks, simName='Simulation'):
     """
     Displays results of the calculation phase of simulation for the Workplace
     instance given.
     
     work: a Workplace instance (any type).
-    num: index in WORKS of the name of the Workplace type.
     weeks: number of weeks over which the results were calculated.
     simName: the name of the simulation (a string).
     """
-    head = ["\n{} ROBOTS".format(WORKS[num]),
+    head = ["\n{} ROBOTS".format(work.type),
             "INDIVIDUAL OUTPUTS",
             "  ID  AGE CARR BATT UTIL COST BRKS |    T.OUT  A.OUT",
             "-----------------------------------|----------------"]
@@ -195,7 +192,7 @@ def rDisplayWorkplaceResults(work, num, weeks, simName='Simulation'):
         print repr(robot.output).rjust(8), repr(robot.output/weeks).rjust(6)
     
     #TODO: Try to make this a nice list. Parentheses?
-    print "\nTOTAL {} OUTPUT:".format(WORKS[num]), work.getTotalOutput()
+    print "\nTOTAL {} OUTPUT:".format(work.type), work.getTotalOutput()
     time.sleep(0.2)
     print "\nAVERAGE WEEKLY OUTPUT PER ROBOT:", work.getAvgOutput(weeks)
     time.sleep(0.2)

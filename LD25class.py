@@ -78,7 +78,10 @@ class LaborRobot(object):
 ###############################################################################
 class Workplace(object):
     """
-    Representation of work environment for robots.
+    Basic representation of work environment for robots.
+    Designed to be inherited.
+    
+    Does not include type attribute.
     """
     def __init__(self, maxRobots, avgDowntime, robots = []):
         """
@@ -144,11 +147,18 @@ class Workplace(object):
 
 class Unassigned(Workplace):
     """
-    Placeholder for robots not yet assigned to a real workplace.
+    Placeholder for robots not yet assigned to an actual workplace.
     """
     def __init__(self, robots = []):
+        """
+        robots: A list of robots currently unassigned to an actual workplace.
+        maxRobots: for purposes of display during simulation (value: None).
+        type: name of workplace type (a string).
+        """
         self.robots = robots
+        #TODO: Make this maxRobots unnecessary by going off of self.type.
         self.maxRobots = None   #Need for pDisplayWorkplace.
+        self.type = "UNASSIGNED"
     
     def addRobot(self, robot):
         self.robots.append(robot)
@@ -158,6 +168,10 @@ class Farm(Workplace):
     """
     Representation of a farm where robots work.
     """
+    def __init__(self, maxRobots, avgDowntime, robots = []):
+        Workplace.__init__(self, maxRobots, avgDowntime, robots)
+        self.type = "FARM"
+    
     def update(self):
         """
         Updates all robots' output totals after a week's worth of work.
@@ -178,6 +192,10 @@ class Factory(Workplace):
     """
     Representation of a factory where robots work.
     """
+    def __init__(self, maxRobots, avgDowntime, robots = []):
+        Workplace.__init__(self, maxRobots, avgDowntime, robots)
+        self.type = "FACTORY"
+        
     def update(self):
         """
         Updates all robots' output totals after a week's worth of work.
@@ -197,11 +215,11 @@ class Factory(Workplace):
 ###############################################################################
 # Simulation State Class
 ###############################################################################
-class SimState(Object):
+class SimState(object):
     """
     Represents the state of the simulation at any given time.
     """
-    def __init__(self, name, workplaces=[]):
+    def __init__(self, workplaces=[], name = "SIMULATION"):
         """
         name: simulation name (a string).
         workplaces: A list of workplace objects.
@@ -209,4 +227,4 @@ class SimState(Object):
         """
         self.name = name
         self.workplaces = workplaces
-        self.phase = "PLACEMENT"
+        self.phase = "ROBOT PLACEMENT"

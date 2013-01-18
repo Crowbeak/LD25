@@ -156,8 +156,8 @@ def calculationPhase(farm, factory):
 #TODO: Make this take a SimState instance.
 def resultsPhase(farm, factory, simName):
     printKeyAndTitle(1, simName)
-    rDisplayWorkplaceResults(farm, 0, WEEKS_NUM, simName)
-    rDisplayWorkplaceResults(factory, 1, WEEKS_NUM, simName)
+    rDisplayWorkplaceResults(farm, WEEKS_NUM, simName)
+    rDisplayWorkplaceResults(factory, WEEKS_NUM, simName)
 
     restart = True
     doneYet = False
@@ -205,7 +205,6 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
     newRobots: Number of incoming new robots to fit in (a positive int).
     simName: Name of current simulation.
     """
-    #TODO: Create simulation object.
     oldRobotL = initRobots(oldRobots, True)
     newRobotL = initRobots(newRobots, False)
     farmAvgDowntime = random.randint(1, 7)
@@ -215,11 +214,11 @@ def runSim(oldRobots, newRobots, simName="Simulation"):
     
     simRunning = True
     while simRunning:
-        #Setup Workplace instances.
-        #TODO: Create list, add to site.
         unassigned = Unassigned(newRobotL[:])
         farm = Farm(farmRobotsNum, farmAvgDowntime, oldRobotL[:farmRobotsNum])
         factory = Factory(factoryRobotsNum, factAvgDowntime, oldRobotL[farmRobotsNum:])
+        workplaces = [farm, factory, unassigned]
+        #simulation = SimState(workplaces, simName)
         
         placementPhase(farm, factory, unassigned, simName)
         calculationPhase(farm, factory)
