@@ -1,6 +1,7 @@
 import random
 import string
 import time
+import copy
 from LD25class import *
 from LD25display import *
 
@@ -161,12 +162,12 @@ def runSim(workplacesToBe, robotsToDiscardNum, simName="SIMULATION"):
     workplaces = []
     for i in workplacesToBe:
         robots = initRobots(i)
-        workplaces.append(i.constructor(i.numberOfRobots, robots[:], i.name,
+        workplaces.append(i.constructor(i.numberOfRobots, copy.deepcopy(robots), i.name,
                                         i.cmd))
     
     simRunning = True
     while simRunning:
-        simState = SimState(robotsToDiscardNum, workplaces[:], simName)
+        simState = SimState(robotsToDiscardNum, copy.deepcopy(workplaces), simName)
         
         placementPhase(simState)
         calculationPhase(simState)

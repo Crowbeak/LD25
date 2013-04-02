@@ -2,6 +2,7 @@
 #      balance them for specific sims (difficulty scaling).
 
 import random
+import copy
 
 random.seed()
 
@@ -86,7 +87,7 @@ class Workplace(object):
              string).
         """
         self.maxRobots = maxRobots
-        self.robots = robots
+        self.robots = copy.deepcopy(robots)
         self.name = name
         self.cmd = cmd
         self.avgDowntime = random.randint(1, 7)
@@ -234,7 +235,7 @@ class SimState(object):
         phase: current phase of simulation (a string).
         """
         self.robotsToDiscardNum = robotsToDiscardNum
-        self.workplaces = workplaces[:]
+        self.workplaces = copy.deepcopy(workplaces)
         self.name = name
         self.weeks = weeks
         self.phase = "ROBOT PLACEMENT"
