@@ -1,5 +1,3 @@
-#TODO: Display the number of weeks during calculation phase results.
-
 import time
 
 

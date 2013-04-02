@@ -1,16 +1,9 @@
-#TODO: Make constants variables for each workplace,
-#      initialized once like average downtime.
+#TODO: Turn constants into randomized functions AND/OR
+#      balance them for specific sims (difficulty scaling).
 
 import random
 
 random.seed()
-
-FARM_BASE = 3.0
-FARM_UTIL_RATIO = 0.05
-FACTORY_BASE = 10.0
-FACTORY_STR_RATIO = 0.03
-BREAKDOWN_RATIO = 0.005
-BROKEN_BEFORE = 0.001
 
 
 ###############################################################################
@@ -20,6 +13,12 @@ class TooManyRobots(Exception):
     """
     Raised by Workplace instances when adding another robot would result in the
     max number of robots for that Workplace being exceeded.
+    """
+
+class NotImplemented(Exception):
+    """
+    Raised by Workplace subclass instances if the subclass has no update
+    function implemented.
     """
 
 
@@ -50,15 +49,18 @@ class LaborRobot(object):
         self.cost = cost
         self.breakdowns = breakdowns
         self.output = output
+        self.BREAKDOWN_RATIO = 0.005
+        self.BROKEN_BEFORE = 0.001
     
     def breakdownProb(self):
         """
-        Returns probability of the robot breaking down in a week (a float).
+        Returns probability of the robot breaking down during a week (a float).
         """
         if self.age <= 1:
-            return BREAKDOWN_RATIO + (self.breakdowns*BROKEN_BEFORE)
+            return self.BREAKDOWN_RATIO + (self.breakdowns*self.BROKEN_BEFORE)
         else:
-            return (self.age*BREAKDOWN_RATIO) + (self.breakdowns*BROKEN_BEFORE)
+            return ((self.age*self.BREAKDOWN_RATIO) +
+                    (self.breakdowns*self.BROKEN_BEFORE))
 
     #TODO: Make following modules into properties?
     def incrementBreaks(self):
@@ -75,18 +77,19 @@ class Workplace(object):
     """
     Basic representation of work environment for robots.
     Designed to be inherited.
-    
-    Does not include name or cmd attributes.
     """
-    def __init__(self, maxRobots, avgDowntime, robots=[]):
+    def __init__(self, maxRobots, robots=[], name="WORKPLACE", cmd="WORK"):
         """
         maxRobots: Maximum number of robots the place can hold (a non-neg int).
         avgDowntime: Average time to repair a robot, in days (int between 1-7).
-        robots: A list of robot objects currently at the workplace.
+        cmd: console command for robot placement phase (a 4-character uppercase
+             string).
         """
         self.maxRobots = maxRobots
-        self.avgDowntime = avgDowntime
         self.robots = robots
+        self.name = name
+        self.cmd = cmd
+        self.avgDowntime = random.randint(1, 7)
     
     def addRobot(self, robot):
         if len(self.robots) < self.maxRobots:
@@ -95,11 +98,7 @@ class Workplace(object):
             raise TooManyRobots("Max number of robots exceeded.")
     
     def removeRobot(self, id):
-        """
-        Pops the robot with the given id number from the list of currentRobots
-        if the robot is in the list.
         #TODO: Otherwise, raise exception.
-        """
         for i in range(len(self.robots)):
             if self.robots[i].id == id:
                 return self.robots.pop(i)
@@ -134,39 +133,29 @@ class Workplace(object):
         return self.getTotalCost()/float(len(self.robots))
     
     def update(self):
-        pass
+        raise NotImplemented("Module update() not implemented.")
 
 
 class Unassigned(Workplace):
     """
     Placeholder for robots not yet assigned to an actual workplace.
     """
-    def __init__(self, robots=[]):
-        """
-        robots: A list of robots currently unassigned to an actual workplace.
-        maxRobots: for purposes of display during simulation,this is None type.
-        name: name of workplace (a string).
-        cmd: console command for robot placement phase (a 4-character uppercase
-             string).
-        """
-        self.robots = robots
-        self.maxRobots = None   #Need for pDisplayWorkplace.
-        self.name = "UNASSIGNED"
-        self.cmd = "NONE"
-    
     def addRobot(self, robot):
         self.robots.append(robot)
+    
+    def update(self):
+        pass
 
 
 class Farm(Workplace):
-    def __init__(self, maxRobots, avgDowntime, robots=[], name="FARM", cmd="FARM"):
+    def __init__(self, maxRobots, robots=[], name="FARM", cmd="FARM"):
         """
         cmd: console command for robot placement phase (a 4-character uppercase
              string).
         """
-        Workplace.__init__(self, maxRobots, avgDowntime, robots)
-        self.name = name
-        self.cmd = cmd
+        Workplace.__init__(self, maxRobots, robots, name, cmd)
+        self.FARM_BASE = 3.0
+        self.FARM_UTIL_RATIO = 0.05
     
     def update(self):
         """
@@ -176,24 +165,24 @@ class Farm(Workplace):
         for robot in self.robots:
             if random.random() < robot.breakdownProb():
                 robot.incrementBreaks()
-                output = int(((robot.strength*FARM_BASE) * robot.battery *
+                output = int(((robot.strength*self.FARM_BASE) * robot.battery *
                              (7-self.avgDowntime) *
-                             (robot.utility*FARM_UTIL_RATIO)))
+                             (robot.utility*self.FARM_UTIL_RATIO)))
             else:
-                output = int(((robot.strength*FARM_BASE) * robot.battery * 7 *
-                             (robot.utility*FARM_UTIL_RATIO)))
+                output = int(((robot.strength*self.FARM_BASE) * robot.battery *
+                             7 * (robot.utility*self.FARM_UTIL_RATIO)))
             robot.addOutput(output)
         
 
 class Factory(Workplace):
-    def __init__(self, maxRobots, avgDowntime, robots=[], name="FACTORY", cmd="FACT"):
+    def __init__(self, maxRobots, robots=[], name="FACTORY", cmd="FACT"):
         """
         cmd: console command for robot placement phase (a 4-character uppercase
              string).
         """
-        Workplace.__init__(self, maxRobots, avgDowntime, robots)
-        self.name = name
-        self.cmd = cmd
+        Workplace.__init__(self, maxRobots, robots, name, cmd)
+        self.FACTORY_BASE = 10.0
+        self.FACTORY_STR_RATIO = 0.03
         
     def update(self):
         """
@@ -203,13 +192,32 @@ class Factory(Workplace):
         for robot in self.robots:
             if random.random() < robot.breakdownProb():
                 robot.incrementBreaks()
-                output = int(((robot.utility*FACTORY_BASE) * robot.battery *
-                             (7-self.avgDowntime) *
-                             (robot.strength*FACTORY_STR_RATIO)))
+                output = int(((robot.utility*self.FACTORY_BASE) *
+                             robot.battery * (7-self.avgDowntime) *
+                             (robot.strength*self.FACTORY_STR_RATIO)))
             else:
-                output = int(((robot.utility*FACTORY_BASE) * robot.battery *
-                             7 * (robot.strength*FACTORY_STR_RATIO)))
+                output = int(((robot.utility*self.FACTORY_BASE) *
+                             robot.battery * 7 *
+                             (robot.strength*self.FACTORY_STR_RATIO)))
             robot.addOutput(output)
+
+
+###############################################################################
+# Workplace Instantiator Class
+###############################################################################
+class WorkplaceToBe(object):
+    """
+    Passed to simulation for use in workplace initiation.
+    
+    Allows for control of simulation balance, but with variability from
+    randomization each time.
+    """
+    def __init__(self, numberOfRobots, robotsAreOld, constructor, name, cmd):
+        self.numberOfRobots = numberOfRobots
+        self.robotsAreOld = robotsAreOld
+        self.constructor = constructor
+        self.name = name
+        self.cmd = cmd
 
 
 ###############################################################################
@@ -219,13 +227,14 @@ class SimState(object):
     """
     Represents the state of the simulation at any given time.
     """
-    def __init__(self, newRobotsNum, workplaces=[], name="SIMULATION", weeks=104):
+    def __init__(self, robotsToDiscardNum, workplaces=[], name="SIMULATION",
+                 weeks=104):
         """
         workplaces: A list of Workplace objects.
         phase: current phase of simulation (a string).
         """
-        self.newRobotsNum = newRobotsNum
-        self.workplaces = workplaces
+        self.robotsToDiscardNum = robotsToDiscardNum
+        self.workplaces = workplaces[:]
         self.name = name
         self.weeks = weeks
         self.phase = "ROBOT PLACEMENT"

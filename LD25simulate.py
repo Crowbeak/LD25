@@ -4,46 +4,39 @@ import time
 from LD25class import *
 from LD25display import *
 
-#TODO: Make breakdown chance an attribute of a workplace instance.
+#TODO: Make breakdown chance an attribute of a workplaceToBe instance.
 BREAKDOWN_CHANCE = [0, 0, 1, 1, 2, 3]
-WEEKS_NUM = 104
 
 errorCMD = ["\nERROR: Robot does not exist or command was mistyped.",
             "Please try again."]
 errorMaxRobots = ["\nERROR: Maximum robot capacity exceeded.",
                   "Please remove one or more robots from destination before adding more."]
 
-def initRobots(number, old):
-    """
-    Returns a list of LaborRobot objects with randomized attributes.
-    
-    number: Number of robot objects to create (a positive int).
-    old: A bool indicating whether or not the robots are old robots.
-    """
+
+def initRobots(workplaceToBe):
     robots = []
-    
-    if old:
+    if workplaceToBe.robotsAreOld:
         id = random.randint(337, 742)
-        for i in range(number):
+        for i in range(workplaceToBe.numberOfRobots):
             age = random.randint(5, 20)
             strength = (random.randint(50, 150)/10) - age/5.0
             battery = (random.randint(90, 150)/10) - age/5.0
             utility = random.randint(1, 10)
             cost = random.randint(35, 150)
             breakdowns = random.choice(BREAKDOWN_CHANCE)
-            
-            robots.append(LaborRobot(id, age, strength, battery, utility,
-                                     cost, breakdowns))
+
+            robots.append(LaborRobot(id, age, strength, battery, utility, cost,
+                                     breakdowns))
             id += random.randint(4, 10)
     else:
         id = random.randint(925, 986)
-        for i in range(number):
+        for i in range(workplaceToBe.numberOfRobots):
             age = 0
             strength = random.randint(70, 190)/10
             battery = random.randint(100, 160)/10
             utility = random.randint(1, 10)
             cost = random.randint(55, 180)
-            
+
             robots.append(LaborRobot(id, age, strength, battery, utility,
                                      cost))
             id += 1
@@ -139,7 +132,7 @@ def resultsPhase(simState):
                 for robot in workplace.robots:
                     idNums.append(robot.id)
                 
-            for i in range(simState.newRobotsNum):
+            for i in range(simState.robotsToDiscardNum):
                 extant = False
                 while not extant:
                     input = raw_input("Enter ID of robot #{} to be decommissioned:".format(i+1))
@@ -159,26 +152,30 @@ def resultsPhase(simState):
     
     return restart
 
-
-def runSim(oldRobotsNum, newRobotsNum, simName="SIMULATION"):
-    oldRobotL = initRobots(oldRobotsNum, True)
-    newRobotL = initRobots(newRobotsNum, False)
-    farmAvgDowntime = random.randint(1, 7)
-    factAvgDowntime = random.randint(1, 7)
-    farmRobotsNum = random.randint(oldRobotsNum*5/10, oldRobotsNum*7/10)
-    factoryRobotsNum = oldRobotsNum - farmRobotsNum
+#MASSIVELY UNDER CONSTRUCTION!
+#Currently runs successfully, but rerunning the simulation doesn't reset the
+#   workplace instances.
+#If I write the workplaces to a file and load them in at the beginning of the
+#   simRunning loop, will that fix the problem?
+def runSim(workplacesToBe, robotsToDiscardNum, simName="SIMULATION"):
+    workplaces = []
+    for i in workplacesToBe:
+        robots = initRobots(i)
+        workplaces.append(i.constructor(i.numberOfRobots, robots[:], i.name,
+                                        i.cmd))
     
     simRunning = True
     while simRunning:
-        unassigned = Unassigned(newRobotL[:])
-        farm = Farm(farmRobotsNum, farmAvgDowntime, oldRobotL[:farmRobotsNum])
-        factory = Factory(factoryRobotsNum, factAvgDowntime, oldRobotL[farmRobotsNum:])
-        workplaces = [farm, factory, unassigned]
-        simState = SimState(newRobotsNum, workplaces, simName)
+        simState = SimState(robotsToDiscardNum, workplaces[:], simName)
         
         placementPhase(simState)
         calculationPhase(simState)
         simRunning = resultsPhase(simState)
 
 if __name__ == '__main__':
-    runSim(10, 2)
+    workplacesToBe = []
+    workplacesToBe.append(WorkplaceToBe(7, True, Farm, "FARM", "FARM"))
+    workplacesToBe.append(WorkplaceToBe(5, True, Factory, "FACTORY", "FACT"))
+    workplacesToBe.append(WorkplaceToBe(2, False, Unassigned, "UNASSIGNED",
+                                        "NONE"))
+    runSim(workplacesToBe, 2, "TEST #1")

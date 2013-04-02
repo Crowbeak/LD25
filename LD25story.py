@@ -12,20 +12,6 @@ def sCredits():
             'Please play through to the end.',
             'You won\'t see how it connects to the theme if you stop early.']
     printText(word)
-    
-
-def firstSim():
-    """
-    Displays a little bit of an intro to the robot simulation.
-    
-    TODO: Indicate why you're doing this job.
-    """
-    word = ['\nAlright. May as well get started. The work isn\'t hard, but it IS',
-            'tedious sometimes. Maybe this will be one of those days where',
-            'rearranging robots to maximize farm and factory outputs seems more',
-            'like a game [Ha~h!] than work. It\'s a bit too groggy in the day to',
-            'say for sure yet.\n']
-    printText(word)
 
 
 def instructions():
@@ -140,8 +126,12 @@ def loggedIn():
                     print '\nEarlobe enlargement? Wow, they\'ll try anything these days.'
                     email = True
             elif int(choice) == 3:
-                #Working.
-                firstSim()
+                fsim = ['\nAlright. May as well get started. The work isn\'t hard, but it IS',
+                        'tedious sometimes. Maybe this will be one of those days where',
+                        'rearranging robots to maximize farm and factory outputs seems more',
+                        'like a game [Ha~h!] than work. It\'s a bit too groggy in the day to',
+                        'say for sure yet.\n']
+                printText(fsim)
                 
                 while True:
                     chc1 = ['\nWhat do you do?',
