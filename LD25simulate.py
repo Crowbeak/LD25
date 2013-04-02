@@ -153,11 +153,7 @@ def resultsPhase(simState):
     
     return restart
 
-#MASSIVELY UNDER CONSTRUCTION!
-#Currently runs successfully, but rerunning the simulation doesn't reset the
-#   workplace instances.
-#If I write the workplaces to a file and load them in at the beginning of the
-#   simRunning loop, will that fix the problem?
+
 def runSim(workplacesToBe, robotsToDiscardNum, simName="SIMULATION"):
     workplaces = []
     for i in workplacesToBe:

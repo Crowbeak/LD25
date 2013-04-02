@@ -144,7 +144,12 @@ def loggedIn():
                         if int(choice) == 1:
                             instructions()
                         elif int(choice) == 2:
-                            runSim(10, 2, '#135466')
+                            workplacesToBe = []
+                            workplacesToBe.append(WorkplaceToBe(7, True, Farm, "FARM #216", "A216"))
+                            workplacesToBe.append(WorkplaceToBe(5, True, Factory, "FACTORY #139", "C139"))
+                            workplacesToBe.append(WorkplaceToBe(2, False, Unassigned, "UNASSIGNED",
+                                                                "NONE"))
+                            runSim(workplacesToBe, 2, '#135466')
                             break
                         else:
                             print 'Try again, please. Invalid input.'
@@ -283,7 +288,13 @@ def loggedIn2():
                         if int(choice) == 1:
                             instructions()
                         elif int(choice) == 2:
-                            runSim(18, 4, '#187949')
+                            workplacesToBe = []
+                            workplacesToBe.append(WorkplaceToBe(7, True, Farm, "FARM #10", "A010"))
+                            workplacesToBe.append(WorkplaceToBe(5, True, Factory, "FACTORY #10", "C010"))
+                            workplacesToBe.append(WorkplaceToBe(6, True, Factory, "FACTORY #12", "C012"))
+                            workplacesToBe.append(WorkplaceToBe(4, False, Unassigned, "UNASSIGNED",
+                                                                "NONE"))
+                            runSim(workplacesToBe, 4, '#187949')
                             break
                         else:
                             print 'Try again, please. Invalid input.'
@@ -350,7 +361,12 @@ def loggedIn3():
                         if int(choice) == 1:
                             instructions()
                         elif int(choice) == 2:
-                            runSim(18, 4, '#187949')
+                            workplacesToBe = []
+                            workplacesToBe.append(WorkplaceToBe(13, True, Farm, "FARM #87", "A087"))
+                            workplacesToBe.append(WorkplaceToBe(5, True, Factory, "FACTORY #60", "C060"))
+                            workplacesToBe.append(WorkplaceToBe(4, False, Unassigned, "UNASSIGNED",
+                                                                "NONE"))
+                            runSim(workplacesToBe, 4, '#187949')
                             break
                         else:
                             print 'Try again, please. Invalid input.'
