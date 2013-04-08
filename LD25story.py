@@ -2,6 +2,7 @@ import time
 from LD25display import printText
 from LD25display import printFromFile
 from LD25simulate import *
+from classes import workclass
 
 
 def instructions():
@@ -89,10 +90,12 @@ def ch01():
                             instructions()
                         elif int(choice) == 2:
                             workplacesToBe = []
-                            workplacesToBe.append(WorkplaceToBe(7, True, Farm, "FARM #216", "A216"))
-                            workplacesToBe.append(WorkplaceToBe(5, True, Factory, "FACTORY #139", "C139"))
-                            workplacesToBe.append(WorkplaceToBe(2, False, Unassigned, "UNASSIGNED",
-                                                                "NONE"))
+                            workplacesToBe.append(workclass.WorkplaceToBe(7, True, workclass.Farm,
+                                                                          "FARM #216", "A216"))
+                            workplacesToBe.append(workclass.WorkplaceToBe(5, True, workclass.Factory,
+                                                                          "FACTORY #139", "C139"))
+                            workplacesToBe.append(workclass.WorkplaceToBe(2, False, workclass.Unassigned,
+                                                                          "UNASSIGNED", "NONE"))
                             runSim(workplacesToBe, 2, '#135466')
                             break
                         else:
@@ -189,11 +192,14 @@ def loggedIn2():
                             instructions()
                         elif int(choice) == 2:
                             workplacesToBe = []
-                            workplacesToBe.append(WorkplaceToBe(7, True, Farm, "FARM #10", "A010"))
-                            workplacesToBe.append(WorkplaceToBe(5, True, Factory, "FACTORY #10", "C010"))
-                            workplacesToBe.append(WorkplaceToBe(6, True, Factory, "FACTORY #12", "C012"))
-                            workplacesToBe.append(WorkplaceToBe(4, False, Unassigned, "UNASSIGNED",
-                                                                "NONE"))
+                            workplacesToBe.append(workclass.WorkplaceToBe(7, True, workclass.Farm,
+                                                                          "FARM #10", "A010"))
+                            workplacesToBe.append(workclass.WorkplaceToBe(5, True, workclass.Factory,
+                                                                          "FACTORY #10", "C010"))
+                            workplacesToBe.append(workclass.WorkplaceToBe(6, True, workclass.Factory,
+                                                                          "FACTORY #12", "C012"))
+                            workplacesToBe.append(workclass.WorkplaceToBe(4, False, workclass.Unassigned,
+                                                                          "UNASSIGNED", "NONE"))
                             runSim(workplacesToBe, 4, '#187949')
                             break
                         else:
@@ -262,10 +268,12 @@ def loggedIn3():
                             instructions()
                         elif int(choice) == 2:
                             workplacesToBe = []
-                            workplacesToBe.append(WorkplaceToBe(13, True, Farm, "FARM #87", "A087"))
-                            workplacesToBe.append(WorkplaceToBe(5, True, Factory, "FACTORY #60", "C060"))
-                            workplacesToBe.append(WorkplaceToBe(4, False, Unassigned, "UNASSIGNED",
-                                                                "NONE"))
+                            workplacesToBe.append(workclass.WorkplaceToBe(13, True, workclass.Farm,
+                                                                          "FARM #87", "A087"))
+                            workplacesToBe.append(workclass.WorkplaceToBe(5, True, workclass.Factory,
+                                                                          "FACTORY #60", "C060"))
+                            workplacesToBe.append(workclass.WorkplaceToBe(4, False, workclass.Unassigned,
+                                                                          "UNASSIGNED", "NONE"))
                             runSim(workplacesToBe, 4, '#187949')
                             break
                         else:

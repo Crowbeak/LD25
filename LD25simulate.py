@@ -2,7 +2,9 @@ import random
 import string
 import time
 import copy
-from LD25class import *
+import classes
+from classes import workclass
+from classes import robotclass
 from LD25display import *
 
 #TODO: Make breakdown chance an attribute of a workplaceToBe instance.
@@ -26,8 +28,8 @@ def initRobots(workplaceToBe):
             cost = random.randint(35, 150)
             breakdowns = random.choice(BREAKDOWN_CHANCE)
 
-            robots.append(LaborRobot(id, age, strength, battery, utility, cost,
-                                     breakdowns))
+            robots.append(robotclass.LaborRobot(id, age, strength, battery,
+                                                utility, cost, breakdowns))
             id += random.randint(4, 10)
     else:
         id = random.randint(925, 986)
@@ -38,8 +40,8 @@ def initRobots(workplaceToBe):
             utility = random.randint(1, 10)
             cost = random.randint(55, 180)
 
-            robots.append(LaborRobot(id, age, strength, battery, utility,
-                                     cost))
+            robots.append(robotclass.LaborRobot(id, age, strength, battery,
+                                                utility, cost))
             id += 1
     
     return robots
@@ -163,8 +165,8 @@ def runSim(workplacesToBe, robotsToDiscardNum, simName="SIMULATION"):
     
     simRunning = True
     while simRunning:
-        simState = SimState(robotsToDiscardNum, copy.deepcopy(workplaces),
-                            simName)
+        simState = classes.SimState(robotsToDiscardNum, copy.deepcopy(workplaces),
+                                    simName)
         
         placementPhase(simState)
         calculationPhase(simState)
@@ -172,8 +174,10 @@ def runSim(workplacesToBe, robotsToDiscardNum, simName="SIMULATION"):
 
 if __name__ == '__main__':
     workplacesToBe = []
-    workplacesToBe.append(WorkplaceToBe(7, True, Farm, "FARM", "FARM"))
-    workplacesToBe.append(WorkplaceToBe(5, True, Factory, "FACTORY", "FACT"))
-    workplacesToBe.append(WorkplaceToBe(2, False, Unassigned, "UNASSIGNED",
-                                        "NONE"))
+    workplacesToBe.append(workclass.WorkplaceToBe(7, True, workclass.Farm,
+                                                  "FARM", "FARM"))
+    workplacesToBe.append(workclass.WorkplaceToBe(5, True, workclass.Factory,
+                                                  "FACTORY", "FACT"))
+    workplacesToBe.append(workclass.WorkplaceToBe(2, False, workclass.Unassigned,
+                                                  "UNASSIGNED", "NONE"))
     runSim(workplacesToBe, 2, "TEST #1")
