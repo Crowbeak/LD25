@@ -2,14 +2,8 @@ import time
 
 import ddisplay
 from classes import workclass
-from LD25simulate import *
-
-
-def instructions():
-    """
-    Displays the employee "manual", which is actually tips for playing.
-    """
-    ddisplay.printFromFile("resources/story/instructions.txt")
+from simulation import runSim as runSim
+from helpers import *
 
 
 def intro():
