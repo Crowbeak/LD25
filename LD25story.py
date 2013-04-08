@@ -3,41 +3,12 @@ from LD25display import printText
 from LD25display import printFromFile
 from LD25simulate import *
 
-def sCredits():
-    """
-    Displays the game title and credits.
-    """
-    word = ['\nDECOMMISSIONER',
-            '\nMade for Ludum Dare 25 by Lena LeRay.',
-            'Theme: You Are the Villain',
-            'Please play through to the end.',
-            'You won\'t see how it connects to the theme if you stop early.']
-    printText(word)
-
 
 def instructions():
     """
     Displays the employee "manual", which is actually tips for playing.
     """
-    word = ['\nYour job is to maximize the output of our nation\'s farms and',
-            'factories by assigning labor robots to each appropriately. This',
-            'usually coincides with assigning new robots to farm or factory',
-            'positions and decommissioning old robots for parts.',
-            '\nYou will run one or more simulations for a given farm/factory pair',
-            'and use the results to decide which robots to decommission. You may',
-            'run as few or as many simulations as you deem necessary.',
-            '\nTIPS:',
-            '----------',
-            'When new robots are constructed, room must be made for them by',
-            'decommissioning an equal number of robots.',
-            '\nRobots with higher utility stats tend to be more useful in',
-            'factories.',
-            '\nRobots with higher carrying capacity tend to be more useful on',
-            'farms.',
-            '\nRemember: your job is very important. The parts and scrap from',
-            'decommissioned robots is essential in these days of scarcity.',
-            '\nDo your duty -- serve us all, and serve yourself!']
-    printText(word)
+    printFromFile("resources/story/instructions.txt")
 
 
 def intro():
@@ -50,18 +21,14 @@ def intro():
     TODO: Have choice of asking about wife or not indicate interest or lack
           thereof in Dave's personal life. Eventually to impact ability to
           prevent Dave's suicide and its impact on the story.
+    TODO: Make coffee intake a relevant stat somehow.
     """
-    dave = ['\n\n"Good morning!"\n',
-            'Dave is as cheerful as ever. Does he really not drink coffee?\n',
-            '"I really don\'t drink coffee," he says with a grin.\n',
-            'Before you can ask how he knew what you were thinki--\n',
-            '"You\'ve asked me that question so many times now," he says, "that I',
-            'can see it in your face."\n']
-    printText(dave)
-    
+    printFromFile("resources/story/intro/credits.txt")
+    raw_input('\n(Press any key to continue)')
+    printFromFile("resources/story/intro/good_morning_dave.txt")
     choice = 0
     agin = ['\nCome on, now. I know you haven\'t had your coffee yet, but surely you',
-            'can find the 1 and 2 buttons on your keyboard.']
+            'can find the 1 and 2 keys on your keyboard.']
     while (int(choice) != 1) and (int(choice) != 2):
         menu = ['\nWhat do you do?',
                 '1 - Grunt, wave goodbye, and go to your cubicle.',
@@ -71,28 +38,17 @@ def intro():
         choice = raw_input("Pick one:")
         try:
             if int(choice) == 1:
-                grunt = ['\nDave laughs at you and calls out, "See you later!"',
-                         '\nYou wave at a couple of other people on your way to your desk, and',
-                         'plop down into your cushy chair as soon as you get there. You',
-                         'don\'t realize until you\'ve already turned your computer on that',
-                         'you were so annoyed with Dave you didn\'t get any coffee.\n',
-                         'Damnation.\n']
-                printText(grunt)
+                printFromFile("resources/story/intro/good_morning_dave_r1.txt")
             elif int(choice) == 2:
-                wife = ['\nDave blabbers on happily about her newest hobby for a few minutes',
-                        'while you get your sweet, sweet coffee. Unsweetened. Black. It\'s sweet',
-                        'in that you really, really wanted-- ah, forget it, you know what I',
-                        'mean. Anyway, you take your coffee to your desk, plop down into',
-                        'your cushy chair, and turn on the computer.\n']
-                printText(wife)
+                printFromFile("resources/story/intro/good_morning_dave_r2.txt")
             else:
                 printText(agin)
         except ValueError:
             choice = 0
             printText(agin)
 
-def loggedIn():
-    intr = ['After logging in, you consider your options.',
+def ch01():
+    intr = ['\nAfter logging in, you consider your options.',
             '\nWhat do you do?']
     printText(intr)
     
@@ -235,7 +191,7 @@ def lunch():
             choice = 0
             printText(agin)
         
-        raw_input('\n(Press any button to continue)')
+        raw_input('\n(Press any key to continue)')
             
 
 def loggedIn2():
@@ -453,7 +409,7 @@ def friends():
             choice = 0
             print '\nDrink some of your coffee and try that again.'
     
-    raw_input('\n(Press any button to continue)')
+    raw_input('\n(Press any key to continue)')
     return dave
     
     
@@ -501,7 +457,7 @@ def loggedIn4():
                         '\nAs they drag you away, the last thing you see is Dave gaping',
                         'at you from his cubicle entrance.']
                 printText(uhoh)
-                raw_input('\n(Press any button to continue)')
+                raw_input('\n(Press any key to continue)')
                 break
             else:
                 print '\nJust put in a correct input so you can get this done and go home.'
@@ -571,7 +527,7 @@ def trouble(dave):
                             'you don\'t quite understand.',
                             '\nAs they drag you away, everyone is gaping in shock.']
                     printText(yeah)
-                    raw_input('\n(Press any button to continue)')
+                    raw_input('\n(Press any key to continue)')
                 elif int(choice) == 2:
                     nope = ['\nBiggs nods a little sadly. "If you change your mind..."',
                             '\nYou thank him politely and he leaves. He and Wedge don\'t seem',
@@ -589,7 +545,7 @@ def trouble(dave):
                             'You open the door, but before you can even finish saying hello,',
                             'there are what seems like a hundred guns pointed at your face.']
                     printText(nope)
-                    raw_input('\n(Press any button to continue)')
+                    raw_input('\n(Press any key to continue)')
                 else:
                     print '\nSimple question. He\'s just asking.'
             except ValueError:
@@ -644,7 +600,7 @@ def spanishInquisition():
             '\nThe judge\'s parting wishes, clearly sincere, are not comforting.',
             '\n"I wish you the best in your new life."']
     printText(cont)
-    raw_input('\n(Press any button to continue)')
+    raw_input('\n(Press any key to continue)')
     
     cont2 = ['\nA sharp jolt rouses you. You\'re in a vehicle of some kind, travelling',
              'down the absolute bumpiest road you\'ve ever encountered in your life.',
@@ -692,9 +648,9 @@ def spanishInquisition():
              '\n"Any questions?"']
             
     printText(cont2)
-    raw_input('\n(Press any button to continue)')
+    raw_input('\n(Press any key to continue)')
     printText(cont3)
-    raw_input('\n(Press any button to continue)')
+    raw_input('\n(Press any key to continue)')
     printText(cont4)
     
     choice = 0
@@ -750,7 +706,7 @@ def spanishInquisition():
              'hands tomorrow?']
     
     printText(cont5)
-    raw_input('\n(Press any button to continue)')
+    raw_input('\n(Press any key to continue)')
     printText(cont6)
     
     raw_input('\n\nTHE END')
