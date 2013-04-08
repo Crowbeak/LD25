@@ -27,7 +27,7 @@ def intro():
     raw_input('\n(Press any key to continue)')
     printFromFile("resources/story/intro/good_morning_dave.txt")
     choice = 0
-    agin = ['\nCome on, now. I know you haven\'t had your coffee yet, but surely you',
+    again = ['\nCome on, now. I know you haven\'t had your coffee yet, but surely you',
             'can find the 1 and 2 keys on your keyboard.']
     while (int(choice) != 1) and (int(choice) != 2):
         menu = ['\nWhat do you do?',
@@ -42,20 +42,19 @@ def intro():
             elif int(choice) == 2:
                 printFromFile("resources/story/intro/good_morning_dave_r2.txt")
             else:
-                printText(agin)
+                printText(again)
         except ValueError:
             choice = 0
-            printText(agin)
+            printText(again)
 
 def ch01():
-    intr = ['\nAfter logging in, you consider your options.',
-            '\nWhat do you do?']
-    printText(intr)
+    intro = ['\nAfter logging in, you consider your options.',
+             '\nWhat do you do?']
+    printText(intro)
     
-    #Goof off or work.
     nosebook = False
     email = False
-    agin = ['\nNo, no, no, that\'s not a valid choice. Try again!']
+    again = ['\nNo, no, no, that\'s not a valid choice. Try again!']
     while True:
         menu = ['1 - See what\'s happening on Nosebook.',
                 '2 - Check your email.',
@@ -68,13 +67,7 @@ def ch01():
                 if nosebook:
                     print '\nYeah... still a lot of nosebook-picking going on here.'
                 else:
-                    nbok = ['\nAsh is talking about how boring it is to be a fireman. Again.',
-                            'The hot newcomer on floor 3 is...',
-                            'Excited about the newest Sunset book?',
-                            'Ugh. Maybe "hot" isn\'t the right adjective. Moving on.',
-                            'Dave is also picking his nosebook.',
-                            'Alright, screw this.']
-                    printText(nbok)
+                    printFromFile("resources/story/ch01/ch01_nosebook.txt")
                     nosebook = True
             elif int(choice) == 2:
                 if email:
@@ -83,18 +76,12 @@ def ch01():
                     print '\nEarlobe enlargement? Wow, they\'ll try anything these days.'
                     email = True
             elif int(choice) == 3:
-                fsim = ['\nAlright. May as well get started. The work isn\'t hard, but it IS',
-                        'tedious sometimes. Maybe this will be one of those days where',
-                        'rearranging robots to maximize farm and factory outputs seems more',
-                        'like a game [Ha~h!] than work. It\'s a bit too groggy in the day to',
-                        'say for sure yet.\n']
-                printText(fsim)
-                
+                printFromFile("resources/story/ch01/ch01_work.txt")
                 while True:
-                    chc1 = ['\nWhat do you do?',
+                    menu = ['\nWhat do you do?',
                             '1 - Review the manual again to stave off the inevitable. [How to Play]',
                             '2 - Just do it.']
-                    printText(chc1)
+                    printText(menu)
                     
                     choice = raw_input("Pick one:")
                     try:
@@ -115,21 +102,20 @@ def ch01():
                         print 'Try again, please. Invalid input.'
                 break
             else:
-                printText(agin)
+                printText(again)
         except ValueError:
             choice = 0
-            printText(agin)
+            printText(again)
         
         print '\nWhat do you do next?'
 
-def lunch():
-    wrd1 = ['You yawn and stretch. Coffee time is past. It\'s snack time now.',
-            '\nWhoops!',
-            '\nApparently you meant lunch time.']
-    printText(wrd1)
+    lunch = ['You yawn and stretch. Coffee time is past. It\'s snack time now.',
+             '\nWhoops!',
+             '\nApparently you meant lunch time.']
+    printText(lunch)
     
     choice = 0
-    agin = ['\nYou... wait, what?! Try that again.']
+    again = ['\nYou... wait, what?! Try that again.']
     while (int(choice) != 1) and (int(choice) != 2):
         chc1 = ['\nWhere do you want to go?',
                 '1 - The good old cafeteria. Mediocre free food, decent conversation.',
@@ -139,57 +125,14 @@ def lunch():
         choice = raw_input("Pick one:")
         try:
             if int(choice) == 1:
-                cafe = ['\nYou mosey your way down to the first floor. Dave has beaten you',
-                        'there and is sitting with Biggs and Wedge at a table smack dab in the',
-                        'middle of the room. You grab a tray of food and \'wedge\' yourself in',
-                        'between the two \'bigg\' guys.',
-                        '\nYou quickly regret your punny decision when Wedge slaps you on the',
-                        'back. At least he\'s gentler than usual. Maybe you\'ll just have a',
-                        'bruise this time.',
-                        '\n"Hey, man! =D" he says. He\'s got one of those silly emoticon things',
-                        'embedded in his forehead to make sure you see the smiley face. Real',
-                        'friendly guy, but he doesn\'t always make the best decisions. Biggs,',
-                        'his brother, just smiles and waves. He has all the brains his brother',
-                        'missed out on, but he\'s a good guy, too. Quieter, though, and',
-                        'stronger. Wouldn\'t want to be against him in a fight.',
-                        '\nYou guys shoot the sheep around the table for about 20 minutes',
-                        'before Dave\'s wife calls and completely diverts his attention. Wedge',
-                        'uses that as an excuse to "go to the bathroom", by which he means hit',
-                        'on one of the new employees a few tables away.',
-                        '\nYou and Biggs idly watch the news on a nearby monitor. More',
-                        'terrorist activity. Has it been on the rise, lately? Ah, who cares.',
-                        'After a while, the sensationalist headlines all blur together.',
-                        '\nWedge comes back before Dave -- no surprise there -- and you guys',
-                        'go back to talking about... uh.. what were you talking about? Must',
-                        'not have been important.']
-                printText(cafe)
+                printFromFile("resources/story/ch01/ch01_cafeteria.txt")
             elif int(choice) == 2:
-                home = ['\nYou barely catch Dave before he rockets downstairs to let him know',
-                        'that you\'ll be ducking out on the crew for lunch. After asking him',
-                        'to give your regards to Biggs and Wedge, you grab your jacket and',
-                        'head home.',
-                        '\nIt\'s nice to live within walking distance of work, isn\'t it? Even',
-                        'with the quality of mass transportation here, there\'s something',
-                        'about walking that feels nicer. Especially after long hours in a',
-                        'chair staring at robot output simulations.',
-                        '\nThe house is quiet when you get home. It always is. Maybe you could',
-                        'get a cat? You flip on the TV before rummaging through the fridge.',
-                        '\nAh, crap... no sandwich meat. Grilled cheese it is, then.',
-                        '\nThe news is showing on TV at the moment. You can\'t make out all of',
-                        'what\'s being said over the sizzling skillet, but apparently it\'s all',
-                        'about terrorists. But then, it always is, these days. The same old',
-                        'headlines are starting to get kind of old.',
-                        '\nYou plop down on your couch and eat your delicious, delicious',
-                        'grilled goodness. Unfortunately, you forget to change the channel',
-                        'BEFORE you grab your greasy sandwich. You manage to finish the',
-                        'sandwich and clean the remote with just enough time to get back to',
-                        'work on time. And there was much rejoicing. Yaaaaaay.']
-                printText(home)
+                printFromFile("resources/story/ch01/ch01_home.txt")
             else:
-                printText(agin)
+                printText(again)
         except ValueError:
             choice = 0
-            printText(agin)
+            printText(again)
         
         raw_input('\n(Press any key to continue)')
             
@@ -340,7 +283,7 @@ def loggedIn3():
         print '\nWhat do you do next?'
 
 
-def friends():
+def ch02():
     """
     Returns True if Dave is still in player's life at end of module or False
     otherwise.

@@ -3,8 +3,7 @@ from LD25story import *
 def main():
     intro()
     ch01()
-    lunch()
-    dave = friends()
+    dave = ch02()
     trouble(dave)
     spanishInquisition()
     
