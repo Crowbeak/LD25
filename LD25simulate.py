@@ -158,12 +158,13 @@ def runSim(workplacesToBe, robotsToDiscardNum, simName="SIMULATION"):
     workplaces = []
     for i in workplacesToBe:
         robots = initRobots(i)
-        workplaces.append(i.constructor(i.numberOfRobots, copy.deepcopy(robots), i.name,
-                                        i.cmd))
+        workplaces.append(i.constructor(i.numberOfRobots, copy.deepcopy(robots),
+                                        i.name, i.cmd))
     
     simRunning = True
     while simRunning:
-        simState = SimState(robotsToDiscardNum, copy.deepcopy(workplaces), simName)
+        simState = SimState(robotsToDiscardNum, copy.deepcopy(workplaces),
+                            simName)
         
         placementPhase(simState)
         calculationPhase(simState)

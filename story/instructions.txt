@@ -1,0 +1,33 @@
+SUMMARY:
+-------------------------------------------------------------------------------
+Your job is to maximize the output of our nation's farms and factories by
+assigning labor robots to each appropriately. This usually coincides with
+assigning new robots to farm or factory positions and decommissioning old
+robots for parts.
+
+You will run one or more simulations for a given set of farms and factories and
+use the results to decide which robots to decommission. You may run as few or
+as many simulations as you deem necessary.
+
+TIPS:
+-------------------------------------------------------------------------------
+When new robots are constructed, room must be made for them by decommissioning
+an equal number of robots.
+
+Robots with higher utility stats tend to be more useful in factories.
+
+Robots with higher carrying capacity tend to be more useful on farms.
+
+REMEMBER:
+-------------------------------------------------------------------------------
+Your job is essential to the prosperity of our nation. Output from the farms
+and factories translates directly into available goods such as food and
+clothing. You must keep in mind, however, that as metal becomes
+increasingly rare, salvaging older robots for scrap is important, too. There
+are some things advanced plastics still can't handle, and for that we need
+metal.
+
+As a Decommissioner, you are responsible for maintaining a good balance between
+goods produced and metal recycled.
+
+Do your duty, for yourself and for us all.

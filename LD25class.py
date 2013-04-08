@@ -155,8 +155,8 @@ class Farm(Workplace):
              string).
         """
         Workplace.__init__(self, maxRobots, robots, name, cmd)
-        self.FARM_BASE = 3.0
-        self.FARM_UTIL_RATIO = 0.05
+        self.MAJOR_STAT_RATIO = 3.0
+        self.MINOR_STAT_RATIO = 0.05
     
     def update(self):
         """
@@ -166,12 +166,13 @@ class Farm(Workplace):
         for robot in self.robots:
             if random.random() < robot.breakdownProb():
                 robot.incrementBreaks()
-                output = int(((robot.strength*self.FARM_BASE) * robot.battery *
-                             (7-self.avgDowntime) *
-                             (robot.utility*self.FARM_UTIL_RATIO)))
+                output = int(((robot.strength*self.MAJOR_STAT_RATIO) *
+                             robot.battery * (7-self.avgDowntime) *
+                             (robot.utility*self.MINOR_STAT_RATIO)))
             else:
-                output = int(((robot.strength*self.FARM_BASE) * robot.battery *
-                             7 * (robot.utility*self.FARM_UTIL_RATIO)))
+                output = int(((robot.strength*self.MAJOR_STAT_RATIO) *
+                             robot.battery * 7 *
+                             (robot.utility*self.MINOR_STAT_RATIO)))
             robot.addOutput(output)
         
 
@@ -182,8 +183,8 @@ class Factory(Workplace):
              string).
         """
         Workplace.__init__(self, maxRobots, robots, name, cmd)
-        self.FACTORY_BASE = 10.0
-        self.FACTORY_STR_RATIO = 0.03
+        self.MAJOR_STAT_RATIO = 10.0
+        self.MINOR_STAT_RATIO = 0.03
         
     def update(self):
         """
@@ -193,13 +194,13 @@ class Factory(Workplace):
         for robot in self.robots:
             if random.random() < robot.breakdownProb():
                 robot.incrementBreaks()
-                output = int(((robot.utility*self.FACTORY_BASE) *
+                output = int(((robot.utility*self.MAJOR_STAT_RATIO) *
                              robot.battery * (7-self.avgDowntime) *
-                             (robot.strength*self.FACTORY_STR_RATIO)))
+                             (robot.strength*self.MINOR_STAT_RATIO)))
             else:
-                output = int(((robot.utility*self.FACTORY_BASE) *
+                output = int(((robot.utility*self.MAJOR_STAT_RATIO) *
                              robot.battery * 7 *
-                             (robot.strength*self.FACTORY_STR_RATIO)))
+                             (robot.strength*self.MINOR_STAT_RATIO)))
             robot.addOutput(output)
 
 

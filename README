@@ -1,4 +1,5 @@
 The first version of this game was made for Ludum Dare 25.
+Current version is hereby dubbed 0.2.
 
 Ludum Dare is what's called a "game jam". A game jam is an event in which game
 developers have fun honing their skills by conceptualizing, designing, and
@@ -28,6 +29,7 @@ organized into prioritized tiers, are:
 HIGH
 - make it so simulation results can be saved for reference/reloaded before
   choosing what to decommission
+  - side bonus: make available to affect story
 - Use file I/O to separate story from function code.
 MEDIUM
 - more branching storylines

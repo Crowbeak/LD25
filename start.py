@@ -1,4 +1,4 @@
-from LD25story import *
+from story import *
 
 def main():
     sCredits()
