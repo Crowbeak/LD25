@@ -1,25 +1,6 @@
 import time
 
-
-def printText(stringList):
-    """
-    Prints strings in list with a 0.1 second time step between each string.
-    """
-    for i in stringList:
-        print i
-        time.sleep(0.1)
-
-def printFromFile(filename):
-    """
-    Prints lines read from a text file with a 0.1 second time step between each
-    line.
-    
-    filename must be a string.
-    """
-    with open(filename, "r") as file:
-        for line in file.readlines():
-            print line,
-            time.sleep(0.1)
+import ddisplay
 
 ###############################################################################
 # Simulation - General Display Functions
@@ -36,12 +17,12 @@ def printKeyAndTitle(simState):
             "UTIL: Rating of robot's ability to complete varied tasks",
             "COST: Weekly costs of maintaining robot",
             "BRKS: Number of times robot has broken down"]
-    printText(key1)
+    ddisplay.printText(key1)
     
     if simState.phase == 'SIMULATION RESULTS':
         key2 = ["T.OUT: Robot's total output over simulated timeframe",
                 "A.OUT: Robot's average output per week over simulated timeframe"]
-        printText(key2)
+        ddisplay.printText(key2)
 
 
 ###############################################################################
@@ -63,7 +44,7 @@ def pDisplayWorkplace(workplace):
         
     head = ["  ID  AGE CARR BATT UTIL COST BRKS",
             "----------------------------------"]
-    printText(head)
+    ddisplay.printText(head)
     
     for robot in workplace.robots:
         print repr(robot.id).rjust(4), repr(robot.age).rjust(4),
@@ -88,7 +69,7 @@ def pCommandMenu(workplaces):
     """
     cmd1 = ["\nCOMMAND   | EFFECT",
             "----------|-----------------------------------------------"]
-    printText(cmd1)
+    ddisplay.printText(cmd1)
     for workplace in workplaces:
         if workplace.cmd == "NONE":
             print "NONE [ID] | Return robot to unassigned robot pool"
@@ -97,7 +78,7 @@ def pCommandMenu(workplaces):
                                                                           workplace.name)
     cmd2 = ["UPDATE    | Reprint robot lists",
             "RUN       | Run simulation"]
-    printText(cmd2)
+    ddisplay.printText(cmd2)
     
 
 ###############################################################################
@@ -156,7 +137,7 @@ def rDisplayWorkplaceResults(workplace, weeks):
             "INDIVIDUAL OUTPUTS",
             "  ID  AGE CARR BATT UTIL COST BRKS |    T.OUT  A.OUT",
             "-----------------------------------|----------------"]
-    printText(head)
+    ddisplay.printText(head)
     for robot in workplace.robots:
         print repr(robot.id).rjust(4), repr(robot.age).rjust(4),
         print repr(robot.strength).rjust(4), repr(robot.battery).rjust(4),
@@ -167,7 +148,7 @@ def rDisplayWorkplaceResults(workplace, weeks):
     summ = ["\nTOTAL {} OUTPUT: {}".format(workplace.name,
                                            workplace.getTotalOutput()),
             "\nAVERAGE WEEKLY OUTPUT PER ROBOT: {}".format(workplace.getAvgOutput(weeks))]
-    printText(summ)
+    ddisplay.printText(summ)
 
 
 def rEnd():
@@ -179,4 +160,4 @@ def rEnd():
             "----------|----------------------------------------------",
             "RESTART   | Restart simulation.",
             "DECOM     | Choose robots to decommission.\n"]
-    printText(cmds)
+    ddisplay.printText(cmds)

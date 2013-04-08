@@ -1,15 +1,15 @@
 import time
-from LD25display import printText
-from LD25display import printFromFile
-from LD25simulate import *
+
+import ddisplay
 from classes import workclass
+from LD25simulate import *
 
 
 def instructions():
     """
     Displays the employee "manual", which is actually tips for playing.
     """
-    printFromFile("resources/story/instructions.txt")
+    ddisplay.printFromFile("resources/story/instructions.txt")
 
 
 def intro():
@@ -24,9 +24,9 @@ def intro():
           prevent Dave's suicide and its impact on the story.
     TODO: Make coffee intake a relevant stat somehow.
     """
-    printFromFile("resources/story/intro/credits.txt")
+    ddisplay.printFromFile("resources/story/intro/credits.txt")
     raw_input('\n(Press any key to continue)')
-    printFromFile("resources/story/intro/good_morning_dave.txt")
+    ddisplay.printFromFile("resources/story/intro/good_morning_dave.txt")
     choice = 0
     again = ['\nCome on, now. I know you haven\'t had your coffee yet, but surely you',
             'can find the 1 and 2 keys on your keyboard.']
@@ -34,24 +34,25 @@ def intro():
         menu = ['\nWhat do you do?',
                 '1 - Grunt, wave goodbye, and go to your cubicle.',
                 '2 - Ask about his wife.']
-        printText(menu)
+        ddisplay.printText(menu)
     
         choice = raw_input("Pick one:")
         try:
             if int(choice) == 1:
-                printFromFile("resources/story/intro/good_morning_dave_r1.txt")
+                ddisplay.printFromFile("resources/story/intro/good_morning_dave_r1.txt")
             elif int(choice) == 2:
-                printFromFile("resources/story/intro/good_morning_dave_r2.txt")
+                ddisplay.printFromFile("resources/story/intro/good_morning_dave_r2.txt")
             else:
-                printText(again)
+                ddisplay.printText(again)
         except ValueError:
             choice = 0
-            printText(again)
+            ddisplay.printText(again)
+
 
 def ch01():
     intro = ['\nAfter logging in, you consider your options.',
              '\nWhat do you do?']
-    printText(intro)
+    ddisplay.printText(intro)
     
     nosebook = False
     email = False
@@ -60,7 +61,7 @@ def ch01():
         menu = ['1 - See what\'s happening on Nosebook.',
                 '2 - Check your email.',
                 '3 - Do the work they\'re paying you to be here for.']
-        printText(menu)
+        ddisplay.printText(menu)
         
         choice = raw_input("Pick one:")
         try:
@@ -68,7 +69,7 @@ def ch01():
                 if nosebook:
                     print '\nYeah... still a lot of nosebook-picking going on here.'
                 else:
-                    printFromFile("resources/story/ch01/ch01_nosebook.txt")
+                    ddisplay.printFromFile("resources/story/ch01/ch01_nosebook.txt")
                     nosebook = True
             elif int(choice) == 2:
                 if email:
@@ -77,12 +78,12 @@ def ch01():
                     print '\nEarlobe enlargement? Wow, they\'ll try anything these days.'
                     email = True
             elif int(choice) == 3:
-                printFromFile("resources/story/ch01/ch01_work.txt")
+                ddisplay.printFromFile("resources/story/ch01/ch01_work.txt")
                 while True:
                     menu = ['\nWhat do you do?',
                             '1 - Review the manual again to stave off the inevitable. [How to Play]',
                             '2 - Just do it.']
-                    printText(menu)
+                    ddisplay.printText(menu)
                     
                     choice = raw_input("Pick one:")
                     try:
@@ -105,17 +106,17 @@ def ch01():
                         print 'Try again, please. Invalid input.'
                 break
             else:
-                printText(again)
+                ddisplay.printText(again)
         except ValueError:
             choice = 0
-            printText(again)
+            ddisplay.printText(again)
         
         print '\nWhat do you do next?'
 
     lunch = ['You yawn and stretch. Coffee time is past. It\'s snack time now.',
              '\nWhoops!',
              '\nApparently you meant lunch time.']
-    printText(lunch)
+    ddisplay.printText(lunch)
     
     choice = 0
     again = ['\nYou... wait, what?! Try that again.']
@@ -123,19 +124,19 @@ def ch01():
         chc1 = ['\nWhere do you want to go?',
                 '1 - The good old cafeteria. Mediocre free food, decent conversation.',
                 '2 - Home. Sandwiches and solitude.']
-        printText(chc1)
+        ddisplay.printText(chc1)
         
         choice = raw_input("Pick one:")
         try:
             if int(choice) == 1:
-                printFromFile("resources/story/ch01/ch01_cafeteria.txt")
+                ddisplay.printFromFile("resources/story/ch01/ch01_cafeteria.txt")
             elif int(choice) == 2:
-                printFromFile("resources/story/ch01/ch01_home.txt")
+                ddisplay.printFromFile("resources/story/ch01/ch01_home.txt")
             else:
-                printText(again)
+                ddisplay.printText(again)
         except ValueError:
             choice = 0
-            printText(again)
+            ddisplay.printText(again)
         
         raw_input('\n(Press any key to continue)')
             
@@ -143,7 +144,7 @@ def ch01():
 def loggedIn2():
     intro = ['Confronted with the usual options...',
              '\nWhat do you do?']
-    printText(intro)
+    ddisplay.printText(intro)
     
     #Goof off or work.
     nosebook = False
@@ -152,7 +153,7 @@ def loggedIn2():
         opts = ['1 - See what\'s happening on Nosebook.',
                 '2 - Check your email.',
                 '3 - Work. Maybe it\'ll take your mind off things.']
-        printText(opts)
+        ddisplay.printText(opts)
         
         choice = raw_input("Pick one:")
         try:
@@ -160,7 +161,7 @@ def loggedIn2():
                 if nosebook:
                     noseSeen = ['\nEven scoffing at the nosebook-picking can\'t cheer you up.',
                                 'The term "nosebook-picking" isn\'t even funny right now.']
-                    printText(noseSeen)
+                    ddisplay.printText(noseSeen)
                 else:
                     noseNew = ['\nAsh is talking about how awesome it is to be a fireman. Again.',
                                'Wedge renamed his cat? What the hell?',
@@ -168,7 +169,7 @@ def loggedIn2():
                                'Didn\'t the last one only come out like five years ago?',
                                'Neither Dave nor his wife have posted anything since yesterday.',
                                'This isn\'t helping.']
-                    printText(noseNew)
+                    ddisplay.printText(noseNew)
                     nosebook = True
             elif int(choice) == 2:
                 if email:
@@ -176,7 +177,7 @@ def loggedIn2():
                 else:
                     newEmail = ['\nSomething from Biggs about a party... don\'t care right now.',
                                 'And... news. Noone cares about that.']
-                    printText(newEmail)
+                    ddisplay.printText(newEmail)
                     email = True
             elif int(choice) == 3:
                 #Working.
@@ -184,7 +185,7 @@ def loggedIn2():
                     workopts = ['\nWhat do you do?',
                                 '1 - Review the manual again.',
                                 '2 - Work. Or try to.']
-                    printText(workopts)
+                    ddisplay.printText(workopts)
                     
                     choice = raw_input("Pick one:")
                     try:
@@ -220,7 +221,7 @@ def loggedIn2():
 def loggedIn3():
     intro = ['Confronted with the usual options...',
              '\nWhat do you do?']
-    printText(intro)
+    ddisplay.printText(intro)
     
     nosebook = False
     email = False
@@ -228,7 +229,7 @@ def loggedIn3():
         opts = ['1 - See what\'s happening on Nosebook.',
                 '2 - Check your email.',
                 '3 - Do the work they\'re paying you to be here for.']
-        printText(opts)
+        ddisplay.printText(opts)
         
         choice = raw_input("Pick one:")
         try:
@@ -236,7 +237,7 @@ def loggedIn3():
                 if nosebook:
                     noseSeen = ['\nMore nosebook-picking. Ah, nosebook-picking.',
                                 'Just the term makes you happy. How do you visualize that?']
-                    printText(noseSeen)
+                    ddisplay.printText(noseSeen)
                 else:
                     noseNew = ['\nAsh is talking about how awesome it is to be a fireman. Again.',
                                'Wedge renamed his cat? What the hell?',
@@ -244,7 +245,7 @@ def loggedIn3():
                                'Didn\'t the last one only come out like five years ago?',
                                'Neither Dave nor his wife have posted anything since yesterday.',
                                'You should probably work. Probably.']
-                    printText(noseNew)
+                    ddisplay.printText(noseNew)
                     nosebook = True
             elif int(choice) == 2:
                 if email:
@@ -252,7 +253,7 @@ def loggedIn3():
                 else:
                     newEmail = ['\nSomething from Biggs about a party... don\'t care right now.',
                                 'And... news. Noone cares about that.']
-                    printText(newEmail)
+                    ddisplay.printText(newEmail)
                     email = True
             elif int(choice) == 3:
                 #Working.
@@ -260,7 +261,7 @@ def loggedIn3():
                     workopts = ['\nWhat do you do?',
                                 '1 - Review the manual again.',
                                 '2 - Work! It\'s like a crummy party you get paid to attend.']
-                    printText(workopts)
+                    ddisplay.printText(workopts)
                     
                     choice = raw_input("Pick one:")
                     try:
@@ -306,7 +307,7 @@ def ch02():
              '\nYou\'re already to your desk and pushing the power button on your',
              'computer when you realize Dave wasn\'t in the kitchen this morning.',
              '\nWeird. Wanna look into that?']
-    printText(intro)
+    ddisplay.printText(intro)
     
     choice = 0
     while (int(choice) != 1) and (int(choice) != 2):
@@ -314,7 +315,7 @@ def ch02():
                 '    are involved.',
                 '2 - Nah. Dave\'s a great guy but it\'s nice not to have to deal',
                 '    with his peppy peppiness sometimes.']
-        printText(opts)
+        ddisplay.printText(opts)
         
         choice = raw_input("Pick one:")
         try:
@@ -338,7 +339,7 @@ def ch02():
                         'doesn\'t want you to go with him. After making him promise to call you',
                         'if he needs anything, you go to your desk and get to work. It\'s not',
                         'like you have anything better to do. Work will be a nice distraction.']
-                printText(look)
+                ddisplay.printText(look)
                 loggedIn2()
                 print '\nLunch time. You still haven\'t heard from Dave. Time to go check on him.'
                 time.sleep(2)
@@ -353,7 +354,7 @@ def ch02():
                             '\nYou\'re one of the last to stick your head out into the aisle to look.',
                             'The hole in the glass -- 7 stories up -- is very, very close to Dave\'s',
                             'cubicle.']
-                printText(dontLook)
+                ddisplay.printText(dontLook)
             else:
                 print '\nDrink some of your coffee and try that again.'
         except ValueError:
@@ -375,7 +376,7 @@ def loggedIn4():
         opts = ['1 - Pick your Nosebook.',
                 '2 - Check your eternally uninteresting email.',
                 '3 - Slave away.']
-        printText(opts)
+        ddisplay.printText(opts)
         
         choice = raw_input("Pick one:")
         try:
@@ -386,7 +387,7 @@ def loggedIn4():
                     noseNew = ['\nAsh is talking about how depressing it is to be a fireman. Again.',
                             'And... oh. Nosebook has reached a new low.',
                             'People are now posting pictures of themselves picking their noses.']
-                    printText(noseNew)
+                    ddisplay.printText(noseNew)
                     nosebook = True
             elif int(choice) == 2:
                 if email:
@@ -407,7 +408,7 @@ def loggedIn4():
                         'you don\'t quite understand.',
                         '\nAs they drag you away, the last thing you see is Dave gaping',
                         'at you from his cubicle entrance.']
-                printText(uhoh)
+                ddisplay.printText(uhoh)
                 raw_input('\n(Press any key to continue)')
                 break
             else:
@@ -433,7 +434,7 @@ def trouble(dave):
                  'down at your own. You really don\'t want to be here today, but',
                  'your choices are limited.',
                  '\nLimited to three.']
-        printText(intro)
+        ddisplay.printText(intro)
         loggedIn4()
     else:
         intro = ['\nA few minutes before lunch, Biggs drops by your desk.',
@@ -443,14 +444,14 @@ def trouble(dave):
                  'sounds of cars stopping suddenly still haunts you. Could you have',
                  'saved Dave? The therapist tells you not to blame yourself, but it\'s',
                  'still hard to face your mutual friends sometimes.']
-        printText(intro)
+        ddisplay.printText(intro)
         
         choice = 0
         while (int(choice) != 1) and (int(choice) != 2):
             opts = ['\nWill you eat with Biggs and Wedge today?',
                     '1 - Yeah.',
                     '2 - No.']
-            printText(opts)
+            ddisplay.printText(opts)
         
             choice = raw_input("Pick one:")
             try:
@@ -477,7 +478,7 @@ def trouble(dave):
                             'face. She says a lot of other things, too, but so quickly you',
                             'you don\'t quite understand.',
                             '\nAs they drag you away, everyone is gaping in shock.']
-                    printText(yeah)
+                    ddisplay.printText(yeah)
                     raw_input('\n(Press any key to continue)')
                 elif int(choice) == 2:
                     nope = ['\nBiggs nods a little sadly. "If you change your mind..."',
@@ -495,7 +496,7 @@ def trouble(dave):
                             'who it could be, you check the peephole. It\'s a police officer.',
                             'You open the door, but before you can even finish saying hello,',
                             'there are what seems like a hundred guns pointed at your face.']
-                    printText(nope)
+                    ddisplay.printText(nope)
                     raw_input('\n(Press any key to continue)')
                 else:
                     print '\nSimple question. He\'s just asking.'
@@ -512,14 +513,14 @@ def spanishInquisition():
              'sit down, but it\'s across a table from a judge in what looks like an',
              'informal meeting room.',
              '\n"Have you anything to say in your defense?" he asks simply.']
-    printText(intro)
+    ddisplay.printText(intro)
     
     choice = 0
     while (int(choice) != 1) and (int(choice) != 2):
         opts = ['\nWell, do you?',
                 '1 - I still don\'t understand what I\'m supposed to have done.',
                 '2 - Would it matter if I did?']
-        printText(opts)
+        ddisplay.printText(opts)
         
         choice = raw_input("Pick one:")
         try:
@@ -529,7 +530,7 @@ def spanishInquisition():
                 question = ['\n"It wouldn\'t change the verdict," he replied, "but it',
                             'could affect your sentence."',
                             '\nHe doesn\'t stop there.']
-                printText(question)
+                ddisplay.printText(question)
             else:
                 print '\n"Have you anything to say in your defense?" he asks again.'
         except ValueError:
@@ -550,7 +551,7 @@ def spanishInquisition():
             '\nWhat does THAT mean?',
             '\nThe judge\'s parting wishes, clearly sincere, are not comforting.',
             '\n"I wish you the best in your new life."']
-    printText(cont)
+    ddisplay.printText(cont)
     raw_input('\n(Press any key to continue)')
     
     cont2 = ['\nA sharp jolt rouses you. You\'re in a vehicle of some kind, travelling',
@@ -598,11 +599,11 @@ def spanishInquisition():
              'that pep talk."',
              '\n"Any questions?"']
             
-    printText(cont2)
+    ddisplay.printText(cont2)
     raw_input('\n(Press any key to continue)')
-    printText(cont3)
+    ddisplay.printText(cont3)
     raw_input('\n(Press any key to continue)')
-    printText(cont4)
+    ddisplay.printText(cont4)
     
     choice = 0
     again = ['\n"What\'s that?" he asks. I can\'t hear you."',
@@ -610,7 +611,7 @@ def spanishInquisition():
     while (int(choice) != 1) and (int(choice) != 2):
         opts = ['1 - You\'re kidding, right? You can\'t be serious.',
                 '2 - Say nothing.']
-        printText(opts)
+        ddisplay.printText(opts)
         
         choice = raw_input("Pick one:")
         try:
@@ -619,18 +620,18 @@ def spanishInquisition():
                         '\nThe two men laugh.',
                         '\n"I love watching the ones with their tongues out try to talk,"',
                         'says the sargeant."']
-                printText(talk)
+                ddisplay.printText(talk)
             elif int(choice) == 2:
                 dontTalk = ['\nAfter waiting for several moments with one eyebrow cocked, the',
                             'sargeant clicks his tongue and makes a face.',
                             '\n"Damn," he says, "I like it when the ones with their tongues out',
                             'try to talk.']
-                printText(dontTalk)
+                ddisplay.printText(dontTalk)
             else:
-                printText(again)
+                ddisplay.printText(again)
         except ValueError:
             choice = 0
-            printText(again)
+            ddisplay.printText(again)
     
     cont5 = ['\n"Anyway," he goes on, "Your tongue has been removed to prevent you from',
              'trying to tell any of your fellow laborers about the fact that no one',
@@ -656,8 +657,8 @@ def spanishInquisition():
              '\nIf none of this had happened to you, would her fate have been in your',
              'hands tomorrow?']
     
-    printText(cont5)
+    ddisplay.printText(cont5)
     raw_input('\n(Press any key to continue)')
-    printText(cont6)
+    ddisplay.printText(cont6)
     
     raw_input('\n\nTHE END')

@@ -2,10 +2,12 @@ import random
 import string
 import time
 import copy
+
 import classes
 from classes import workclass
 from classes import robotclass
-from LD25display import *
+import ddisplay
+from ddisplay import sim
 
 #TODO: Make breakdown chance an attribute of a workplaceToBe instance.
 BREAKDOWN_CHANCE = [0, 0, 1, 1, 2, 3]
@@ -55,20 +57,20 @@ def buildPossibleCMD(workplaces):
 
 
 def placementPhase(simState):
-    pDisplay(simState)
+    sim.pDisplay(simState)
     possibleCMD = buildPossibleCMD(simState.workplaces)
     
     command = [False]
     while command[0] != 'RUN':
-        pCommandMenu(simState.workplaces)
+        sim.pCommandMenu(simState.workplaces)
         input = raw_input("\nPlease choose an option from above:")
         command = input.upper().split()
         command.append(' ')
         
         if command[0] not in possibleCMD:
-            printText(errorCMD)
+            ddisplay.printText(errorCMD)
         elif command[0] == 'UPDATE':
-            pDisplay(simState)
+            sim.pDisplay(simState)
         elif command[0] == 'RUN':
             break
         else:
@@ -92,7 +94,7 @@ def placementPhase(simState):
                         break
                     
                     if oldHome == workplace:
-                        printText(errorCMD)
+                        ddisplay.printText(errorCMD)
                     else:
                         move = oldHome.removeRobot(id)
                         try:
@@ -102,7 +104,7 @@ def placementPhase(simState):
                                                                                      workplace.name)
                         except TooManyRobots:
                             oldHome.addRobot(move)
-                            printText(errorMaxRobots)
+                            ddisplay.printText(errorMaxRobots)
 
 
 def calculationPhase(simState):
@@ -110,19 +112,19 @@ def calculationPhase(simState):
     for i in range(simState.weeks):
         for workplace in simState.workplaces:
             workplace.update()
-        cStatus(i, simState.weeks)
+        sim.cStatus(i, simState.weeks)
         
 
 def resultsPhase(simState):
     simState.phase = 'SIMULATION RESULTS'
-    printKeyAndTitle(simState)
+    sim.printKeyAndTitle(simState)
     for workplace in simState.workplaces:
-        rDisplayWorkplaceResults(workplace, simState.weeks)
+        sim.rDisplayWorkplaceResults(workplace, simState.weeks)
 
     restart = True
     doneYet = False
     while not doneYet:
-        rEnd()
+        sim.rEnd()
         input = raw_input("\nPlease choose an option from above:")
         command = input.upper().split()
         command.append(' ')
@@ -143,15 +145,15 @@ def resultsPhase(simState):
                         if int(input) in idNums:
                             extant = True
                         else:
-                            printText(errorID)
+                            ddisplay.printText(errorID)
                     except ValueError:
                         input = ' '
-                        printText(errorID)
+                        ddisplay.printText(errorID)
             print '\nSIMULATION COMPLETE\n'
             restart = False
             doneYet = True
         else:
-            printText(errorCMD)
+            ddisplay.printText(errorCMD)
     
     return restart
 
