@@ -3,7 +3,13 @@ import time
 import ddisplay
 from classes import workclass
 from simulation import runSim as runSim
-from helpers import *
+
+
+def instructions():
+    """
+    Displays the employee "manual", which is actually tips for playing.
+    """
+    ddisplay.printFromFile("resources/story/instructions.txt")
 
 
 def intro():
@@ -134,8 +140,7 @@ def ch01():
         
         raw_input('\n(Press enter key to continue)')
 
-#TODO: Eliminate lookWork() and justWork() by combining them into one function
-#      with if statements based on the dave variable. (Dumbass!)
+
 def ch02():
     """
     Returns True if Dave is still in player's life at end of module or False
@@ -156,19 +161,111 @@ def ch02():
             if int(choice) == 1:
                 dave = True
                 ddisplay.printFromFile("resources/story/ch02/ch02_look.txt")
-                lookWork()
-                print '\nLunch time. You still haven\'t heard from Dave. Time to go check on him.'
-                time.sleep(0.2)
             elif int(choice) == 2:
                 dave = False
                 print '\nYou sip your coffee obtained in quiet and log in.'
-                justWork()
-                ddisplay.printFromFile("resources/story/ch02/ch02_worked.txt")
             else:
                 print '\nDrink some of your coffee and try that again.'
         except ValueError:
             choice = 0
             print '\nDrink some of your coffee and try that again.'
+    
+    intro = ['Confronted with the usual options...',
+             '\nWhat do you do?']
+    ddisplay.printText(intro)
+    
+    #Goof off or work.
+    nosebook = False
+    email = False
+    while True:
+        opts = ['1 - See what\'s happening on Nosebook.',
+                '2 - Check your email.']
+        if dave:
+            opts.append('3 - Work. Maybe it\'ll take your mind off things.')
+        else:
+            opts.append('3 - Do the work they\'re paying you to be here for.')
+        ddisplay.printText(opts)
+        
+        choice = raw_input("Pick one:")
+        try:
+            if int(choice) == 1:
+                if nosebook:
+                    if dave:
+                        noseSeen = ['\nEven scoffing at the nosebook-picking can\'t cheer you up.',
+                                    'The term "nosebook-picking" isn\'t even funny right now.']
+                    else:
+                        noseSeen = ['\nMore nosebook-picking. Ah, nosebook-picking.',
+                                    'Just the term makes you happy. How do you visualize that?']
+                    ddisplay.printText(noseSeen)
+                else:
+                    ddisplay.printFromFile("resources/story/ch02/ch02_nosebook.txt")
+                    if dave:
+                        print('\nThis isn\'t helping.')
+                    else:
+                        print('\nYou should probably work. Probably.')
+                    nosebook = True
+            elif int(choice) == 2:
+                if email:
+                    if dave:
+                        print('\nNo new email. Not that you did a good job reading the first two.')
+                    else:
+                        print('\nNo new email. Who\'s surprised?')
+                else:
+                    newEmail = ['\nSomething from Biggs about a party... don\'t care right now.',
+                                'And... news. Noone cares about that.']
+                    ddisplay.printText(newEmail)
+                    email = True
+            elif int(choice) == 3:
+                #Working.
+                while True:
+                    opts = ['\nWhat do you do?',
+                            '1 - Review the manual again.']
+                    if dave:
+                        opts.append('2 - Work. Or try to.')
+                    else:
+                        opts.append('2 - Work! It\'s like a crummy party you get paid to attend.')
+                    ddisplay.printText(opts)
+                    
+                    choice = raw_input("Pick one:")
+                    try:
+                        if int(choice) == 1:
+                            instructions()
+                        elif int(choice) == 2:
+                            workplacesToBe = []
+                            workplacesToBe.append(workclass.WorkplaceToBe(7, True, workclass.Farm,
+                                                                          "FARM #512", "A512"))
+                            workplacesToBe.append(workclass.WorkplaceToBe(5, True, workclass.Factory,
+                                                                          "FACTORY #110", "C110"))
+                            workplacesToBe.append(workclass.WorkplaceToBe(6, True, workclass.Factory,
+                                                                          "FACTORY #112", "C112"))
+                            workplacesToBe.append(workclass.WorkplaceToBe(4, False, workclass.Unassigned,
+                                                                          "UNASSIGNED", "NONE"))
+                            runSim(workplacesToBe, 4, '#187949')
+                            break
+                        else:
+                            print 'Try again, please. Invalid input.'
+                    except ValueError:
+                        choice = 0
+                        print 'Try again, please. Invalid input.'
+                break
+            else:
+                if dave:
+                    print('\nI know you\'re distracted, but please use proper input.')
+                else:
+                    print('Have a sip of carefree coffee and try again.')
+        except ValueError:
+            choice = 0
+            if dave:
+                print('\nI know you\'re distracted, but please use proper input.')
+            else:
+                print('Have a sip of carefree coffee and try again.')
+        
+        print '\nWhat do you do next?'
+    
+    if dave:
+        print('\nLunch time. You still haven\'t heard from Dave. Time to go check on him.')
+    else:
+        ddisplay.printFromFile("resources/story/ch02/ch02_worked.txt")
     
     raw_input('\n(Press enter key to continue)')
     return dave
