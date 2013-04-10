@@ -29,7 +29,7 @@ organized into prioritized tiers, are:
 HIGH
 - make it so simulation results can be saved for reference/reloaded before
   choosing what to decommission
-  - side bonus: make available to affect story
+  - side bonus: make saved results available to affect story
 - Use file I/O to separate story from function code.
 MEDIUM
 - more branching storylines

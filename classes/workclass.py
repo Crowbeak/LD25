@@ -8,6 +8,22 @@ random.seed()
 
 
 ###############################################################################
+# Exceptions
+###############################################################################
+class TooManyRobots(Exception):
+    """
+    Raised by Workplace instances when adding another robot would result in the
+    max number of robots for that Workplace being exceeded.
+    """
+
+class NotImplemented(Exception):
+    """
+    Raised by Workplace subclass instances if the subclass has no update
+    function implemented.
+    """
+
+
+###############################################################################
 # Workplace Classes
 ###############################################################################
 class Workplace(object):

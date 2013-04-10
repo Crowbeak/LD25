@@ -102,7 +102,7 @@ def placementPhase(simState):
                             print "\nSUCCESS. Robot #{} moved from {} to {}.".format(id,
                                                                                      oldHome.name,
                                                                                      workplace.name)
-                        except TooManyRobots:
+                        except workclass.TooManyRobots:
                             oldHome.addRobot(move)
                             ddisplay.printText(errorMaxRobots)
 
