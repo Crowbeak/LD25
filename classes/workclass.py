@@ -31,21 +31,22 @@ class Workplace(object):
     Basic representation of work environment for robots.
     Designed to be inherited.
     """
-    def __init__(self, maxRobots, robots=[], name="WORKPLACE", cmd="WORK"):
+    _avg_downtime = random.randint(1, 7)
+    
+    def __init__(self, max_robots, robots=[], name="WORKPLACE", cmd="WORK"):
         """
-        maxRobots: Maximum number of robots the place can hold (a non-neg int).
+        max_obots: Maximum number of robots the place can hold (a non-neg int).
         avgDowntime: Average time to repair a robot, in days (int between 1-7).
         cmd: console command for robot placement phase (a 4-character uppercase
              string).
         """
-        self.maxRobots = maxRobots
+        self.max_robots = max_robots
         self.robots = copy.deepcopy(robots)
         self.name = name
         self.cmd = cmd
-        self.avgDowntime = random.randint(1, 7)
     
-    def addRobot(self, robot):
-        if len(self.robots) < self.maxRobots:
+    def add_robot(self, robot):
+        if len(self.robots) < self.max_robots:
             self.robots.append(robot)
         else:
             raise TooManyRobots("Max number of robots exceeded.")
@@ -56,34 +57,18 @@ class Workplace(object):
             if self.robots[i].id == id:
                 return self.robots.pop(i)
     
-    def getTotalOutput(self):
+    def total_output(self):
         total = 0
         for robot in self.robots:
-            total += robot.output
+            total += robot.total_output
         
         return total
     
-    #TODO: Am I using this, or does it need to go?
-    def getTotalCost(self):
-        total = 0
-        for robot in self.robots:
-            total += robot.cost
-        
-        return total
-    
-    def getAvgOutput(self, weeks):
+    def avg_output(self, weeks):
         """
         Returns the average weekly output per robot as a float.
         """
-        return (self.getTotalOutput()/weeks)/float(len(self.robots))
-    
-    #TODO: Am I using this, or does it need to go?
-    def getAvgCost(self):
-        """
-        Returns the average weekly cost to maintain a robot at the workplace
-        as a float.
-        """
-        return self.getTotalCost()/float(len(self.robots))
+        return (self.total_output()/weeks)/float(len(self.robots))
     
     def update(self):
         raise NotImplemented("Module update() not implemented.")
@@ -93,7 +78,7 @@ class Unassigned(Workplace):
     """
     Placeholder for robots not yet assigned to an actual workplace.
     """
-    def addRobot(self, robot):
+    def add_robot(self, robot):
         self.robots.append(robot)
     
     def update(self):
@@ -101,14 +86,11 @@ class Unassigned(Workplace):
 
 
 class Farm(Workplace):
-    def __init__(self, maxRobots, robots=[], name="FARM", cmd="FARM"):
-        """
-        cmd: console command for robot placement phase (a 4-character uppercase
-             string).
-        """
-        Workplace.__init__(self, maxRobots, robots, name, cmd)
-        self.MAJOR_STAT_RATIO = 3.0
-        self.MINOR_STAT_RATIO = 0.05
+    """
+    Instance of a farm workplace type.
+    """
+    _major_stat_ratio = 3.0
+    _minor_stat_ratio = 0.05
     
     def update(self):
         """
@@ -116,27 +98,21 @@ class Farm(Workplace):
         If a robot breaks, increments the number of breaks for that robot.
         """
         for robot in self.robots:
-            if random.random() < robot.breakdownProb():
-                robot.incrementBreaks()
-                output = int(((robot.strength*self.MAJOR_STAT_RATIO) *
-                             robot.battery * (7-self.avgDowntime) *
-                             (robot.utility*self.MINOR_STAT_RATIO)))
+            if random.random() < robot.breakdown_prob():
+                robot.breakdowns += 1
+                output = int(((robot.strength*self._major_stat_ratio) *
+                             robot.battery * (7-self._avg_downtime) *
+                             (robot.utility*self._minor_stat_ratio)))
             else:
-                output = int(((robot.strength*self.MAJOR_STAT_RATIO) *
+                output = int(((robot.strength*self._major_stat_ratio) *
                              robot.battery * 7 *
-                             (robot.utility*self.MINOR_STAT_RATIO)))
-            robot.addOutput(output)
+                             (robot.utility*self._minor_stat_ratio)))
+            robot.total_output += output
         
 
 class Factory(Workplace):
-    def __init__(self, maxRobots, robots=[], name="FACTORY", cmd="FACT"):
-        """
-        cmd: console command for robot placement phase (a 4-character uppercase
-             string).
-        """
-        Workplace.__init__(self, maxRobots, robots, name, cmd)
-        self.MAJOR_STAT_RATIO = 10.0
-        self.MINOR_STAT_RATIO = 0.03
+    _major_stat_ratio = 10.0
+    _minor_stat_ratio = 0.03
         
     def update(self):
         """
@@ -144,16 +120,16 @@ class Factory(Workplace):
         If a robot breaks, increments the number of breaks for that robot.
         """
         for robot in self.robots:
-            if random.random() < robot.breakdownProb():
-                robot.incrementBreaks()
-                output = int(((robot.utility*self.MAJOR_STAT_RATIO) *
-                             robot.battery * (7-self.avgDowntime) *
-                             (robot.strength*self.MINOR_STAT_RATIO)))
+            if random.random() < robot.breakdown_prob():
+                robot.breakdowns += 1
+                output = int(((robot.utility*self._major_stat_ratio) *
+                             robot.battery * (7-self._avg_downtime) *
+                             (robot.strength*self._minor_stat_ratio)))
             else:
-                output = int(((robot.utility*self.MAJOR_STAT_RATIO) *
+                output = int(((robot.utility*self._major_stat_ratio) *
                              robot.battery * 7 *
-                             (robot.strength*self.MINOR_STAT_RATIO)))
-            robot.addOutput(output)
+                             (robot.strength*self._minor_stat_ratio)))
+            robot.total_output += output
 
 
 ###############################################################################
@@ -166,9 +142,11 @@ class WorkplaceToBe(object):
     Allows for control of simulation balance, but with variability from
     randomization each time.
     """
-    def __init__(self, numberOfRobots, robotsAreOld, constructor, name, cmd):
-        self.numberOfRobots = numberOfRobots
-        self.robotsAreOld = robotsAreOld
+    breakdown_chance = [0, 0, 0, 0, 1, 1, 1, 2, 2, 3]
+    
+    def __init__(self, number_of_robots, robots_are_old, constructor, name, cmd):
+        self.number_of_robots = number_of_robots
+        self.robots_are_old = robots_are_old
         self.constructor = constructor
         self.name = name
         self.cmd = cmd

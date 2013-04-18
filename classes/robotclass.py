@@ -2,8 +2,16 @@
 # Labor Robot Class
 ###############################################################################
 class LaborRobot(object):
-    def __init__(self, id, age, strength, battery, utility, cost, breakdowns=0,
-                 output=0):
+    """
+    Instance of a labor robot.
+    """
+    
+    _breakdown_ratio = 0.005
+    _broken_before = 0.001
+    total_output = 0
+    
+    def __init__(self, id, age, strength, battery, utility, cost,
+                 breakdowns=0):
         """
         age: Number of years robot has been in service (a non-negative int).
         strength: Tens of pounds the robot can carry (a positive float).
@@ -24,23 +32,13 @@ class LaborRobot(object):
         self.utility = utility
         self.cost = cost
         self.breakdowns = breakdowns
-        self.output = output
-        self.BREAKDOWN_RATIO = 0.005
-        self.BROKEN_BEFORE = 0.001
-    
-    def breakdownProb(self):
+
+    def breakdown_prob(self):
         """
         Returns probability of the robot breaking down during a week (a float).
         """
         if self.age <= 1:
-            return self.BREAKDOWN_RATIO + (self.breakdowns*self.BROKEN_BEFORE)
+            return self._breakdown_ratio + (self.breakdowns*self._broken_before)
         else:
-            return ((self.age*self.BREAKDOWN_RATIO) +
-                    (self.breakdowns*self.BROKEN_BEFORE))
-
-    #TODO: Make following modules into properties?
-    def incrementBreaks(self):
-        self.breakdowns += 1
-    
-    def addOutput(self, amount):
-        self.output += amount
+            return ((self.age*self._breakdown_ratio) +
+                    (self.breakdowns*self._broken_before))
