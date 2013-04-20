@@ -1,6 +1,6 @@
 import time
 
-import ddisplay
+from displays import *
 from classes import workclass
 from simulation import run_sim as run_sim
 
@@ -9,7 +9,7 @@ def instructions():
     """
     Displays the employee "manual", which is actually tips for playing.
     """
-    ddisplay.print_from_file("resources/story/instructions.txt")
+    print_from_file("resources/story/instructions.txt")
 
 
 def intro():
@@ -24,9 +24,9 @@ def intro():
           prevent Dave's suicide and its impact on the story.
     TODO: Make coffee intake a relevant stat somehow.
     """
-    ddisplay.print_from_file("resources/story/intro/credits.txt")
+    print_from_file("resources/story/intro/credits.txt")
     raw_input('\n(Press enter key to continue)')
-    ddisplay.print_from_file("resources/story/intro/good_morning_dave.txt")
+    print_from_file("resources/story/intro/good_morning_dave.txt")
     choice = 0
     again = ['\nCome on, now. I know you haven\'t had your coffee yet, but surely you',
             'can find the 1 and 2 keys on your keyboard.']
@@ -34,25 +34,25 @@ def intro():
         menu = ['\nWhat do you do?',
                 '1 - Grunt, wave goodbye, and go to your cubicle.',
                 '2 - Ask about his wife.']
-        ddisplay.print_text(menu)
+        print_text(menu)
     
         choice = raw_input("Pick one:")
         try:
             if int(choice) == 1:
-                ddisplay.print_from_file("resources/story/intro/good_morning_dave_r1.txt")
+                print_from_file("resources/story/intro/good_morning_dave_r1.txt")
             elif int(choice) == 2:
-                ddisplay.print_from_file("resources/story/intro/good_morning_dave_r2.txt")
+                print_from_file("resources/story/intro/good_morning_dave_r2.txt")
             else:
-                ddisplay.print_text(again)
+                print_text(again)
         except ValueError:
             choice = 0
-            ddisplay.print_text(again)
+            print_text(again)
 
 
 def ch01():
     intro = ['\nAfter logging in, you consider your options.',
              '\nWhat do you do?']
-    ddisplay.print_text(intro)
+    print_text(intro)
     
     nosebook = False
     email = False
@@ -61,7 +61,7 @@ def ch01():
         menu = ['1 - See what\'s happening on Nosebook.',
                 '2 - Check your email.',
                 '3 - Do the work they\'re paying you to be here for.']
-        ddisplay.print_text(menu)
+        print_text(menu)
         
         choice = raw_input("Pick one:")
         try:
@@ -69,7 +69,7 @@ def ch01():
                 if nosebook:
                     print '\nYeah... still a lot of nosebook-picking going on here.'
                 else:
-                    ddisplay.print_from_file("resources/story/ch01/ch01_nosebook.txt")
+                    print_from_file("resources/story/ch01/ch01_nosebook.txt")
                     nosebook = True
             elif int(choice) == 2:
                 if email:
@@ -78,12 +78,12 @@ def ch01():
                     print '\nEarlobe enlargement? Wow, they\'ll try anything these days.'
                     email = True
             elif int(choice) == 3:
-                ddisplay.print_from_file("resources/story/ch01/ch01_work.txt")
+                print_from_file("resources/story/ch01/ch01_work.txt")
                 while True:
                     menu = ['\nWhat do you do?',
                             '1 - Review the manual again to stave off the inevitable. [How to Play]',
                             '2 - Just do it.']
-                    ddisplay.print_text(menu)
+                    print_text(menu)
                     
                     choice = raw_input("Pick one:")
                     try:
@@ -106,17 +106,17 @@ def ch01():
                         print 'Try again, please. Invalid input.'
                 break
             else:
-                ddisplay.print_text(again)
+                print_text(again)
         except ValueError:
             choice = 0
-            ddisplay.print_text(again)
+            print_text(again)
         
         print '\nWhat do you do next?'
 
     lunch = ['You yawn and stretch. Coffee time is past. It\'s snack time now.',
              '\nWhoops!',
              '\nApparently you meant lunch time.']
-    ddisplay.print_text(lunch)
+    print_text(lunch)
     
     choice = 0
     again = ['\nYou... wait, what?! Try that again.']
@@ -124,19 +124,19 @@ def ch01():
         chc1 = ['\nWhere do you want to go?',
                 '1 - The good old cafeteria. Mediocre free food, decent conversation.',
                 '2 - Home. Sandwiches and solitude.']
-        ddisplay.print_text(chc1)
+        print_text(chc1)
         
         choice = raw_input("Pick one:")
         try:
             if int(choice) == 1:
-                ddisplay.print_from_file("resources/story/ch01/ch01_cafeteria.txt")
+                print_from_file("resources/story/ch01/ch01_cafeteria.txt")
             elif int(choice) == 2:
-                ddisplay.print_from_file("resources/story/ch01/ch01_home.txt")
+                print_from_file("resources/story/ch01/ch01_home.txt")
             else:
-                ddisplay.print_text(again)
+                print_text(again)
         except ValueError:
             choice = 0
-            ddisplay.print_text(again)
+            print_text(again)
         
         raw_input('\n(Press enter key to continue)')
 
@@ -146,7 +146,7 @@ def ch02():
     Returns True if Dave is still in player's life at end of module or False
     otherwise.
     """
-    ddisplay.print_from_file("resources/story/ch02/ch02_intro.txt")
+    print_from_file("resources/story/ch02/ch02_intro.txt")
     
     choice = 0
     while (int(choice) != 1) and (int(choice) != 2):
@@ -154,13 +154,13 @@ def ch02():
                 '    are involved.',
                 '2 - Nah. Dave\'s a great guy but it\'s nice not to have to deal',
                 '    with his peppy peppiness sometimes.']
-        ddisplay.print_text(opts)
+        print_text(opts)
         
         choice = raw_input("Pick one:")
         try:
             if int(choice) == 1:
                 dave = True
-                ddisplay.print_from_file("resources/story/ch02/ch02_look.txt")
+                print_from_file("resources/story/ch02/ch02_look.txt")
             elif int(choice) == 2:
                 dave = False
                 print '\nYou sip your coffee obtained in quiet and log in.'
@@ -172,7 +172,7 @@ def ch02():
     
     intro = ['Confronted with the usual options...',
              '\nWhat do you do?']
-    ddisplay.print_text(intro)
+    print_text(intro)
     
     #Goof off or work.
     nosebook = False
@@ -184,7 +184,7 @@ def ch02():
             opts.append('3 - Work. Maybe it\'ll take your mind off things.')
         else:
             opts.append('3 - Do the work they\'re paying you to be here for.')
-        ddisplay.print_text(opts)
+        print_text(opts)
         
         choice = raw_input("Pick one:")
         try:
@@ -196,9 +196,9 @@ def ch02():
                     else:
                         noseSeen = ['\nMore nosebook-picking. Ah, nosebook-picking.',
                                     'Just the term makes you happy. How do you visualize that?']
-                    ddisplay.print_text(noseSeen)
+                    print_text(noseSeen)
                 else:
-                    ddisplay.print_from_file("resources/story/ch02/ch02_nosebook.txt")
+                    print_from_file("resources/story/ch02/ch02_nosebook.txt")
                     if dave:
                         print('\nThis isn\'t helping.')
                     else:
@@ -213,7 +213,7 @@ def ch02():
                 else:
                     newEmail = ['\nSomething from Biggs about a party... don\'t care right now.',
                                 'And... news. Noone cares about that.']
-                    ddisplay.print_text(newEmail)
+                    print_text(newEmail)
                     email = True
             elif int(choice) == 3:
                 #Working.
@@ -224,7 +224,7 @@ def ch02():
                         opts.append('2 - Work. Or try to.')
                     else:
                         opts.append('2 - Work! It\'s like a crummy party you get paid to attend.')
-                    ddisplay.print_text(opts)
+                    print_text(opts)
                     
                     choice = raw_input("Pick one:")
                     try:
@@ -265,7 +265,7 @@ def ch02():
     if dave:
         print('\nLunch time. You still haven\'t heard from Dave. Time to go check on him.')
     else:
-        ddisplay.print_from_file("resources/story/ch02/ch02_worked.txt")
+        print_from_file("resources/story/ch02/ch02_worked.txt")
     
     raw_input('\n(Press enter key to continue)')
     return dave
@@ -273,7 +273,7 @@ def ch02():
     
 def ch03(dave):
     if dave:
-        ddisplay.print_from_file("resources/story/ch03/ch03_dave_intro.txt")
+        print_from_file("resources/story/ch03/ch03_dave_intro.txt")
         print('\nWhat do you do?')
         time.sleep(0.2)
     
@@ -284,7 +284,7 @@ def ch03(dave):
             opts = ['1 - Pick your Nosebook.',
                     '2 - Check your eternally uninteresting email.',
                     '3 - Slave away.']
-            ddisplay.print_text(opts)
+            print_text(opts)
         
             choice = raw_input("Pick one:")
             try:
@@ -292,7 +292,7 @@ def ch03(dave):
                     if nosebook:
                         print '\nOh, why bother.'
                     else:
-                        ddisplay.print_from_file("resources/story/ch03/ch03_nosebook.txt")
+                        print_from_file("resources/story/ch03/ch03_nosebook.txt")
                         nosebook = True
                 elif int(choice) == 2:
                     if email:
@@ -302,7 +302,7 @@ def ch03(dave):
                         email = True
                 elif int(choice) == 3:
                     #Tries to work.
-                    ddisplay.print_from_file("resources/story/ch03/ch03_work.txt")
+                    print_from_file("resources/story/ch03/ch03_work.txt")
                     raw_input('\n(Press enter key to continue)')
                     break
                 else:
@@ -313,22 +313,22 @@ def ch03(dave):
         
             print '\nWhat do you do next?'
     else:
-        ddisplay.print_from_file("resources/story/ch03/ch03_nodave_intro.txt")
+        print_from_file("resources/story/ch03/ch03_nodave_intro.txt")
         
         choice = 0
         while (int(choice) != 1) and (int(choice) != 2):
             opts = ['\nWill you eat with Biggs and Wedge today?',
                     '1 - Yeah.',
                     '2 - No.']
-            ddisplay.print_text(opts)
+            print_text(opts)
         
             choice = raw_input("Pick one:")
             try:
                 if int(choice) == 1:
-                    ddisplay.print_from_file("resources/story/ch03/ch03_yes.txt")
+                    print_from_file("resources/story/ch03/ch03_yes.txt")
                     raw_input('\n(Press enter key to continue)')
                 elif int(choice) == 2:
-                    ddisplay.print_from_file("resources/story/ch03/ch03_no.txt")
+                    print_from_file("resources/story/ch03/ch03_no.txt")
                     raw_input('\n(Press enter key to continue)')
                 else:
                     print '\nSimple question. He\'s just asking.'
@@ -338,34 +338,34 @@ def ch03(dave):
         
     
 def spanishInquisition():
-    ddisplay.print_from_file("resources/story/si/si_intro.txt")
+    print_from_file("resources/story/si/si_intro.txt")
     
     choice = 0
     while (int(choice) != 1) and (int(choice) != 2):
         opts = ['\nWell, do you?',
                 '1 - I still don\'t understand what I\'m supposed to have done.',
                 '2 - Would it matter if I did?']
-        ddisplay.print_text(opts)
+        print_text(opts)
         
         choice = raw_input("Pick one:")
         try:
             if int(choice) == 1:
                 pass
             elif int(choice) == 2:
-                ddisplay.print_from_file("resources/story/si/si_no_change.txt")
+                print_from_file("resources/story/si/si_no_change.txt")
             else:
                 print '\n"Have you anything to say in your defense?" he asks again.'
         except ValueError:
             choice = 0
             print '\n"Have you anything to say in your defense?" he asks again.'
     
-    ddisplay.print_from_file("resources/story/si/si_verdict.txt")
+    print_from_file("resources/story/si/si_verdict.txt")
     raw_input('\n(Press enter key to continue)')
-    ddisplay.print_from_file("resources/story/si/si_ending01.txt")
+    print_from_file("resources/story/si/si_ending01.txt")
     raw_input('\n(Press enter key to continue)')
-    ddisplay.print_from_file("resources/story/si/si_ending02.txt")
+    print_from_file("resources/story/si/si_ending02.txt")
     raw_input('\n(Press enter key to continue)')
-    ddisplay.print_from_file("resources/story/si/si_ending03.txt")
+    print_from_file("resources/story/si/si_ending03.txt")
     
     choice = 0
     again = ['\n"What\'s that?" he asks. I can\'t hear you."',
@@ -373,22 +373,22 @@ def spanishInquisition():
     while (int(choice) != 1) and (int(choice) != 2):
         opts = ['1 - You\'re kidding, right? You can\'t be serious.',
                 '2 - Say nothing.']
-        ddisplay.print_text(opts)
+        print_text(opts)
         
         choice = raw_input("Pick one:")
         try:
             if int(choice) == 1:
-                ddisplay.print_from_file("resources/story/si/si_speech.txt")
+                print_from_file("resources/story/si/si_speech.txt")
             elif int(choice) == 2:
-                ddisplay.print_from_file("resources/story/si/si_silence.txt")
+                print_from_file("resources/story/si/si_silence.txt")
             else:
-                ddisplay.print_text(again)
+                print_text(again)
         except ValueError:
             choice = 0
-            ddisplay.print_text(again)
+            print_text(again)
     
-    ddisplay.print_from_file("resources/story/si/si_ending04.txt")
+    print_from_file("resources/story/si/si_ending04.txt")
     raw_input('\n(Press enter key to continue)')
-    ddisplay.print_from_file("resources/story/si/si_ending05.txt")
+    print_from_file("resources/story/si/si_ending05.txt")
     
     raw_input('\n\nTHE END')

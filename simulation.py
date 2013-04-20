@@ -8,8 +8,8 @@ import copy
 import classes
 from classes import workclass
 from classes import robotclass
-import ddisplay
-from ddisplay import sim
+from displays import *
+from displays import sim
 
 
 errorCMD = ["\nERROR: Robot does not exist or command was mistyped.",
@@ -68,7 +68,7 @@ def placement_phase(sim_state):
         command.append(' ')
         
         if command[0] not in cmd_list:
-            ddisplay.print_text(errorCMD)
+            print_text(errorCMD)
         elif command[0] == 'UPDATE':
             sim.placement_display(sim_state)
         elif command[0] == 'RUN':
@@ -94,7 +94,7 @@ def placement_phase(sim_state):
                         break
                     
                     if old_home == workplace:
-                        ddisplay.print_text(errorCMD)
+                        print_text(errorCMD)
                     else:
                         move = old_home.removeRobot(id)
                         try:
@@ -104,7 +104,7 @@ def placement_phase(sim_state):
                                                                                      workplace.name)
                         except workclass.TooManyRobots:
                             old_home.add_robot(move)
-                            ddisplay.print_text(errorMaxRobots)
+                            print_text(errorMaxRobots)
 
 
 def calculation_phase(sim_state):
@@ -145,15 +145,15 @@ def results_phase(sim_state):
                         if int(input) in id_nums:
                             extant = True
                         else:
-                            ddisplay.print_text(errorID)
+                            print_text(errorID)
                     except ValueError:
                         input = ' '
-                        ddisplay.print_text(errorID)
+                        print_text(errorID)
             print '\nSIMULATION COMPLETE\n'
             restart = False
             done_yet = True
         else:
-            ddisplay.print_text(errorCMD)
+            print_text(errorCMD)
     
     return restart
 

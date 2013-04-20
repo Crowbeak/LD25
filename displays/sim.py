@@ -1,12 +1,12 @@
 import time
 
-import ddisplay
+from displays import *
 
 ###############################################################################
 # Simulation - General Display Functions
 ###############################################################################
 def print_key(sim_state):
-    ddisplay.print_text(["\nSIMULATION: {} \n".format(sim_state.name),
+    print_text(["\nSIMULATION: {} \n".format(sim_state.name),
                         "{}\n".format(sim_state.phase),
                         "\nKEY",
                         "----------",
@@ -19,7 +19,7 @@ def print_key(sim_state):
                         "BRKS: Number of times robot has broken down"])
     
     if sim_state.phase == 'SIMULATION RESULTS':
-        ddisplay.print_text(["T.OUT: Robot's total output over simulated timeframe",
+        print_text(["T.OUT: Robot's total output over simulated timeframe",
                             "A.OUT: Robot's average output per week over simulated timeframe"])
 
 
@@ -33,14 +33,14 @@ def placement_display(sim_state):
     print_key(sim_state)
     
     for workplace in sim_state.workplaces:
-        ddisplay.print_text(["\n{} ROBOTS".format(workplace.name)])
+        print_text(["\n{} ROBOTS".format(workplace.name)])
     
         if workplace.max_robots == None:
-            ddisplay.print_text(["NO MAXIMUM"])
+            print_text(["NO MAXIMUM"])
         else:
-            ddisplay.print_text(["MAX NUMBER OF ROBOTS: {}".format(workplace.max_robots)])
+            print_text(["MAX NUMBER OF ROBOTS: {}".format(workplace.max_robots)])
         
-        ddisplay.print_text(["  ID  AGE CARR BATT UTIL COST BRKS",
+        print_text(["  ID  AGE CARR BATT UTIL COST BRKS",
                             "----------------------------------"])
     
         for robot in workplace.robots:
@@ -55,7 +55,7 @@ def placement_cmd(workplaces):
     """
     Displays console commands during the robot placement phase of simulation.
     """
-    ddisplay.print_text(["\nCOMMAND   | EFFECT",
+    print_text(["\nCOMMAND   | EFFECT",
                          "----------|-----------------------------------------------"])
     for workplace in workplaces:
         if workplace.cmd == "NONE":
@@ -63,7 +63,7 @@ def placement_cmd(workplaces):
         else:
             print "{} [ID] | Move robot with ID number [ID] to {}".format(workplace.cmd,
                                                                           workplace.name)
-    ddisplay.print_text(["UPDATE    | Reprint robot lists",
+    print_text(["UPDATE    | Reprint robot lists",
                          "RUN       | Run simulation"])
     
 
@@ -77,13 +77,13 @@ def calc_status(i, cycles):
     tenths = cycles/10
     
     if i == 0:
-        ddisplay.print_text(["\n\nSIMULATING. PLEASE WAIT..."])
+        print_text(["\n\nSIMULATING. PLEASE WAIT..."])
     elif i == (cycles-1):
-        ddisplay.print_text(["SIMULATION COMPLETE.\n"])
+        print_text(["SIMULATION COMPLETE.\n"])
     else:
         for j in xrange(1, 10):
             if i == tenths*j:
-                ddisplay.print_text(["...{}0% complete".format(j)])
+                print_text(["...{}0% complete".format(j)])
 
 
 ###############################################################################
@@ -94,7 +94,7 @@ def results(workplace, weeks):
     Displays results of the calculation phase of simulation in table format for
     the Workplace instance given.
     """
-    ddisplay.print_text(["\n{} ROBOTS".format(workplace.name),
+    print_text(["\n{} ROBOTS".format(workplace.name),
                         "INDIVIDUAL OUTPUTS",
                         "  ID  AGE CARR BATT UTIL COST BRKS |    T.OUT  A.OUT",
                         "-----------------------------------|----------------"])
@@ -106,7 +106,7 @@ def results(workplace, weeks):
         print repr(robot.total_output).rjust(8),
         print repr(robot.total_output/weeks).rjust(6)
     
-    ddisplay.print_text(["\nTOTAL {} OUTPUT: {}".format(workplace.name,
+    print_text(["\nTOTAL {} OUTPUT: {}".format(workplace.name,
                                                        workplace.total_output()),
                         "\nAVERAGE WEEKLY OUTPUT PER ROBOT: {}".format(workplace.avg_output(weeks))])
 
@@ -116,7 +116,7 @@ def end_menu():
     Displays console commands after the calculation phase of simulation
     is complete.
     """
-    ddisplay.print_text(["\nCOMMAND   | EFFECT",
+    print_text(["\nCOMMAND   | EFFECT",
                         "----------|----------------------------------------------",
                         "RESTART   | Restart simulation.",
                         "DECOM     | Choose robots to decommission.\n"])
