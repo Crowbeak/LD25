@@ -2,6 +2,8 @@
 
 import time
 
+import pyglet
+
 def print_text(string_list):
     """
     Prints strings in list with a 0.1 second time step between each string.
@@ -21,3 +23,13 @@ def print_from_file(filename):
         for line in file.readlines():
             print line,
             time.sleep(0.1)
+
+#For use with pyglet text labels.
+def text_from_file(filename):
+    """
+    Returns the text from a file as one big chunk.
+    
+    filename must be a string.
+    """
+    with open(filename, "r") as file:
+        return file.read()

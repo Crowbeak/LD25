@@ -1,8 +1,37 @@
 import time
 
+import pyglet
+
+from load import *
+from load import resources
 from displays import *
 from classes import workclass
 from simulation import run_sim as run_sim
+
+
+def title(game_window):
+    """
+    Displays the game title screen.
+    
+    :Parameters:
+        game_window : WindowState class
+            Contains attributes related to the running of the pyglet game
+            window.
+    """
+    time.sleep(3.0)
+    seal = TimedImage(death_timer=10.0, img=resources.seal_pic, x=400, y=550,
+                      batch=game_window.fg_batch)
+    title = TimedImage(death_timer=10.0, img=resources.title_pic, x=400,
+                       y=500-seal.height, batch=game_window.fg_batch)
+    lena = TimedImage(death_timer=10.0, img=resources.lena_pic, x=750, y=50,
+                      batch=game_window.fg_batch)
+    credits = pyglet.text.Label("a game by Lena LeRay", x=500,
+                                y=100+lena.height, batch=game_window.fg_batch)
+    
+
+#------------------------------------------------------------------------------
+# Non-Pyglet, Definitely Working Code
+#------------------------------------------------------------------------------
 
 
 def instructions():
